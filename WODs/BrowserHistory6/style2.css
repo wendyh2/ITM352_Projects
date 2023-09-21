@@ -8,7 +8,7 @@ body {
     background-color: black;
 }
 img {
-    float: left;
+    float: none;
     margin-right: 10px;
 }
 li {
