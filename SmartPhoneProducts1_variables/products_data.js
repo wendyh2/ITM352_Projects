@@ -18,4 +18,4 @@ let name5 = "Blackberry";
 let price5 = 10.00;
 let image5 = "http://dport96.github.io/ITM352/morea/080.flow-control-II/Blackberry.jpg";
 
-console.log("Product variables loaded...")
+console.log("Product variables loaded...");
