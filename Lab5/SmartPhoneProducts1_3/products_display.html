@@ -4,24 +4,28 @@
 <head>
     <meta charset="utf-8">
     <title>Smart Phone Store</title>
-
     <link href="https://fonts.googleapis.com/css?family=Cherry+Swash|Raleway" rel="stylesheet">
-
     <link href="products-style.css" rel="stylesheet">
     <style id="localStyle"></style>
     <script>
-        const store_name = 'Wendy Huang';
-        let hits = 1;
-        spins = 2;
-
+        store_name= 'Wendy Huang';
+    </script>
+    <script>
+        let store_name = 'Wendy Huang';
     </script>
 </head>
-
-<body>
-    
+<body onload="hits_span.innerHTML = hits; spins_span.innerHTML = spins;">
     <header>
         <h1><script>document.write(store_name);
         </script>'s Used Smart Phone Store</h1>
+            <p style="text-align: center; font-weight: bold;">
+                Hits:<span id="hits_span">0</span>
+                Spins:<span id="spins_span">0</span>
+                </p>
+                <p
+                    style="text-align: center;">
+                    Hit/Spin:<span id="hit_spin_span">0</span>
+                </p>
     </header>
     <div>
         <aside>
@@ -37,31 +41,51 @@
         </aside>
 
         <main>
-            <section class="item" onmouseover="className='item rotate'" onclick="className='item'">
+            <section class="item" 
+            onmouseover="className='item rotate'; spins_span.innerHTML = ++spins;
+            hit_spin_span.innerHTML = (hits_span.innerHTML/spins_span.innerHTML).toFixed(2);"
+            onclick="className='item'; hits_span.innerHTML = ++hits;
+            hit_spin_span.innerHTML = (hits_span.innerHTML/spins_span.innerHTML).toFixed(2);">
                 <h2>HTC</h2>
                 <p>$40.00</p>
                 <img src="http://dport96.github.io/ITM352/morea/080.flow-control-II/HTC.jpg" alt="HTC Phones">
             </section>
 
-            <section class="item" onmouseover="className='item rotate'" onclick="className='item'">
+            <section class="item" 
+            onmouseover="className='item rotate'; spins_span.innerHTML = ++spins;
+            hit_spin_span.innerHTML = (hits_span.innerHTML/spins_span.innerHTML).toFixed(2);"
+            onclick="className='item'; hits_span.innerHTML = ++hits;
+            hit_spin_span.innerHTML = (hits_span.innerHTML/spins_span.innerHTML).toFixed(2);">
                 <h2>Apple</h2>
                 <p>$75.00</p>
                 <img src="http://dport96.github.io/ITM352/morea/080.flow-control-II/iphone-3gs.jpg">
             </section>
 
-            <section class="item" onmouseover="className='item rotate'" onclick="className='item'">
+            <section class="item" 
+            onmouseover="className='item rotate'; spins_span.innerHTML = ++spins;
+            hit_spin_span.innerHTML = (hits_span.innerHTML/spins_span.innerHTML).toFixed(2);"
+            onclick="className='item'; hits_span.innerHTML = ++hits;
+            hit_spin_span.innerHTML = (hits_span.innerHTML/spins_span.innerHTML).toFixed(2);">
                 <h2>Nokia</h2>
                 <p>$35.00</p>
                 <img src="http://dport96.github.io/ITM352/morea/080.flow-control-II/Nokia.jpg">
             </section>
 
-            <section class="item" onmouseover="className='item rotate'" onclick="className='item'">
+            <section class="item" 
+            onmouseover="className='item rotate'; spins_span.innerHTML = ++spins;
+            hit_spin_span.innerHTML = (hits_span.innerHTML/spins_span.innerHTML).toFixed(2);"
+            onclick="className='item'; hits_span.innerHTML = ++hits;
+            hit_spin_span.innerHTML = (hits_span.innerHTML/spins_span.innerHTML).toFixed(2);">
                 <h2>Samsung</h2>
                 <p>$45.00</p>
                 <img src="http://dport96.github.io/ITM352/morea/080.flow-control-II/Samsung.jpg">
             </section>
 
-            <section class="item" onmouseover="className='item rotate'" onclick="className='item'">
+            <section class="item" 
+            onmouseover="className='item rotate'; spins_span.innerHTML = ++spins;
+            hit_spin_span.innerHTML = (hits_span.innerHTML/spins_span.innerHTML).toFixed(2);"
+            onclick="className='item'; hits_span.innerHTML = ++hits;
+            hit_spin_span.innerHTML = (hits_span.innerHTML/spins_span.innerHTML).toFixed(2);">
                 <h2>Blackberry</td>
                 </h2>
                 <p>$10.00</p>
@@ -70,11 +94,18 @@
 
         </main>
     </div>
-    <footer>
-        <h1>
-            Your One Stop For Used Phones
-        </h1>
-    </footer>
+    <script>
+        let hits = 0;
+        spins = 0;
+        hits_span.innerHTML = hits; 
+        spins_span.innerHTML = spins;
+    </script>
 </body>
-
+<footer>
+    <h1>
+        <script> 
+            document.write("Your One Stop Shop for Used Phones - "+store_name+"'s");
+        </script>
+    </h1>
+</footer>
 </html>
