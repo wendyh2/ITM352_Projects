@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Smart Phone Store</title>
+    <link href="https://fonts.googleapis.com/css?family=Cherry+Swash|Raleway" rel="stylesheet">
+    <link href="products-style.css" rel="stylesheet">
+    <style id="localStyle"></style>
+    <script>
+        store_name= 'Wendy Huang';
+    </script>
+    <script>
+        let store_name = 'Wendy Huang';
+        let first_name ="Wendy"
+        let last_name = "Huang"
+        let hits = 0;
+        let spins = 0;
+        hits_span.innerHTML = hits; 
+        spins_span.innerHTML = spins;
+    </script>
+</head>
+<body onload="hits_span.innerHTML = hits; spins_span.innerHTML = spins;">
+    <header>
+                <p style="margin-top:0px; margin-bottom:0px;text-align: center; font-size: 1000%;">
+                    <b><script>document.write(first_name)</script></b>
+                    <i><script>document.write(last_name+"'s")</script></i>
+                </p>        
+                <h1>Used Smart Phone Store</h1>
+            <p style="text-align: center; font-weight: bold;">
+                Hits:<span id="hits_span">0</span>
+                Spins:<span id="spins_span">0</span>
+                </p>
+                <p
+                    style="text-align: center;">
+                    Hit/Spin:<span id="hit_spin_span">0</span>
+                </p>
+
+            
+    </header>
+    <div>
+        <aside>
+            <div style="font-size:4rem;text-align:center;font-weight: bold;font-style: italic; color: white">
+                We sell from
+                around the globe!
+            </div>
+            <div>
+                <input id='speedSlider' type='range' min=".1" max="5" step=".1" style="direction: rtl;"
+                onchange="localStyle.innerHTML = '.rotate img {animation-duration: ' + speedSlider.value + 's;}';
+                "style="direction: rtl;"/>
+            </div>
+        </aside>
+
+        <main>
+            <section class="item" 
+            onmouseover="className='item rotate'; spins_span.innerHTML = ++spins;
+            hit_spin_span.innerHTML = (hits_span.innerHTML/spins_span.innerHTML).toFixed(2);"
+            onclick="className='item'; hits_span.innerHTML = ++hits;
+            hit_spin_span.innerHTML = (hits_span.innerHTML/spins_span.innerHTML).toFixed(2);">
+                <h2>HTC</h2>
+                <p>$40.00</p>
+                <img src="http://dport96.github.io/ITM352/morea/080.flow-control-II/HTC.jpg" alt="HTC Phones">
+            </section>
+
+            <section class="item" 
+            onmouseover="className='item rotate'; spins_span.innerHTML = ++spins;
+            hit_spin_span.innerHTML = (hits_span.innerHTML/spins_span.innerHTML).toFixed(2);"
+            onclick="className='item'; hits_span.innerHTML = ++hits;
+            hit_spin_span.innerHTML = (hits_span.innerHTML/spins_span.innerHTML).toFixed(2);">
+                <h2>Apple</h2>
+                <p>$75.00</p>
+                <img src="http://dport96.github.io/ITM352/morea/080.flow-control-II/iphone-3gs.jpg">
+            </section>
+
+            <section class="item" 
+            onmouseover="className='item rotate'; spins_span.innerHTML = ++spins;
+            hit_spin_span.innerHTML = (hits_span.innerHTML/spins_span.innerHTML).toFixed(2);"
+            onclick="className='item'; hits_span.innerHTML = ++hits;
+            hit_spin_span.innerHTML = (hits_span.innerHTML/spins_span.innerHTML).toFixed(2);">
+                <h2>Nokia</h2>
+                <p>$35.00</p>
+                <img src="http://dport96.github.io/ITM352/morea/080.flow-control-II/Nokia.jpg">
+            </section>
+
+            <section class="item" 
+            onmouseover="className='item rotate'; spins_span.innerHTML = ++spins;
+            hit_spin_span.innerHTML = (hits_span.innerHTML/spins_span.innerHTML).toFixed(2);"
+            onclick="className='item'; hits_span.innerHTML = ++hits;
+            hit_spin_span.innerHTML = (hits_span.innerHTML/spins_span.innerHTML).toFixed(2);">
+                <h2>Samsung</h2>
+                <p>$45.00</p>
+                <img src="http://dport96.github.io/ITM352/morea/080.flow-control-II/Samsung.jpg">
+            </section>
+
+            <section class="item" 
+            onmouseover="className='item rotate'; spins_span.innerHTML = ++spins;
+            hit_spin_span.innerHTML = (hits_span.innerHTML/spins_span.innerHTML).toFixed(2);"
+            onclick="className='item'; hits_span.innerHTML = ++hits;
+            hit_spin_span.innerHTML = (hits_span.innerHTML/spins_span.innerHTML).toFixed(2);">
+                <h2>Blackberry</td>
+                </h2>
+                <p>$10.00</p>
+                <img src="http://dport96.github.io/ITM352/morea/080.flow-control-II/Blackberry.jpg">
+            </section>
+
+        </main>
+    </div>
+</body>
+<footer>
+    <h1>
+        <script> 
+            document.write("Your One Stop Shop for Used Phones - "+store_name+"'s");
+        </script>
+    </h1>
+    <table border="1" style="margin-left: auto; margin-right: auto; text-align: center;">
+        <script>
+            let line=1;
+            let line2=2;
+            let line3=3;
+            let now = new Date();
+            let year = now.getFullYear();
+            let hoursx = now.getHours();
+            let hours = (hoursx + 11) % 12 + 1;
+            let minutes = now.getMinutes();
+            let time = hours + ":" + minutes;
+            let amPm = hours > 12 ? 'AM' : 'PM';
+
+            document.write(`
+                    <tr>
+                        <th colspan="2"><h1>Your One Stop For Used Phones - ${first_name[0]}.${last_name[0]}.'s</h1>
+                        </th>
+                    </tr>
+                
+                    <tr>
+                        <td>${line}</td>
+                        <td><br>Copyright @ ${first_name} ${last_name}</td>
+                    </tr>
+                
+                    <tr>
+                        <td>${line2}</td>
+                        <td>${year}</td>
+                    </tr>
+                
+                    <tr>
+                        <td>${line3}</td>
+                        <td>${time}${amPm}</td>
+                    </tr>
+                `);
+        </script> 
+    </table>
+</footer>
+</html>
