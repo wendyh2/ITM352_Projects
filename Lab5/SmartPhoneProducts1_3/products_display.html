@@ -12,12 +12,21 @@
     </script>
     <script>
         let store_name = 'Wendy Huang';
+        let first_name ="Wendy"
+        let last_name = "Huang"
+        let hits = 0;
+        let spins = 0;
+        hits_span.innerHTML = hits; 
+        spins_span.innerHTML = spins;
     </script>
 </head>
 <body onload="hits_span.innerHTML = hits; spins_span.innerHTML = spins;">
     <header>
-        <h1><script>document.write(store_name);
-        </script>'s Used Smart Phone Store</h1>
+                <p style="margin-top:0px; margin-bottom:0px;text-align: center; font-size: 700%;">
+                    <b><script>document.write(first_name)</script></b>
+                    <i><script>document.write(last_name+"'s")</script></i>
+                </p>        
+                <h1>Used Smart Phone Store</h1>
             <p style="text-align: center; font-weight: bold;">
                 Hits:<span id="hits_span">0</span>
                 Spins:<span id="spins_span">0</span>
@@ -26,6 +35,8 @@
                     style="text-align: center;">
                     Hit/Spin:<span id="hit_spin_span">0</span>
                 </p>
+
+            
     </header>
     <div>
         <aside>
@@ -36,7 +47,7 @@
             <div>
                 <input id='speedSlider' type='range' min=".1" max="5" step=".1" style="direction: rtl;"
                 onchange="localStyle.innerHTML = '.rotate img {animation-duration: ' + speedSlider.value + 's;}';
-                "style="direction: rtl;" />
+                "style="direction: rtl;"/>
             </div>
         </aside>
 
@@ -94,12 +105,6 @@
 
         </main>
     </div>
-    <script>
-        let hits = 0;
-        spins = 0;
-        hits_span.innerHTML = hits; 
-        spins_span.innerHTML = spins;
-    </script>
 </body>
 <footer>
     <h1>
@@ -107,5 +112,41 @@
             document.write("Your One Stop Shop for Used Phones - "+store_name+"'s");
         </script>
     </h1>
+    <table border="1" style="margin-left: auto; margin-right: auto; text-align: center;">
+        <script>
+            let line=1;
+            let line2=2;
+            let line3=3;
+            let now = new Date();
+            let year = now.getFullYear();
+            let hoursx = now.getHours();
+            let hours = (hoursx + 11) % 12 + 1;
+            let minutes = now.getMinutes();
+            let time = hours + ":" + minutes;
+            let amPm = hours > 12 ? 'AM' : 'PM';
+
+            document.write(`
+                    <tr>
+                        <th colspan="2"><h1>Your One Stop For Used Phones - ${first_name[0]}.${last_name[0]}.'s</h1>
+                        </th>
+                    </tr>
+                
+                    <tr>
+                        <td>${line}</td>
+                        <td><br>Copyright @ ${first_name} ${last_name}</td>
+                    </tr>
+                
+                    <tr>
+                        <td>${line2}</td>
+                        <td>${year}</td>
+                    </tr>
+                
+                    <tr>
+                        <td>${line3}</td>
+                        <td>${time}${amPm}</td>
+                    </tr>
+                `);
+        </script> 
+    </table>
 </footer>
 </html>
