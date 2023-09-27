@@ -11,11 +11,12 @@
         store_name= 'Wendy Huang';
     </script>
     <script>
-        let store_name = 'Wendy Huang';
-        let first_name ="Wendy"
-        let last_name = "Huang"
+        const store_name = 'Wendy Huang';
+        let first_name ="Wendy";
+        let last_name = "Huang";
         let hits = 0;
         let spins = 0;
+        let over_half = false;
         hits_span.innerHTML = hits; 
         spins_span.innerHTML = spins;
     </script>
@@ -30,13 +31,12 @@
             <p style="text-align: center; font-weight: bold;">
                 Hits:<span id="hits_span">0</span>
                 Spins:<span id="spins_span">0</span>
+                You win:<span id="win_span">pending...</span>
                 </p>
                 <p
                     style="text-align: center;">
                     Hit/Spin:<span id="hit_spin_span">0</span>
                 </p>
-
-            
     </header>
     <div>
         <aside>
@@ -53,10 +53,26 @@
 
         <main>
             <section class="item" 
-            onmouseover="className='item rotate'; spins_span.innerHTML = ++spins;
-            hit_spin_span.innerHTML = (hits_span.innerHTML/spins_span.innerHTML).toFixed(2);"
-            onclick="className='item'; hits_span.innerHTML = ++hits;
-            hit_spin_span.innerHTML = (hits_span.innerHTML/spins_span.innerHTML).toFixed(2);">
+            onmouseover="
+            if(this.className === 'item') {
+                this.className='item rotate'; 
+                spins_span.innerHTML = ++spins;
+                } 
+            hit_spin_span.innerHTML = (hits_span.innerHTML/spins_span.innerHTML).toFixed(2);
+            over_half ||= (spins < 2*hits) && (hits < spins);
+            win_span.innerHTML = over_half;"
+            onclick="
+            if(this.className === 'item rotate') {
+                this.className ='item'; 
+                hits_span.innerHTML = ++hits;
+            } else {
+                this.className ='item rotate';
+            }
+
+            hit_spin_span.innerHTML = (hits_span.innerHTML/spins_span.innerHTML).toFixed(2);
+            over_half ||= (spins < 2*hits) && (hits < spins);
+            win_span.innerHTML = over_half;
+            ">
                 <h2>HTC</h2>
                 <p>$40.00</p>
                 <img src="http://dport96.github.io/ITM352/morea/080.flow-control-II/HTC.jpg" alt="HTC Phones">
