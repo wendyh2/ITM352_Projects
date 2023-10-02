@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Switch</title>
+</head>
+
+<body>
+    <p>After entering the name of a month, you get the number of days in that month</p>
+    Month:<input type="text" id="month"> <br>
+    Days in that month: <span id="daysinmonth"></span><br><br>
+    <input type="button" onclick="ND()" value="submit">
+    <script>
+        function ND() {
+            let month =
+                document.getElementById("month").value;
+            let number_of_days;
+            switch (month) {
+                case 'January':
+                    number_of_days = 31;
+                    break;
+                case 'February':
+                    number_of_days = 28;
+                    break;
+                case 'March':
+                    number_of_days = 31;
+                    break;
+                case 'April':
+                    number_of_days = 30;
+                    break;
+                case 'May':
+                    number_of_days = 31;
+                    break;
+                case 'June':
+                    number_of_days = 30;
+                    break;
+                case 'July':
+                    number_of_days = 31;
+                    break;
+                case 'August':
+                    number_of_days = 31;
+                    break;
+                case 'September':
+                    number_of_days = 30;
+                    break;
+                case 'October':
+                    number_of_days = 31;
+                    break;
+                case 'November':
+                    number_of_days = 30;
+                    break;
+                case 'December':
+                    number_of_days = 31;
+                    break;
+                default: 
+                number_of_days = 'ERROR! Are you typing the name of the month you want correctly? Make sure the first letter of the month is capitalized, or it will not work!';
+            }
+            daysinmonth.innerHTML = number_of_days;
+        }
+    </script>
+    </body>
+    </html>
