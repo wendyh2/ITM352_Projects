@@ -11,4 +11,4 @@ But my expertise doesn't end there. I've actively contributed to various project
 
 Beyond my academic and professional endeavors, I'm deeply engaged in extracurricular activities. I've led student teams, actively participated in professional development programs, and contributed to community organizations.
 
-In a nutshell, I'm a well-rounded, proactive, and highly motivated individual dedicated to excellence in all that I do. **Let's** connect and explore how I can leverage my skills and dedication to make a positive impact on your team or project."
+In a nutshell, I'm a well-rounded, proactive, and highly motivated individual dedicated to excellence in all that I do. **Let's connect**  and explore how I can leverage my skills and dedication to make a positive impact on your team or project."
