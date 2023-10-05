@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./products_data.js"></script>
+</head>
+
+<body>
+    <table border="1">
+        <tbody>
+            <tr>
+                <th>Number</th>
+                <th>Item</th>
+            </tr>
+            <script>
+                let num_products = 5;
+                for (let prod_number = 1; eval("typeof name" + prod_number)
+                    != 'undefined'; prod_number++) {
+                        document.write(`<tr><td>${prod_number + '.'}
+            </td><td>${eval("name" + prod_number)}</td></tr>`)
+                }
+            </script>
+        </tbody>
+    </table>
+</body>
+
+</html>
