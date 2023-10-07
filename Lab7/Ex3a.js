@@ -2,7 +2,7 @@ require("./products_data.js");
 
 let num_products = 5;
 
-for(let product_num = 0; product_num < num_products, product_num++) {
+for(let product_num = 1; product_num < num_products; product_num++) {
     if(product_num > num_products/2) {
         console.log('Don\'t ask for anything else!');
         process.exit(1);
