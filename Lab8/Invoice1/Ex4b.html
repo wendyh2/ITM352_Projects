@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        let product_quantities = [1, 2, 3, 4, 5];
+
+        // array of all products
+        // corresponds to product_quantities array
+        // product_quantities[i] is the quantity for products[i]
+
+        products = [
+            { 'name': 'small gumball', 'price': 0.02 },
+            { 'name': 'medium gumball', 'price': 0.05 },
+            { 'name': 'large gumball', 'price': 0.07 },
+            { 'name': 'small jawbreaker', 'price': 0.06 },
+            { 'name': 'large jawbreaker', 'price': 0.10 }
+        ];
+
+        document.write(`
+    <table style="border: 1px solid black;text-align: center;">
+        <tbody onclick="new_row = this.appendChild(document.createElement('tr')); 
+    for(let row = 0; row < this.rows[0].cells.length; row++)
+    {new_cell = new_row.appendChild(document.createElement('td'));
+    new_cell.innerHTML='xxx';
+    }"
+        <tr style="border: 1px solid black;">
+            <th style="border: 1px solid black;">Product Name</th>
+            <th style="border: 1px solid black;">Price</th>
+            <th style="border: 1px solid black;">Extended Price </th>
+        </tr>
+        `)
+        for (let i in product_quantities) {
+            document.write
+                (`<td style="border: 1px solid black;">${products[i].name}</td>
+        <td style="border: 1px solid black;">$${products[i].price.toFixed(2)}</td>
+        <td style="border: 1px solid black;">$${(product_quantities[i] * products[i].price).toFixed(2)}</td></tr>`);
+        }
+        document.write(`
+</table>
+<input type="button" value="Delete Last Row"
+onclick = "tBody = document.getElementsByTagName('table')[0];
+tBody.deleteRow(tBody.rows.length - 1);">
+`);
+    </script>
+</body>
+</html>

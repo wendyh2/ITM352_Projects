@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // array of all products
+    // corresponds to product_quantities array
+    // product_quantities[i] is the quantity for products[i]
+    let product_quantities = [1, 2, 3, 4, 5];
+
+    products = [
+      { 'name': 'small gumball', 'price': 0.02 },
+      { 'name': 'medium gumball', 'price': 0.05 },
+      { 'name': 'large gumball', 'price': 0.07 },
+      { 'name': 'small jawbreaker', 'price': 0.06 },
+      { 'name': 'large jawbreaker', 'price': 0.10 }
+    ];
+
+    document.write(`<style>
+    tr:hover {
+      background-color: yellow;
+    }
+  </style>
+  <table id = "invoice_table" style="border: 1px solid black;text-align: center;">
+        <tr style="border: 1px solid black;">
+            <th style="border: 1px solid black;">Product Name</th>
+            <th style="border: 1px solid black;">Price</th>
+            <th style="border: 1px solid black;">Extended Price </th>
+        </tr>
+        `)
+    for (let i in product_quantities) {
+      document.write(`
+        <tr style = "border: 1px solid black;" onclick = "
+      invoice_table.deleteRow(this.rowIndex);">
+        <td style="border: 1px solid black;">${products[i].name}</td>
+        <td style="border: 1px solid black;">$${products[i].price.toFixed(2)}</td>
+        <td style="border: 1px solid black;">$${(product_quantities[i] * products[i].price).toFixed(2)}</td></tr>`);
+    }
+    document.write(`
+  </table>
+  <input type="button" value="Add new row" onclick="
+    let new_row = invoice_table.rows[1].cloneNode(true);
+    invoice_table.appendChild(new_row);
+    let row_cells = new_row.cells;
+    for(let i = 0; i < row_cells.length; i++) {
+      row_cells[i].innerHTML = 'xxx';
+    }
+  ">
+  `);
+  </script>
+</body>
