@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic Tac Toe</title>
+</head>
+<body>
+<script>
+        var TicTacToe = [['x','o','x'],['o','x','o'],['x','o','o']]
+        
+        document.write(`
+            <table>
+                <th>TicTacToe</th>
+        `);
+        for(var i=0; i<TicTacToe.length; i++) {
+            document.write(`
+            <tr style="border: 1px solid black;">
+            `);
+            for(var c=0; c<TicTacToe[i].length; c++) {
+                document.write(`<td style="border-right: 1px solid black;">${TicTacToe[i][c]}</td>`)
+            }
+            document.write(`</tr>`)
+        }
+        document.write(`</table>`)
+
+</script>
+</body>
