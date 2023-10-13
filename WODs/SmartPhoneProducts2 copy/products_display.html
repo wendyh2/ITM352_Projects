@@ -1,0 +1,77 @@
+<script>
+    num_products= 5;
+
+    // Product 1 
+    let brand1 = "HTC";
+    let price1 = "40.00";
+    let image1 = "http://dport96.github.io/ITM352/morea/080.flow-control-II/HTC.jpg";
+
+    // Product 2
+    let brand2 = "Apple";
+    let price2 = "75.00";
+    let image2 = "http://dport96.github.io/ITM352/morea/080.flow-control-II/iphone-3gs.jpg";
+
+    // Product 3
+    let brand3 = "Nokia";
+    let price3 = "35.00";
+    let image3 = "http://dport96.github.io/ITM352/morea/080.flow-control-II/Nokia.jpg";
+
+    // Product 4
+    let brand4 = "Samsung";
+    let price4 = "45.00";
+    let image4 = "http://dport96.github.io/ITM352/morea/080.flow-control-II/Samsung.jpg";
+
+    // Product 5
+    let brand5 = "Blackberry";
+    let price5 = "10.00";
+    let image5 = "http://dport96.github.io/ITM352/morea/080.flow-control-II/Blackberry.jpg";
+
+</script>
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Smart Phone Store</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Cherry+Swash|Raleway" rel="stylesheet">
+
+    <link href="products-style.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <header>
+        <h1>Wendy's Used Smart Phone Store</h1>
+    </header>
+    <div>
+        <aside>
+            <div style="font-size:4rem;text-align:center;font-weight: bold;font-style: italic; color: white">
+                We sell from
+                around the globe!
+            </div>
+        </aside>
+
+        <main>
+
+            <script>
+                for (i = 1; i <= num_products; i++) {
+                document.write(`
+    <section class="item">
+                <h2>${eval('brand' + i)} </h2>
+                <p>$${eval('price' + i)}</p>
+                <img src="${eval('image' + i)}">
+            </section>
+    `);
+        }
+            </script>
+        </main>
+    </div>
+    <footer>
+        <h1>
+            Your One Stop For Used Phones
+        </h1>
+    </footer>
+</body>
+
+</html>
