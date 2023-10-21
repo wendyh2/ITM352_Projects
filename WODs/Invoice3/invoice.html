@@ -1,65 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Receipt Sales</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Receipt Sales</title>
 
-  <script>
+    <script src="./products_data.js"></script>
+    <script>
     /*
     This shows and makes a sales invoice from our product sales data
     */
 
-    // Product Data
-
-    // Product 1
-    let item1 = 'Gillette Sensor 3 Razor';
-    let quantity1 = 2;
-    let price1 = 1.23;
-
-    // Product 2
-    let item2 = 'Barbasol Shaving Cream';
-    let quantity2 = 1;
-    let price2 = 2.76;
-
-    // Product 3
-    let item3 = 'Nautica Cologne';
-    let quantity3 = 1;
-    let price3 = 7.11;
-
-    // Product 4
-    let item4 = 'Rubbing Alcohol';
-    let quantity4 = 3;
-    let price4 = 1.36;
-
-    // Product 5
-    let item5 = 'Colgate Classic Toothbrush';
-    let quantity5 = 12;
-    let price5 = 1.89;
-
-    // Compute extended price
-    let extended_price1 = quantity1 * price1;
-    let extended_price2 = quantity2 * price2;
-    let extended_price3 = quantity3 * price3;
-    let extended_price4 = quantity4 * price4;
-    let extended_price5 = quantity5 * price5;
+    //Quantities Array
+    let quantities = [-5,-9,10,19,28]
 
     // Compute subtotal
-    let subtotal = extended_price1 + extended_price2 + extended_price3 + extended_price4 + extended_price5;
-
-    // Compute tax rate
-    let tax_rate = 0.0575;
-    let tax = tax_rate * subtotal;
-
-    // Compute shipping
-    if (subtotal <= 50) { shipping = 2 }
-    else if (50 < subtotal < 100) { shipping = 5 }
-    else { shipping = subtotal * 0.05 };
-
-    // Compute grand total
-    let total = subtotal + tax + shipping;
+    let subtotal = 0;
 
   </script>
 </head>
@@ -70,67 +27,77 @@
       <tbody>
         <script>
           document.write(`
-            <tr>
-              <th style="text-align: center;" width="43%">Item</th>
-              <th style="text-align: center;" width="11%">quantity</th>
-              <th style="text-align: center;" width="13%">price</th>
-              <th style="text-align: center;" width="54%">extended price</th>
-            </tr>
-            <tr>
-              <td width="43%">${item1}</td>
-              <td align="center" width="11%">${quantity1}</td>
-              <td width="13%">$${price1}</td>
-              <td width="54%">$${extended_price1}</td>
-            </tr>
+          <tr>
+            <th style="text-align: center;" width="43%">Item</th>
+            <th style="text-align: center;" width="11%">quantity</th>
+            <th style="text-align: center;" width="13%">price</th>
+            <th style="text-align: center;" width="54%">extended price</th>
+          </tr>
+          `)
+          function generate_item_rows(quantities){
+            for (let i in quantities){
+              if (quantities[i]==0){continue};
+              errors = findNonNegInt(quantities[i], true);
+              if (errors.length == 0){
+              var extended_price = quantities[i] * products[i].price;
+              subtotal += extended_price  
+            }
+              else(extended_price=0);
+              document.write(`
+          <tr>
+            <td width="43%">${products[i].brand}</td>
+            <td align="center" width="11%">${quantities[i]}
+              <br><font color = "red">${errors.join('<br>')}
+              </td>
+            <td width="13%">$${products[i].price}</td>
+            <td width="54%">$${extended_price}</td>
+          </tr>
+          `)
+            } 
+          }
 
-            <tr>
-              <td width="43%">${item2}</td>
-              <td align="center" width="11%">${quantity2}</td>
-              <td width="13%">$${price2}</td>
-              <td width="54%">$${extended_price2}</td>
-            </tr>
+          function findNonNegInt(q, returnErrors = false){ //the function returns non-negative integers in the object.
+    errors = []; // assume no errors at first
+    if(Number(q) != q) errors.push('Not a number!'); // Check if string is a number value
+    if(q < 0) errors.push('Negative value!'); // Check if it is non-negative
+    if(parseInt(q) != q) errors.push('Not an integer!'); // Check that it is an integer
 
-            <tr>
-              <td width="43%">${item3}</td>
-              <td align="center" width="11%">${quantity3}</td>
-              <td width="13%">$${price3}</td>
-              <td width="54%">$${extended_price3}</td>
-            </tr>
+    return returnErrors ? errors : (errors.length == 0);}
 
-            <tr>
-              <td width="43%">${item4}</td>
-              <td align="center" width="11%">${quantity4}</td>
-              <td width="13%">$${price4}</td>
-              <td width="54%">$${extended_price4}</td>
-            </tr>
+          generate_item_rows(quantities);
 
-            <tr>
-              <td width="43%">${item5}</td>
-              <td align="center" width="11%">${quantity5}</td>
-              <td width="13%">$${price5}</td>
-              <td width="54%">$${extended_price5}</td>
-            </tr>
-            
-            <tr>
-              <td colspan="4" width="100%">&nbsp;</td>
-            </tr>
-            <tr>
-              <td style="text-align: center;" colspan="3" width="67%">Sub-total</td>
-              <td width="54%">${subtotal}</td>
-            </tr>
-            <tr>
-              <td style="text-align: center;" colspan="3" width="67%">Tax @ 5.75%</span></td>
-              <td width="54%">$${(tax).toFixed(2)}</td>
-            </tr>
-            <tr>
-              <td style="text-align: center;" colspan="3" width="67%">Shipping</span></td>
-              <td width="54%">$${shipping}</td>
-            </tr>
-            <tr>
-              <td style="text-align: center;" colspan="3" width="67%"><strong>Total</strong></td>
-              <td width="54%"><strong>$${(total).toFixed(2)}</strong></td>
-            </tr>
-            `)
+          // Compute tax rate
+  let tax_rate = 0.0575;
+  let tax = tax_rate * subtotal;
+
+  // Compute shipping
+  if (subtotal <= 50) { shipping = 2 }
+  else if (50 < subtotal < 100) { shipping = 5 }
+  else { shipping = subtotal * 0.05 };
+
+  // Compute grand total
+  let total = subtotal + tax + shipping;
+  document.write(`
+          <tr>
+            <td colspan="4" width="100%">&nbsp;</td>
+          </tr>
+          <tr>
+            <td style="text-align: center;" colspan="3" width="67%">Sub-total</td>
+            <td width="54%">${subtotal}</td>
+          </tr>
+          <tr>
+            <td style="text-align: center;" colspan="3" width="67%">Tax @ 5.75%</span></td>
+            <td width="54%">$${(tax).toFixed(2)}</td>
+          </tr>
+          <tr>
+            <td style="text-align: center;" colspan="3" width="67%">Shipping</span></td>
+            <td width="54%">$${shipping}</td>
+          </tr>
+          <tr>
+            <td style="text-align: center;" colspan="3" width="67%"><strong>Total</strong></td>
+            <td width="54%"><strong>$${(total).toFixed(2)}</strong></td>
+          </tr>
+          `)
         </script>
       </tbody>
     </table>
