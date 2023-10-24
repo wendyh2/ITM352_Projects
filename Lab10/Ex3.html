@@ -1,7 +1,18 @@
-<span id="firstname">Wendy</span>, <span id="lastname">Huang</span>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <span id="firstname">Wendy</span>, <span id="lastname">Huang</span>
 <br>
 <input type="button" value="Swap" 
     onclick="
+    var tmp = firstname.innerHTML
     firstname.innerHTML = lastname.innerHTML;
-    lastname.innerHTML = firstname.innerHTML;
+    lastname.innerHTML = tmp;
     ">
+</body>
+</html>

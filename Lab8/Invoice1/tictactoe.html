@@ -57,19 +57,61 @@
                 }
             }
         }
-
         function computerMove() {
-            // Implement the computer's move logic here
-            // For simplicity, let's make a random move
-            if (!gameWon) {
-                let row, col;
-                do {
-                    row = Math.floor(Math.random() * 3);
-                    col = Math.floor(Math.random() * 3);
-                } while (board[row][col] !== "-");
-                makeMove(row, col);
+    if (!gameWon) {
+        const currentPlayer = marks[moveNum % 2];
+
+        // Check if the computer can win in the next move
+        for (let i = 0; i < 3; i++) {
+            for (let j = 0; j < 3; j++) {
+                if (board[i][j] === '-') {
+                    // Simulate a move to check for a win
+                    board[i][j] = currentPlayer;
+                    if (checkForWin()) {
+                        makeMove(i, j);
+                        return;
+                    }
+                    board[i][j] = '-'; // Undo the move
+                }
             }
         }
+
+        // Check if the player is about to win and block them
+        const opponent = marks[(moveNum + 1) % 2];
+        for (let i = 0; i < 3; i++) {
+            for (let j = 0; j < 3; j++) {
+                if (board[i][j] === '-') {
+                    // Simulate the opponent's move to check for a potential win
+                    board[i][j] = opponent;
+                    if (checkForWin()) {
+                        makeMove(i, j);
+                        return;
+                    }
+                    board[i][j] = '-'; // Undo the move
+                }
+            }
+        }
+
+        // If the center is available, take it
+        if (board[1][1] === '-') {
+            makeMove(1, 1);
+            return;
+        }
+
+        // If none of the winning moves or blocks are available, prioritize corners and then edges
+        const preferredMoves = [
+            [0, 0], [0, 2], [2, 0], [2, 2], // Corners
+            [0, 1], [1, 0], [1, 2], [2, 1], // Edges
+        ];
+
+        for (const [row, col] of preferredMoves) {
+            if (board[row][col] === '-') {
+                makeMove(row, col);
+                return;
+            }
+        }
+    }
+}
 
         function checkForWin() {
             // Implement the win-checking logic here
