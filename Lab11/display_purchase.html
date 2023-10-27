@@ -1,0 +1,21 @@
+<script>
+    function findNonNegInt(q, returnErrors = false){ //the function returns non-negative integers in the object.
+    errors = []; // assume no errors at first
+    if(Number(q) != q){
+     errors.push('Not a number!');} // Check if string is a number value
+    else
+    {
+    if(q < 0) errors.push('Negative value!'); // Check if it is non-negative
+    if(parseInt(q) != q) errors.push('Not an integer!'); // Check that it is an integer
+    }
+    let params = (new URL(document.location)).searchParams;
+    if(params.has ('quantity_textbox')){
+       let qty = params.get('quantity_textbpx');
+       if(findNonNegInt (qty,false)===true) {
+        document.write(`Thank for you for ordering ${qty} things!`);
+       }
+       else {
+        document.write()
+       }
+    }
+</script>
