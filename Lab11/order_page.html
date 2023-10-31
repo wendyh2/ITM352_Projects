@@ -16,8 +16,11 @@
 
     return returnErrors ? errors : (errors.length == 0);}
     function displayPurchase (){
+        let qty = quantity_textbox.value;
+        if (findNonNegInt (qty, false === true)) {
         document.write(`Thank you for ordering ${quantity_textbox.value} things!`);
     }
+}
     let params = (new URL(document.location)).searchParams;
     if(params.has ('quantity_textbox')){
        let qty = params.get('quantity_textbpx');
@@ -30,7 +33,6 @@
        }
       
     }
-</script>
 </script>
 <form name="quantity_form" action="./display_purchase.html" method="GET">
 <label>quantity desired:</label>

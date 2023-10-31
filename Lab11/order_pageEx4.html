@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        let params = (new URL(document.location)).searchParams;
+
+        function displayPurchase(){document.body.innerHTML=`Thank for you for ordering ${quantity_textbox.value} things!`}
+
+        function checkQuantityTextbox(the_quantity_textbox){
+            let errors = findNonNegInt(the_quantity_textbox.value);
+            purchase_button.disabled=true;
+            if(errors.length==0){purchase_button.disabled=false};
+            document.getElementById(the_quantity_textbox.id + '_message').innerHTML = errors.join(" ")
+        }
+
+        function findNonNegInt(q){ //the function returns non-negative integers in the object.
+    errors = []; // assume no errors at first
+    if(Number(q) != q) errors.push('Not a number!'); // Check if string is a number value
+    else{
+    if(q < 0) errors.push('Negative value!'); // Check if it is non-negative
+    if(parseInt(q) != q) errors.push('Not an integer!'); // Check that it is an integer
+    }
+    return errors;
+      }
+    </script>
+</head>
+<body>
+    <form name="quantity_form" action="http://localhost:8080/display_purchase.html" method="GET">
+        
+    Quantity desired: <input id="quantity_textbox" name="quantity_textbox" type="text"  onkeyup=checkQuantityTextbox(this)>
+    <span id='quantity_textbox_message'>Enter a quantity</span>
+    <br>
+    <input disabled type="submit" id = "purchase_button" value="Purchase">
+<br>
+<script>
+/*
+if (params.has('quantity_textbox')) {
+    quantity_form["quantity_textbox"].value = params.get('quantity_textbox');
+    checkQuantityTextbox(quantity_form["quantity_textbox"]);
+};
+
+        if(params.has('quantity_textbox')){
+            let qty=params.get('quantity_textbox');
+
+        if(findNonNegInt(qty).length==0){document.write(`Thank you for ordering ${qty} things!`)} else((document.write("")));
+
+// Validate qty; if valid then display thank you
+        } else(
+            document.write("Hey you need to select some quantities!")
+        );
+        */
+    </script>
+</form>
+</body>
+</html>
