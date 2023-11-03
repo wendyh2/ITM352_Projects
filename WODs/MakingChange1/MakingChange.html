@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // Amount of coins
+        amount = 25;
+
+        // Largest number of quarters
+        quarters = parseInt(amount / 25);
+        remainderQua = amount % 25;
+
+        // Largest number of dimes
+        dimes = parseInt(remainderQua / 10);
+        remainderDim = remainderQua % 10;
+
+        // Largest number of nickels
+        nickels = parseInt(remainderDim / 5);
+        remainderNic = remainderDim % 5;
+
+        // Remainder in pennies
+        pennies = remainderNic;
+
+        document.write(`
+        Quarters: ${quarters} <br>
+        Dimes: ${dimes} <br>
+        Nickels:  ${nickels} <br>
+        Pennies: ${pennies}
+        `)
+    </script>
+</body>
+
+</html>
