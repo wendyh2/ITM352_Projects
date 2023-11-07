@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Receipt Sales</title>
+
+    <script src="./products_data.js"></script>
+    <script>
+
+    let params = (new URL(document.location)).searchParams
+
+    /*
+    This shows and makes a sales invoice from our product sales data
+    */
+
+    //Quantities Array
+    let quantities = []
+
+    for(i = 0; i < products.length; i++){
+      if(params.has(`quantity${i}`)){
+        const phones = params.get(`quantity${i}`);
+        quantities.push(phones);
+      }
+    }
+
+    // Compute subtotal
+    let subtotal = 0;
+
+  </script>
+</head>
+
+<body>
+  <div>
+    <table border="2">
+      <tbody>
+        <script>
+          document.write(`
+          <tr>
+            <th style="text-align: center;" width="43%">Item</th>
+            <th style="text-align: center;" width="11%">quantity</th>
+            <th style="text-align: center;" width="13%">price</th>
+            <th style="text-align: center;" width="54%">extended price</th>
+          </tr>
+          `)
+          function generate_item_rows(quantities){
+            for (let i in quantities){
+              if (quantities[i]==0){continue};
+              errors = findNonNegInt(quantities[i], true);
+              if (errors.length == 0){
+              var extended_price = quantities[i] * products[i].price;
+              subtotal += extended_price  
+            }
+              else(extended_price=0);
+              document.write(`
+          <tr>
+            <td width="43%">${products[i].brand}</td>
+            <td align="center" width="11%">${quantities[i]}
+              <br><font color = "red">${errors.join('<br>')}
+              </td>
+            <td width="13%">$${products[i].price}</td>
+            <td width="54%">$${extended_price}</td>
+          </tr>
+          `)
+            } 
+          }
+
+          function findNonNegInt(q, returnErrors = false){ //the function returns non-negative integers in the object.
+    errors = []; // assume no errors at first
+    if(Number(q) != q) errors.push('Not a number!'); // Check if string is a number value
+    if(q < 0) errors.push('Negative value!'); // Check if it is non-negative
+    if(parseInt(q) != q) errors.push('Not an integer!'); // Check that it is an integer
+
+    return returnErrors ? errors : (errors.length == 0);}
+
+          generate_item_rows(quantities);
+
+          // Compute tax rate
+  let tax_rate = 0.0575;
+  let tax = tax_rate * subtotal;
+
+  // Compute shipping
+  if (subtotal <= 50) { shipping = 2 }
+  else if (50 < subtotal < 100) { shipping = 5 }
+  else { shipping = subtotal * 0.05 };
+
+  // Compute grand total
+  let total = subtotal + tax + shipping;
+  document.write(`
+          <tr>
+            <td colspan="4" width="100%">&nbsp;</td>
+          </tr>
+          <tr>
+            <td style="text-align: center;" colspan="3" width="67%">Sub-total</td>
+            <td width="54%">${subtotal}</td>
+          </tr>
+          <tr>
+            <td style="text-align: center;" colspan="3" width="67%">Tax @ 5.75%</span></td>
+            <td width="54%">$${(tax).toFixed(2)}</td>
+          </tr>
+          <tr>
+            <td style="text-align: center;" colspan="3" width="67%">Shipping</span></td>
+            <td width="54%">$${shipping}</td>
+          </tr>
+          <tr>
+            <td style="text-align: center;" colspan="3" width="67%"><strong>Total</strong></td>
+            <td width="54%"><strong>$${(total).toFixed(2)}</strong></td>
+          </tr>
+          `)
+        </script>
+      </tbody>
+    </table>
+    <div>
+      <br> <b>
+        OUR SHIPPING POLICY IS:A subtotal $0 - $49.99 will be $2 shipping
+        A subtotal $50 - $99.99 will be $5 shipping
+        Subtotals over $100 will be charged 5% of the subtotal amount
+      </b>
+    </div>
+  </div>
+</body>
+
+</html>
