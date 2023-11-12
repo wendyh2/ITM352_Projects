@@ -24,6 +24,3 @@
         "price" : "10.00",
         "image" : "http://dport96.github.io/ITM352/morea/080.flow-control-II/Blackberry.jpg"}
     ];
-    if(typeof module != 'undefined') {
-        module.exports.products = products;
-    }

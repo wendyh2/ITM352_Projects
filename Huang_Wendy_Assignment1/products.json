@@ -1,0 +1,50 @@
+[
+    {
+        "name": "12oz Legacy Gloves",
+        "price": 79.99,
+        "image": "gloves.jpg",
+        "quantity_available": 10,
+        "total_sold": 0,
+        "description": "Best gloves in town"
+    },
+    {
+        "name": "Legacy Headgear",
+        "price": 29.99,
+        "image": "headgear.jpg",
+        "quantity_available": 10,
+        "total_sold": 0,
+        "description": "Durable, all around head protection"
+    },
+    {
+        "name": "120in Handwraps",
+        "price": 11.99,
+        "image": "handwraps.jpg",
+        "quantity_available": 10,
+        "total_sold": 0,
+        "description": "Great for protecting your wrists"
+    },
+    {
+        "name": "Legacy Shin Guards",
+        "price": 79.99,
+        "image": "shinguards.jpg",
+        "quantity_available": 10,
+        "total_sold": 0,
+        "description": "Protection from those low kicks"
+    },
+    {
+        "name": "Standard Mouthguard",
+        "price": 19.50,
+        "image": "mouthguard.jpg",
+        "quantity_available": 10,
+        "total_sold": 0,
+        "description": "Protects your jaw"
+    },
+    {
+        "name": "Venum Water Bottle",
+        "price": 15.25,
+        "image": "bottle.jpg",
+        "quantity_available": 10,
+        "total_sold": 0,
+        "description": "Great for hydration"
+    }
+]
