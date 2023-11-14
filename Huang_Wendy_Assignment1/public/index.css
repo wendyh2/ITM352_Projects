@@ -1,3 +1,11 @@
+/*
+Author: Wendy Huang
+Assignment 1
+Date: 11/12/2023
+Description: My CSS stylesheet for my index.html
+Some of this was inspired from what we did in our SmartPhoneProducts2
+*/
+
 body {
     text-align: center;
     background-image: url(img/flowers.jpg);
@@ -5,7 +13,8 @@ body {
     background-size: cover; /* Cover the entire background */
     background-repeat: no-repeat; /* No repeating of the background image */
     font-family: 'Montserrat', sans-serif; /* Set font to Montserrat */
-    color: black; /* Set text color to white for better visibility on the background */
+    color: black; /* Set text color to black for better visibility on the background */
+    margin: 0px;
 }
 
 img {
@@ -20,5 +29,5 @@ img {
 
 /* Add a hover effect (black shadow) */
 img:hover {
-    box-shadow: 0 0 5px 1px black;
+    box-shadow: 0 0 5px 1px rgb(177, 219, 233);
 }
