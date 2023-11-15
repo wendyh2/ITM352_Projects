@@ -8,7 +8,10 @@ app.all('*', function (request, response, next) {
     next();
 });
 
-app.post("/process_form", function (request, response) {  let q = request.body['quantity_textbox'];
+app.post("/process_form", function (request, response) 
+{  
+    console.log('in process+form', request. body);
+    let q = request.body['quantity_textbox'];
 if (typeof q != 'undefined') {
 response.send(`Thank you for purchasing ${q} things!`);
 }
