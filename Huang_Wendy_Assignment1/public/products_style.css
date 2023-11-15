@@ -119,7 +119,7 @@ header {
 }
 
 .main-btn:hover{
-    background-color: rgb(232, 196, 250);
+    background-color: rgb(199, 232, 255);
 }
 
 .main-btn i{
@@ -127,8 +127,18 @@ header {
 }
 
 /* Hover effect for navigation menu items */
-.navmenu a:hover {
-    color: rgb(203, 128, 213); 
+.navmenu a:hover,
+.navmenu a.active {
+    color: rgb(93, 97, 100)
+}
+
+.navmenu a.active::after{
+    content:"";
+    width: 30%;
+    height: 2px;
+    position: absolute;
+    bottom: -4px;
+    left: 20px;
 }
 
 /* Styling for the navigation icon container */
@@ -285,22 +295,51 @@ section {
     transform: scale(1.4);
 }
 
-/*Making the navigation menu functional and nice*/
-@media(max-width: 720px){
-.navmenu{
-    top: 100%;
-    right:0;
-    position: absolute;
-    width: 300px;
-    height: 150vh;
-    background: pink;
-    display: flex;
-    align-items: center;
-    paddinh: 120px 40px;
-    flex-direction: column;
+/*This is how I will make it responsive, so that my site can still properly display without being in full-screen. This is optional I personally did it because it was easier to code side-by-side with my vs code on the right and my webpage on the left, so I could make sure it was working. This was made with the help of W3 schools and through a lot of trial and error*/
+/* Making the navigation menu functional and nice */
+@media (max-width: 850px) {
+    header {
+        padding: 20px 2%;
+        transition: 0.5s;
+    }
+
+    .navmenu {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 100%;
+        height: 100vh;
+        background: pink;
+        display: flex;
+        align-items: center;
+        padding: 20px 10px;
+        flex-direction: column;
+        z-index: 1;
+    }
+
+    .navmenu a {
+        display: block;
+        margin: 17px 0;
+    }
+
+    .navmenu.open {
+        right: 0;
+    }
 }
-.navmenu a{
-    display: block;
-    margin: 17px 0;
-}
+
+@media (max-width: 650px) {
+    .main-text h1 {
+        font-size: 30px; /* Adjusted font size for smaller screens */
+        transition: 0.5s;
+    }
+
+    .main-text p {
+        font-size: 14px; /* Adjusted font size for smaller screens */
+        transition: 0.5s;
+    }
+
+    .main-btn {
+        padding: 8px 16px; /* Adjusted padding for smaller screens */
+        transition: 0.4s;
+    }
 }
