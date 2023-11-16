@@ -1,7 +1,3 @@
-// Author: Wendy Huang
-// Date: 11/10/2023
-// My server js file that runs the server for my site. This was taken from our Lab12 with permission from Dan to use it 
-
 const express = require('express');
 const app = express();
 const querystring = require('querystring');
@@ -19,7 +15,7 @@ app.all('*', function (request, response, next) {
 // Route to provide products data as a JavaScript file
 app.get("/products_data.js", function (request, response, next) {
     response.type('.js');
-    const products_str = `var products = ${JSON.stringify(products)}`;
+    const products_str = `var products = ${JSON.stringify(product_data)}`;
     response.send(products_str);
 });
 
@@ -31,7 +27,7 @@ app.post("/purchase", function (request, response, next) {
     let hasQty = false;
     let hasInput = false;
 
-    for (const i in products) {
+    for (const i in product_data) {
         const qty = request.body[`quantity${i}`];
 
         if (qty > 0) {
@@ -48,7 +44,7 @@ app.post("/purchase", function (request, response, next) {
             hasInput = true;
         }
 
-        if (qty > products[i].quantity_available) {
+        if (qty > product_data[i].sets_available) {
             errors[`quantity${i}_available_error`] = `We don't have ${qty} available!`;
             hasInput = true;
         }
@@ -61,9 +57,9 @@ app.post("/purchase", function (request, response, next) {
     console.log(errors);
 
     if (Object.keys(errors).length === 0) {
-        for (const i in products) {
-            products[i].quantity_available -= request.body[`quantity${i}`];
-            products[i].quantity_sold += Number(request.body[`quantity${i}`]);
+        for (const i in product_data) {
+            product_data[i].sets_available -= request.body[`quantity${i}`];
+            product_data[i].sets_sold += Number(request.body[`quantity${i}`]);
         }
         response.redirect("./invoice.html?" + querystring.stringify(request.body));
     } else {
