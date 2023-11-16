@@ -4,47 +4,87 @@
 
 const express = require('express');
 const app = express();
-const products = require(__dirname + "/products.json");
-const querystring = require("querystring");
-const header = document.querySelector("header");
+const querystring = require('querystring');
+const product_data = require(__dirname + '/products.json');
 
-window.addEventListener ("scroll", function (){
-   header.classList.toggle ("sticky", this.window.scrollY > 0);
-})
-
-let menu = document.querySelector('#menu-icon');
-let menu = document.querySelector('#.navmenu');
-
-menu.onclick = () => {
-   menu.classList.toggle('bx-x');
-   navmenu.classList.toggle('open');
-}
-
+// Middleware for decoding form data
 app.use(express.urlencoded({ extended: true }));
 
-// Routing 
-// monitor all requests
+// Log all requests
 app.all('*', function (request, response, next) {
-    console.log(request.method + ' to path ' + request.path + 'with qs' + JSON.stringify(request.query)) ; 
+    console.log(request.method + ' to ' + request.path);
     next();
 });
 
-// process purchase request (validate quantities, check quantity available)
-<** your code here ***>
-
-app.post("/process_form", function (request, response) {  let q = request.body['quantity_textbox'];
-if (typeof q != 'undefined') {
-response.send(`Thank you for purchasing ${q} things!`);
-}
- });
-
-app.get('/pro', function (request, response, next) {
-    response.send('in route GET to /test');
+// Route to provide products data as a JavaScript file
+app.get("/products_data.js", function (request, response, next) {
+    response.type('.js');
+    const products_str = `var products = ${JSON.stringify(products)}`;
+    response.send(products_str);
 });
 
-// route all other GET requests to files in public 
+// Process purchase request
+app.post("/purchase", function (request, response, next) {
+    console.log(request.body);
+
+    const errors = {};
+    let hasQty = false;
+    let hasInput = false;
+
+    for (const i in products) {
+        const qty = request.body[`quantity${i}`];
+
+        if (qty > 0) {
+            hasQty = true;
+            hasInput = true;
+        }
+
+        if (qty == "") {
+            request.body[`quantity${i}`] = 0;
+        }
+
+        if (!findNonNegInt(qty)) {
+            errors[`quantity${i}_error`] = findNonNegInt(qty, true).join("<br>");
+            hasInput = true;
+        }
+
+        if (qty > products[i].quantity_available) {
+            errors[`quantity${i}_available_error`] = `We don't have ${qty} available!`;
+            hasInput = true;
+        }
+    }
+
+    if (hasQty === false && hasInput === false) {
+        errors[`noQty`] = `Please select some items to purchase!`;
+    }
+
+    console.log(errors);
+
+    if (Object.keys(errors).length === 0) {
+        for (const i in products) {
+            products[i].quantity_available -= request.body[`quantity${i}`];
+            products[i].quantity_sold += Number(request.body[`quantity${i}`]);
+        }
+        response.redirect("./invoice.html?" + querystring.stringify(request.body));
+    } else {
+        request.body["errorsJSONstring"] = JSON.stringify(errors);
+        response.redirect(
+            "./products_display.html?" + querystring.stringify(request.body)
+        );
+    }
+});
+
+// Serve static files
 app.use(express.static(__dirname + '/public'));
 
+// Start server
+app.listen(8000, () => console.log(`listening on port 8000`));
 
-// start server
-app.listen(8080, () => console.log(`listening on port 8080`)); // note the use of an anonymous function here to do a callback
+function findNonNegInt(q, returnErrors = false) {
+    const errors = [];
+    if (Number(q) !== q) errors.push("Not a number!");
+    if (q < 0) errors.push("Negative value!");
+    if (parseInt(q) !== q) errors.push("Not an integer!");
+
+    return returnErrors ? errors : errors.length === 0;
+}
