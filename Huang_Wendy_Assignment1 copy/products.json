@@ -1,0 +1,42 @@
+[
+    {
+        "name": "Pink Bowsy",
+        "price": 60.00,
+        "image": "bow.jpg",
+        "sets_available": 5,
+        "sets_sold": 5,
+        "description": "A mix of pink and white themes with bows, pearls, and gold in the design"
+    },
+    {
+        "name": "Green Liilies",
+        "price": 46.00,
+        "image": "floral.jpg",
+        "sets_available": 3,
+        "sets_sold": 7,
+        "description": "Inspired by water lilies and spider webs with the 3D effect of water"
+    },
+    {
+        "name": "Ligeia",
+        "price": 63.00,
+        "image": "mermaid.jpg",
+        "sets_available": 8,
+        "sets_sold": 2,
+        "description": "Inspired by sirens and just a modern twist of cute bows mixed in there"
+    },
+    {
+        "name": "Aurora Waters",
+        "price": 57.00,
+        "image": "pinky.jpg",
+        "sets_available": 6,
+        "sets_sold": 4,
+        "description": "Imagine if the aurora borealis met the ocean, it would be this nail set"
+    },
+    {
+        "name": "Eloise",
+        "price": 63.00,
+        "image": "starbow.jpg",
+        "sets_available": 4,
+        "sets_sold": 8,
+        "description": "A pink themed super star and bow nail set"
+    }
+]

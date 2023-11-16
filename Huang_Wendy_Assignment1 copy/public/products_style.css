@@ -1,0 +1,205 @@
+/*
+Author: Wendy Huang
+Assignment 1
+Date: 11/10/2023
+Description: Merged CSS for Shop Page
+*/
+
+/* Resetting some default styles */
+body, h1, h2, p {
+    margin: 0;
+    padding: 0;
+}
+
+/* General styling for the document */
+body {
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* Header styles from my home CSS */
+header {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    right: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 2%; /* Adjusted padding */
+    background-image: url(img/purpstarsky.jpg);
+    background-position: center;
+    background-size: cover;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.06);
+}
+
+/* Logo styles from my home CSS for the navmenu up above*/
+.logo {
+    max-width: 30%;
+    height: auto;
+    margin-left: 50px;
+}
+.logo img {
+    max-width: 150px;
+    height: auto;
+}
+
+/* Navigation menu styles from the home CSS */
+.navmenu {
+    display: flex;
+    font-family: 'Montserrat', sans-serif;
+    gap: 100px;
+    margin-right: 250px;
+}
+
+.navmenu a {
+    font-size: 18px;
+    color: white;
+    text-transform: capitalize;
+    font-weight: 400;
+    padding: 20px 40px;
+    text-decoration: none;
+    transition: all .40s ease;
+}
+
+.cart-icon {
+    display: flex;
+    align-items: center;
+    margin-right: 50px;
+}
+
+.cart-icon i {
+    font-size: 25px;
+}
+
+/* Shop section from the home CSS */
+.popular-products {
+    text-align: center;
+    padding: 40px 0;
+}
+
+.popular-products h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.products {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.row {
+    width: 30%;
+    margin: 10px 0;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.row img {
+    width: 100%;
+    height: auto;
+}
+
+.product-text {
+    padding: 20px;
+    background-color: #fff;
+}
+
+.product-text h4 {
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+}
+
+.product-text p {
+    font-size: 1rem;
+    margin-bottom: 15px;
+}
+
+.product-text label {
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+.product-text input {
+    width: 40px;
+    padding: 5px;
+}
+
+/* Contact section from the home CSS */
+.contact {
+    text-align: center;
+    padding: 40px 0;
+    background-image: url(img/purpstarsky.jpg);
+    background-size: cover;
+    width: 100%;
+    color: rgb(66, 63, 63);
+}
+
+.contact-info img {
+    width: 143px;
+    border-radius: 50%;
+    margin-bottom: 15px;
+    height: auto;
+}
+
+.contact-info h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.contact-info p {
+    font-size: 1rem;
+    margin-bottom: 5px;
+}
+
+/* Styling for social media icons from the home CSS */
+.socialmedia-icon i {
+    color: white;
+    font-size: 30px;
+    margin-right: 10px;
+    transition: all .40s;
+}
+
+.socialmedia-icon i:hover {
+    transform: scale(1.4);
+}
+
+html {
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.center-text h2 {
+    color: black;
+    font-size: 28px;
+    margin-bottom: 40px;
+    text-align: center;
+    text-transform: capitalize;
+}
+
+.center-text span {
+    color: red;
+}
+
+.products {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 2rem;
+    margin-top: 60px;
+}
+
+.row {
+    width: 100%;
+    max-width: 400px;
+    padding: 10px;
+    border: 1px solid pink;
+    position: relative;
+}
+
+.row img {
+    width: 100%;
+    height: auto;
+    border-radius: 15px;
+    transition: transform 0.3s;
+}
