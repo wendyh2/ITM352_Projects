@@ -4,7 +4,7 @@ Assignment 1
 Date: 11/10/2023
 Description: My Homepage
 -->
-<script src="./products_data.js" type="text/javascript"></script>
+<!-- <script src="./products_data.js" type="text/javascript"></script> -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,102 +16,78 @@ Description: My Homepage
     <link rel="stylesheet" href="products_style.css">
     <!--I used Google Fonts specifically Montserrat because it looks nice to me-->
     <form action="./invoice.html" method="GET">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,200;0,300;0,600;0,700;1,600&family=Montserrat:wght@100;200;300;400;700&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
-        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,200;0,300;0,600;0,700;1,600&family=Montserrat:wght@100;200;300;400;700&display=swap"
+            rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+            integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+            crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
 </head>
-        <!--Taken from my home.html it is for my navigation menu to still pop up at the beginning of a new page-->
-        <body>
-        <header>
-            <a href="#"><img src="img/logo.png" class="logo" alt="my logo"></a> <!--This is where my logo goes in my header-->
-            <div class="navmenu">
-                <a href="home.html">Home</a>
-                <a href="products_display.html">Shop</a>
-                <a href="about.html">About</a>
-                <a href="contact.html">Contact</a>
-                <div class="cart-icon">
-                <a href="invoice.html"><i class="fa-solid fa-bag-shopping"></i></a>            
-                </div>
-            </div>
-            </header>
-             <!--My Shop-->
-    <section class="popular-products"
-    id="popular">
-    <div class="center-text">
-        <h2>Our Most Popular <span>Holiday</span> Nail Sets</h2>
-    </div>
-    <div class="products">
-        <div class="row">
-            <img src="img/bow.jpg" alt="">
-            <div class="product-text">
-                <h4>Pink Bowsy</h4>
-                <p>$60.00</p>
-                <label for="quantity1">Sets Desired:</label>
-                <input type="number" name="quantity1" id="quantity1" min="0" max="5">
-            </div>
-          
-        </div>
-        <div class="row">
-            <img src="img/floral.jpg" alt="">
-            <div class="products">
-            </div>
-            <div class="product-text">
-                <h4>Green Lilies</h4>
-                <p>$46.00</p>
-                <label for="quantity2">Sets Desired:</label>
-                <input type="number" name="quantity2" id="quantity2" min="0" max="3">
+<!--Taken from my home.html it is for my navigation menu to still pop up at the beginning of a new page-->
+
+<body>
+    <header>
+        <a href="#"><img src="img/logo.png" class="logo" alt="my logo"></a>
+        <!--This is where my logo goes in my header-->
+        <div class="navmenu">
+            <a href="home.html">Home</a>
+            <a href="products_display.html">Shop</a>
+            <a href="about.html">About</a>
+            <a href="contact.html">Contact</a>
+            <div class="cart-icon">
+                <a href="invoice.html"><i class="fa-solid fa-bag-shopping"></i></a>
             </div>
         </div>
-        <div class="row">
-            <img src="img/mermaid.jpg" alt="">
-            <div class="products">
-            </div>
-            <div class="product-text">
-                <h4>Ligeia</h4>
-                <p>$63.00</p>
-                <label for="quantity3">Sets Desired:</label>
-                <input type="number" name="quantity3" id="quantity3" min="0" max="8">
-            </div>
+    </header>
+    <!--My Shop-->
+    <section class="popular-products" id="popular">
+        <div class="center-text">
+            <h2>Our Most Popular <span>Holiday</span> Nail Sets</h2>
         </div>
-        <div class="row">
-            <img src="img/pinky.jpg" alt="">
-            <div class="products">
-            </div>
-            <div class="product-text">
-                <h4>Aurora Waters</h4>
-                <p>$57.00</p>
-                <label for="quantity4">Sets Desired:</label>
-                <input type="number" name="quantity4" id="quantity4" min="0" max="6">
-            </div>
-          
-        </div>
-        <div class="row">
-            <img src="img/starbow.jpg" alt="">
-            <div class="products">
-            </div>
-            <div class="product-text">
-                <h4>Eloise</h4>
-                <p>$63.00</p>
-                <label for="quantity5">Sets Desired:</label>
-                <input type="number" name="quantity5" id="quantity5" min="0" max="4">
-            </div>
-          
-        </div>
-    </div>
-</section>
-        <!-- Purchase Button -->
-        <div class="purchase-button">
-            <button onclick="purchase()">Purchase</button>
+        <div class="products" id="productContainer">
+
         </div>
     </section>
-              <!--Taken from my home.html it's my contact page -->
-   <section class="contact">
+
+    <script>
+        // Read data from products.json file
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', 'products.json', true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                const data = JSON.parse(xhr.responseText);
+                const productContainer = document.getElementById('productContainer');
+
+                data.forEach(product => {
+                    const productElement = document.createElement('div');
+                    productElement.classList.add('row');
+                    productElement.innerHTML = `
+                    <img src="${product.image}" alt="${product.name}">
+                    <div class="product-text">
+                        <h4>${product.name}</h4>
+                        <p>$${product.price.toFixed(2)}</p>
+                        <label for="quantity">${product.sets_available} Sets Available:</label>
+                        <input type="number" name="quantity" min="0" max="${product.sets_available}">
+                    </div>
+                `;
+
+                    productContainer.appendChild(productElement);
+                });
+            }
+        };
+        xhr.send();
+    </script>
+
+    <!-- Purchase Button -->
+    <div class="purchase-button">
+        <button onclick="purchase()">Purchase</button>
+    </div>
+    </section>
+    <!--Taken from my home.html it's my contact page -->
+    <section class="contact">
         <div class="contact-info">
             <div class="first-info">
                 <img src="img/logo.png" alt="">
@@ -129,69 +105,5 @@ Description: My Homepage
             </div>
         </div>
     </section>
-    <body>
-        <!-- ... -->
-        <div class="products" id="product-container">
-            <!-- Product information will be dynamically added here -->
-        </div>
 
-        <script>
-            // Function to fetch JSON data
-            async function fetchProducts() {
-                const response = await fetch('Huang_Wendy_Assignment1\products.json');
-                const data = await response.json();
-                return data;
-            }
-
-            // Function to generate product cards
-            function generateProductCards(products) {
-                const productContainer = document.getElementById('product-container');
-
-                products.forEach(product => {
-                    const row = document.createElement('div');
-                    row.classList.add('row');
-
-                    const img = document.createElement('img');
-                    img.src = `img/${product.image}`;
-                    img.alt = product.name;
-
-                    const productText = document.createElement('div');
-                    productText.classList.add('product-text');
-
-                    const h4 = document.createElement('h4');
-                    h4.textContent = product.name;
-
-                    const pPrice = document.createElement('p');
-                    pPrice.textContent = `$${product.price.toFixed(2)}`;
-
-                    const label = document.createElement('label');
-                    label.htmlFor = `quantity-${product.name.toLowerCase().replace(' ', '-')}`;
-                    label.textContent = 'Sets Desired:';
-
-                    const input = document.createElement('input');
-                    input.type = 'number';
-                    input.name = `quantity-${product.name.toLowerCase().replace(' ', '-')}`;
-                    input.id = `quantity-${product.name.toLowerCase().replace(' ', '-')}`;
-                    input.min = 0;
-                    input.max = product.sets_available;
-
-                    productText.appendChild(h4);
-                    productText.appendChild(pPrice);
-                    productText.appendChild(label);
-                    productText.appendChild(input);
-
-                    row.appendChild(img);
-                    row.appendChild(productText);
-
-                    productContainer.appendChild(row);
-                });
-            }
-
-            // Load and generate product cards on page load
-            window.onload = async function () {
-                const products = await fetchProducts();
-                generateProductCards(products);
-            };
-        </script>
-    </body>
 </html>
