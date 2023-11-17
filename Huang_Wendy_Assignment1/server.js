@@ -5,7 +5,7 @@
 const express = require('express');
 const app = express();
 const querystring = require('querystring');
-const product_data = require(__dirname + '/products.json');
+const products = require(__dirname + '/products.json');
 
 // Middleware for decoding form data
 app.use(express.urlencoded({ extended: true }));

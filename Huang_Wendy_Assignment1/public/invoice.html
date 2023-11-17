@@ -1,3 +1,8 @@
+<!-- Author: Monica Mau -->
+<!-- Assignment 1 -->
+<!-- Date: 4/10/2023 -->
+<!-- Invoice Page -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,118 +12,137 @@
     <title>Receipt Sales</title>
 
     <script src="./products_data.js"></script>
+    <link href="invoice.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari&family=Palanquin+Dark:wght@500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@300&family=Noto+Sans+Devanagari&family=Palanquin+Dark:wght@500&display=swap" rel="stylesheet">
+
     <script>
 
-    let params = (new URL(document.location)).searchParams
+  var params = (new URL(document.location)).searchParams
 
-    /*
-    This shows and makes a sales invoice from our product sales data
-    */
+        /*
+        Sales Receipt
+        */
 
-    //Quantities Array
-    let quantities = []
+        //Quantities Arrayq
+        const quantities = []
 
-    for(i = 0; i < products.length; i++){
-      if(params.has(`quantity${i}`)){
-        const phones = params.get(`quantity${i}`);
-        quantities.push(phones);
-      }
-    }
-
-    // Compute subtotal
-    let subtotal = 0;
-
-  </script>
-</head>
-
-<body>
-  <div>
-    <table border="2">
-      <tbody>
-        <script>
-          document.write(`
-          <tr>
-            <th style="text-align: center;" width="43%">Item</th>
-            <th style="text-align: center;" width="11%">quantity</th>
-            <th style="text-align: center;" width="13%">price</th>
-            <th style="text-align: center;" width="54%">extended price</th>
-          </tr>
-          `)
-          function generate_item_rows(quantities){
-            for (let i in quantities){
-              if (quantities[i]==0){continue};
-              errors = findNonNegInt(quantities[i], true);
-              if (errors.length == 0){
-              var extended_price = quantities[i] * products[i].price;
-              subtotal += extended_price  
-            }
-              else(extended_price=0);
-              document.write(`
-          <tr>
-            <td width="43%">${products[i].brand}</td>
-            <td align="center" width="11%">${quantities[i]}
-              <br><font color = "red">${errors.join('<br>')}
-              </td>
-            <td width="13%">$${products[i].price}</td>
-            <td width="54%">$${extended_price}</td>
-          </tr>
-          `)
-            } 
+        // written by me in store 1 wod
+        for(i in products){
+          if(params.has(`quantity${i}`)){
+            const album = params.get(`quantity${i}`); quantities.push(album);
           }
+        }
+        
+         // Subtotal
+         var subtotal = 0;
+    
+    
+    </script>
+</head>
+<body>
 
-          function findNonNegInt(q, returnErrors = false){ //the function returns non-negative integers in the object.
+<!--Nav bar-->
+<section class="navbar">
+  <img src="./images/logo.png" class="logo">
+  <a class="button" href="/index.html">Home</a>
+  <a class="button" href="/products_display.html">Products</a>
+</section>
+
+  <h1>Thank you for ordering!</h1>
+    <div>
+        <table border="2">
+          <tbody>
+
+            <!-- column titles row -->
+            <tr>
+              <th style="text-align: center;" width="11%">Image</th>
+              <th style="text-align: center;" width="26%">Item</th>
+              <th style="text-align: center;" width="11%">Quantity</th>
+              <th style="text-align: center;" width="13%">Price</th>
+              <th style="text-align: center;" width="39%">Extended Price</th>
+            </tr>
+            <script>
+            // generates rows with prices based on quantities
+            function generate_item_rows(quantities){
+              for(let i in quantities){
+                if(quantities[i]==0){continue};
+                errors = findNonNegInt(quantities[i], true);
+                if(errors.length == 0){
+                var extended_price = quantities[i] * products[i].price;
+                subtotal += extended_price;
+                }
+                else(extended_price=0);
+
+        // IR 5 - When diplaying the invoice, add a small icon image of the product to the line item, show description on mouseover
+          document.write(`
+            <tr>
+             <td height="70px" width="11%">
+              <div class="img-mouseover">
+                <img src="./images/${products[i].image}" height="50px" width="50px">
+                <div class="product-description">
+                  ${products[i].description}
+                  </div>
+                </div></td>
+              <td width="26%">${products[i].album}</td>
+              <td align="center" width="11%">${quantities[i]}<br><font color = "red">${errors.join('<br>')}</td>
+              <td width="13%">$${products[i].price}</td>
+              <td width="39%">$${(extended_price).toFixed(2)}</td>
+            </tr>
+            `)
+              }
+            }
+
+function findNonNegInt(q, returnErrors = false){ //the function returns non-negative integers in the object.
     errors = []; // assume no errors at first
     if(Number(q) != q) errors.push('Not a number!'); // Check if string is a number value
     if(q < 0) errors.push('Negative value!'); // Check if it is non-negative
     if(parseInt(q) != q) errors.push('Not an integer!'); // Check that it is an integer
 
-    return returnErrors ? errors : (errors.length == 0);}
+    return returnErrors ? errors : (errors.length == 0);
+      }
 
-          generate_item_rows(quantities);
+            generate_item_rows(quantities);
+        // Tax rate
+         var tax_rate = 0.04712;
+         var tax = tax_rate * subtotal;
 
-          // Compute tax rate
-  let tax_rate = 0.0575;
-  let tax = tax_rate * subtotal;
-
-  // Compute shipping
-  if (subtotal <= 50) { shipping = 2 }
-  else if (50 < subtotal < 100) { shipping = 5 }
-  else { shipping = subtotal * 0.05 };
-
-  // Compute grand total
-  let total = subtotal + tax + shipping;
-  document.write(`
-          <tr>
-            <td colspan="4" width="100%">&nbsp;</td>
-          </tr>
-          <tr>
-            <td style="text-align: center;" colspan="3" width="67%">Sub-total</td>
-            <td width="54%">${subtotal}</td>
-          </tr>
-          <tr>
-            <td style="text-align: center;" colspan="3" width="67%">Tax @ 5.75%</span></td>
-            <td width="54%">$${(tax).toFixed(2)}</td>
-          </tr>
-          <tr>
-            <td style="text-align: center;" colspan="3" width="67%">Shipping</span></td>
-            <td width="54%">$${shipping}</td>
-          </tr>
-          <tr>
-            <td style="text-align: center;" colspan="3" width="67%"><strong>Total</strong></td>
-            <td width="54%"><strong>$${(total).toFixed(2)}</strong></td>
-          </tr>
-          `)
+         // Compute shipping (if less than $50, shipping is $5, if between $50 and $100 then $7, if over 100 then shipping is 10%)
+         if(subtotal<=80){shipping=10}
+         else {shipping=0};
+    
+         // Grand total
+         var total = subtotal + tax + shipping;
+          
+         document.write(`
+            <tr>
+              <td colspan="5" width="100%">&nbsp;</td>
+            </tr>
+            <tr>
+              <td style="text-align: right;" colspan="3" width="67%">Subtotal</td>
+              <td colspan="2" width="54%">$${(subtotal).toFixed(2)}</td>
+            </tr>
+            <tr>
+              <td style="text-align: right;" colspan="3" width="67%">Tax @ 4.71%</span></td>
+              <td colspan="2" width="54%">$${(tax).toFixed(2)}</td>
+            </tr>
+            <tr>
+              <td style="text-align: right;" colspan="3" width="67%">Shipping</span></td>
+              <td colspan="2" width="54%">$${shipping}</td>
+            </tr>
+            <tr>
+              <td style="text-align: right;" colspan="3" width="67%"><b>Total</b></td>
+              <td colspan="2" width="54%"><b>$${(total).toFixed(2)}</b></td>
+            </tr>
+            `)
         </script>
-      </tbody>
-    </table>
-    <div>
-      <br> <b>
-        OUR SHIPPING POLICY IS:A subtotal $0 - $49.99 will be $2 shipping
-        A subtotal $50 - $99.99 will be $5 shipping
-        Subtotals over $100 will be charged 5% of the subtotal amount
-      </b>
+          </tbody>
+        </table>
     </div>
-  </div>
+    
+    <!-- shipping policy -->
+    <h3>&#8415; SHIPPING POLICY &#8415;<br>&#8415; Free shipping for orders over $80! &#8415;<br>&#8415; Orders under $80 will be charged a flat rate of $10 per order. &#8415;</h3>
+    <footer>&copy; 2023 Monica's SHINee Album Shop</footer>
 </body>
-
 </html>
