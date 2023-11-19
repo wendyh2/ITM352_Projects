@@ -61,7 +61,7 @@ header {
     text-decoration: none;
     transition: all .40s ease;
 }
-
+/*This is my for my cart icon*/
 .cart-icon {
     display: flex;
     align-items: center;

@@ -1,6 +1,6 @@
 // Author: Wendy Huang
 // Date: 11/10/2023
-// My server js file that runs the server for my site. This was taken from our Lab12 with permission from Dan to use it 
+// My server js file that runs the server for my site. This was taken from our Lab12 with permission from Dan to use it
 
 const express = require('express');
 const app = express();
@@ -32,7 +32,7 @@ app.post("/purchase", function (request, response, next) {
     let hasInput = false;
 
     for (const i in products) {
-        const qty = request.body[`quantity${i}`];
+        const qty = parseInt(request.body[`quantity${i}`]);
 
         if (qty > 0) {
             hasQty = true;
@@ -71,14 +71,38 @@ app.post("/purchase", function (request, response, next) {
         response.redirect(
             "./products_display.html?" + querystring.stringify(request.body)
         );
+        console.log(request.body);
     }
+});
+
+// Added HTML table row
+app.get("/exampleTableRow", function (request, response, next) {
+    const i = 0; // Adjust the index as needed
+    const extended_price = 123.45; // Replace with your calculated value
+    const product_quantities_array = [1, 2, 3]; // Replace with your data
+    response.send(`
+        <tr>
+            <td style="width: 43%; text-align: left;">
+                <img src="./img/${products[i].image}" alt="Product Image" width="50px" height="50px" title="${products[i].description}">
+                ${products[i].name}
+            </td>
+            <td style="width: 11%; text-align: center;">
+                ${product_quantities_array[i]}
+                <div style="color: red;">
+                    ${errors.join('<br>')}
+                </div>
+            </td>
+            <td style="width: 13%; text-align: center;">\$${products[i].price}</td>
+            <td style="width: 54%; text-align: center;">\$${extended_price.toFixed(2)}</td>
+        </tr>
+    `);
 });
 
 // Serve static files
 app.use(express.static(__dirname + '/public'));
 
 // Start server
-app.listen(8000, () => console.log(`listening on port 8000`));
+app.listen(8080, () => console.log(`listening on port 800`));
 
 function findNonNegInt(q, returnErrors = false) {
     const errors = [];
