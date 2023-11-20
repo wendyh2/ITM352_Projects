@@ -66,7 +66,7 @@ app.post("/purchase", function (request, response, next) {
         // When the purchase is valid this will reduce our inventory by the amounts purchased
         for (const i in products) {
             products[i].sets_available -= Number(request.body[`quantity${i}`]);
-            products[i].quantity_sold += Number(request.body[`quantity${i}`]);
+            products[i].sets_sold += Number(request.body[`quantity${i}`]);
         }
         // This redirects them to the invoice with a querystring that has the values they wanted and they've been removed from the inventory
         response.redirect("./invoice.html?" + querystring.stringify(request.body));
