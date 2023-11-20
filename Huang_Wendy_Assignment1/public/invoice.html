@@ -42,16 +42,28 @@
     </script>
 </head>
 <body>
+<!--Displaying my header-->
+<header>
+  <a href="#"><img src="img/logo.png" class="logo" alt="my logo"></a>
+  <!--This is where my logo goes in my header-->
+  <!--Got this from my home.html because it's my navigation menu-->
+  <div class="navmenu">
+    <a href="home.html">Home</a>
+    <a href="products_display.html">Shop</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+    <div class="cart-icon">
+      <a href="invoice.html"><i class="fa-solid fa-bag-shopping"></i></a>
+    </div>
+  </div>
+</header>
 
-<!--Nav bar-->
-<section class="navbar">
-  <img src="./images/logo.png" class="logo">
-  <a class="button" href="/index.html">Home</a>
-  <a class="button" href="/products_display.html">Products</a>
-</section>
+  <!-- Create div for spacing between header and rest of page -->
+  <div class="header-spacing"></div>
 
   <h1>Thank you for ordering!</h1>
     <div>
+      <!--Where I will print my invoice-->
         <table border="2">
           <tbody>
 
@@ -80,12 +92,12 @@
             <tr>
              <td height="70px" width="11%">
               <div class="img-mouseover">
-                <img src="./images/${products[i].image}" height="50px" width="50px">
+                <img src="./img/${products[i].image}" height="50px" width="50px">
                 <div class="product-description">
                   ${products[i].description}
                   </div>
                 </div></td>
-              <td width="26%">${products[i].album}</td>
+              <td width="26%">${products[i].name}</td>
               <td align="center" width="11%">${quantities[i]}<br><font color = "red">${errors.join('<br>')}</td>
               <td width="13%">$${products[i].price}</td>
               <td width="39%">$${(extended_price).toFixed(2)}</td>
@@ -108,9 +120,9 @@ function findNonNegInt(q, returnErrors = false){ //the function returns non-nega
          var tax_rate = 0.04712;
          var tax = tax_rate * subtotal;
 
-         // Compute shipping (if less than $50, shipping is $5, if between $50 and $100 then $7, if over 100 then shipping is 10%)
-         if(subtotal<=80){shipping=10}
-         else {shipping=0};
+         // Compute shipping (if subtotal is less than 80, shipping is $10, otherwise it's free)
+         if(subtotal < 80) {shipping = 10}
+         else {shipping = 0};
     
          // Grand total
          var total = subtotal + tax + shipping;
@@ -139,4 +151,9 @@ function findNonNegInt(q, returnErrors = false){ //the function returns non-nega
         </script>
           </tbody>
         </table>
+        <h4><strong> Our shipping policy is: A subtotal of $0-$80 will be $10 shi[[ing. Subtotals over $80 will have free shipping</strong></h4>
     </div>
+  
+  </body>
+  
+  </html>

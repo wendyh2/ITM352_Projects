@@ -80,6 +80,70 @@ Description: My Homepage
     </section>
 
     </section>
+
+        <!--Myscript to validate the form/invoice -->
+        <script>
+            function validateForm() {
+                /// Creating variables for IR1 and formValid
+                let condition1= false;
+                let condition2= true;
+                let condition3= true;
+                let formValid = true;
+
+                 // Loop through products array
+            for (i = 0; i < products.length; i++) {
+                // Get values of quantity for each quantity input on the form
+                const quantityInput = document.getElementById(`quantity${i}`);
+                const quantity = parseInt(quantityInput.value);
+    
+                // Update Condition 1: Checks if at least 1 quantity is not 0, if it is then condition 1 is satisfied
+                if (quantity > 0) {
+                    condition1 = true;
+                }
+
+
+                // Update Condition 2: Checks to make sure inputs are non-negative integers.
+                // Also fulfills IR2 requirement
+                if (quantity < 0) {
+                    document.getElementById(`quantity${i}_errors_span`).textContent = 'Please input a non-negative integer.';
+                    document.getElementById(`quantity${i}`).style.border = "1px solid red";
+                    condition2 = false;
+                } else if(isNaN(quantity)){
+                    document.getElementById(`quantity${i}_errors_span`).textContent = 'Quantity must be a number!';
+                    condition2 = false;
+                } else{
+                    document.getElementById(`quantity${i}_errors_span`).textContent = `You want ${quantity} sets`;
+                }
+    
+                // Update Condition 3: Check if quantity exceeds available sets for any input
+                // Also fulfills IR3 requirement
+                if (quantity > products[i].sets_available) {
+                    document.getElementById(`quantity${i}_errors_span`).textContent = `We don\'t have ${quantity} sets available.`;
+                    document.getElementById(`quantity${i}`).value = products[i].sets_available
+                    condition3 = false;
+                }
+            }
+    
+            // If any of the conditions are not met, print an alert and set formValid to false 
+            // The if statement for condition 1 also fulfills IR4 
+            if (!condition1) {
+                alert('Please select at least one quantity greater than zero.');
+                document.getElementById(`purchase_button`).value = "Please Select Some Items to Purchase";
+                formValid = false;
+            }else if(!condition2){
+                alert('Please check values on the form and make sure they are all non-negative integers.');
+                formValid = false;
+            }else if(!condition3){
+                alert('Quantity selected exceeds available amount of sets for at least 1 input, please try again.');
+                formValid = false;
+            }
+    
+            return formValid;
+        }
+    </script>
+
+    </section>
+
     <!--Taken from my home.html it's my contact page -->
     <section class="contact">
         <div class="contact-info">
