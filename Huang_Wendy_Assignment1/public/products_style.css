@@ -203,3 +203,7 @@ html {
     border-radius: 15px;
     transition: transform 0.3s;
 }
+
+.error_msg {
+    color: red;
+}

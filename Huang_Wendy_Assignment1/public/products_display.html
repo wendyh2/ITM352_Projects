@@ -5,6 +5,33 @@ Date: 11/10/2023
 Description: My Homepage
 -->
 <script src="./products_data.js" type="text/javascript"></script>
+<script>
+    // get the query string and put it into a searchParams Object
+  const params = (new URL(document.location)).searchParams
+
+  // This will be executed after the page is loaded
+  window.onload = function() {
+        // if there is quantity data in the query string, put it into the quanity textboxes
+    for (let i in products) {
+        if(params.has(`quantity${i}`)) {
+            let qty = params.get(`quantity${i}`);
+            // put qty value from query string into quantity textbox
+            document.getElementById(`quantity${i}`).value = qty;
+        }
+        // if the is an error for the quantity for product i, display it in the error div
+        if(params.has(`quantity${i}_error`)) {
+            document.getElementById(`error_quantity${i}_div`).innerHTML = params.get(`quantity${i}_error`);
+        }
+    }
+    // if the user did not select any quanitities, let them kmow
+            // if the is an error for the quantity for product i, display it in the error div
+            if(params.has("noQty")) {
+                alert(params.get("noQty"));
+        }
+  }
+
+</script>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -53,7 +80,7 @@ Description: My Homepage
             <!-- Container for all products -->
             <div class="products" id="productContainer">
                 <script>
-                    for (i = 0; i < products.length; i++) {
+                    for (let i in products) {
                         document.write(
                             `<div class="row">
                                 <img src="./img/${products[i].image}" alt="${products[i].name}"/>
@@ -62,7 +89,9 @@ Description: My Homepage
                                     <p>$${products[i].price}</p>
                                     <div class="qty">
                                     <label id="quantity${i}_label">Sets Desired:</label>
-                                    <input type="number" name="quantity${i}" id="quantity${i}" placeholder="0" min="0" max="${products[i].sets_available}" value="0">
+                                    <input type="text" name="quantity${i}" id="quantity${i}" placeholder="0" min="0" max="${products[i].sets_available}" value="0">
+                                    <div class="error_msg" id="error_quantity${i}_div"> 
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -83,6 +112,7 @@ Description: My Homepage
 
         <!--Myscript to validate the form/invoice -->
         <script>
+            /*
             function validateForm() {
                 /// Creating variables for condition 1 and my formValid
                 let condition1= false;
@@ -140,6 +170,7 @@ Description: My Homepage
     
             return formValid;
         }
+        */
     </script>
 
     </section>
