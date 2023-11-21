@@ -1,0 +1,41 @@
+/* Contact section */
+.contact {
+    margin-top: 400px;
+    text-align: center;
+    padding: 40px 0;
+    background-image: url(img/blueboatmove.gif);
+    background-position: center;
+    background-size: cover;
+    width: 100%;
+    color: rgb(66, 63, 63);
+}
+
+.contact-info img {
+    width: 143px;
+    border-radius: 50%;
+    margin-bottom: 15px;
+    height: auto;
+}
+
+.contact-info h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.contact-info p {
+    font-size: 1rem;
+    margin-bottom: 5px;
+}
+
+/* Social media icons */
+.socialmedia-icon i {
+    color: white;
+    font-size: 30px;
+    margin-right: 10px;
+    transition: all .40s;
+}
+
+.socialmedia-icon i:hover {
+    transform: scale(1.4);
+}
+

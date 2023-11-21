@@ -1,0 +1,130 @@
+/*
+Author: Wendy Huang
+Assignment 1
+Date: 11/20/2023
+Description: My CSS stylesheet for my about.html
+*/
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    margin: 20px;
+    padding: 0;
+    background-image: url(img/purpboatmove.gif);
+    background-position: center;
+    background-size: cover;
+}
+
+/* Header styles */
+header {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    right: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 2%;
+    background-image: url(img/purpstarsky.jpg);
+    background-position: center;
+    background-size: cover;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.06);
+}
+
+/* Logo styles */
+.logo {
+    max-width: 120px; /* Adjusted max-width */
+    height: auto;
+    margin-left: 80px; /* Adjusted margin */
+}
+
+/* Navigation menu styles */
+.navmenu {
+    display: flex;
+    font-family: 'Montserrat', sans-serif;
+    gap: 100px;
+    margin-right: 250px;
+}
+
+.navmenu a {
+    font-size: 18px;
+    color: white;
+    text-transform: capitalize;
+    font-weight: 400;
+    padding: 20px 40px;
+    text-decoration: none; /* Removing the underline that was part of it */
+    transition: all .40s ease;
+    margin-left: 50px;
+}
+
+/* Styling for preventing logo cut-off and main-home section */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 2%;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+}
+
+li {
+    margin-right: 20px;
+}
+
+a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+section {
+    padding: auto;
+}
+
+h2 {
+    color: #79a0a5;
+}
+
+p {
+    line-height: 1.6;
+}
+
+/* Centering h3 tag */
+h3 {
+    text-align: center;
+    color: black;
+}
+
+
+/* Contact section from the home CSS */
+.contact {
+    text-align: center;
+    padding: 40px 0;
+    background-image: url(img/purpstarsky.jpg);
+    background-size: cover;
+    width: 100%;
+    color: rgb(66, 63, 63);
+}
+
+.contact-info img {
+    width: 143px;
+    border-radius: 50%;
+    margin-bottom: 15px;
+    height: auto;
+}
+
+.contact-info h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.contact-info p {
+    font-size: 1rem;
+    margin-bottom: 0px;
+}

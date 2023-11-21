@@ -16,35 +16,31 @@ body {
     font-family: 'Montserrat', sans-serif;
 }
 
-/* Header styles from my home CSS */
+/* Header styles */
 header {
-    position: absolute;
+    position: fixed;
     width: 100%;
     top: 0;
     right: 0;
     z-index: 1000;
     display: flex;
-    align-items: center;
     justify-content: space-between;
-    padding: 20px 2%; /* Adjusted padding */
+    align-items: center;
+    padding: 20px 2%;
     background-image: url(img/purpstarsky.jpg);
     background-position: center;
     background-size: cover;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.06);
 }
 
-/* Logo styles from my home CSS for the navmenu up above*/
+/* Logo styles */
 .logo {
-    max-width: 30%;
+    max-width: 120px; /* Adjusted max-width */
     height: auto;
-    margin-left: 50px;
-}
-.logo img {
-    max-width: 150px;
-    height: auto;
+    margin-left: 80px; /* Adjusted margin */
 }
 
-/* Navigation menu styles from the home CSS */
+/* Navigation menu styles */
 .navmenu {
     display: flex;
     font-family: 'Montserrat', sans-serif;
@@ -58,24 +54,60 @@ header {
     text-transform: capitalize;
     font-weight: 400;
     padding: 20px 40px;
-    text-decoration: none;
+    text-decoration: none; /* Removing the underline that was part of it */
     transition: all .40s ease;
+    margin-left: 50px;
 }
-/*This is my for my cart icon*/
+
+/* Cart icon styles */
 .cart-icon {
     display: flex;
     align-items: center;
-    margin-right: 50px;
+    margin-right: 20px; /* Adjusted margin */
+    position: relative; /* Relative positioning for child absolute positioning */
 }
 
+/* Cart icon styling */
 .cart-icon i {
     font-size: 25px;
+}
+
+/* Cart text below the icon */
+.cart-text {
+    position: absolute;
+    top: 100%; /* Position it below the cart icon */
+    left: 50%; /* Center it horizontally */
+    transform: translateX(-50%); /* Adjust for centering */
+    color: white;
+}
+
+/* Styling for preventing logo cut-off and main-home section */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 2%;
+}
+
+
+/* Hover effect for navigation menu items */
+.navmenu a:hover{
+    color: pink;
 }
 
 /* Shop section from the home CSS */
 .popular-products {
     text-align: center;
-    padding: 40px 0;
+    padding: 40px 20px; 
+    background-image: url(img/indexback.png);
+    background-position: center;
+    background-size: cover; 
+}
+
+.collection-name h4 {
+    margin-top: 160px; /* Adjusted margin for less space */
+    color: white; 
+    font-size: 45px; /* Make it more noticeable and readable*/
 }
 
 .popular-products h2 {
@@ -83,27 +115,11 @@ header {
     margin-bottom: 20px;
 }
 
-.products {
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-}
-
-.row {
-    width: 30%;
-    margin: 10px 0;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-}
-
-.row img {
-    width: 100%;
-    height: auto;
-}
-
 .product-text {
     padding: 20px;
     background-color: #fff;
+    margin-bottom: 10px;
+    font-size: 1.5rem;
 }
 
 .product-text h4 {
@@ -170,40 +186,50 @@ html {
     box-sizing: border-box;
 }
 
-.center-text h2 {
-    color: black;
-    font-size: 28px;
-    margin-bottom: 40px;
-    text-align: center;
-    text-transform: capitalize;
-}
-
-.center-text span {
-    color: red;
-}
-
 .products {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-    gap: 2rem;
-    margin-top: 60px;
-}
+    margin-top: 40px;
+        display: flex;
+        justify-content: center; /* Center the products horizontally */
+        flex-wrap: wrap; /* Allow products to wrap to the next row */
+        gap: 20px; /* Adjusted gap between products */
+    }
 
 .row {
     width: 100%;
-    max-width: 400px;
+    max-width: 300px; /* Adjusted max-width to make products smaller */
     padding: 10px;
     border: 1px solid pink;
+    border-radius: 10px; /* Add border-radius for rounded corners */
     position: relative;
+    background-color: white;
+    overflow: hidden; /* Ensure that the background color doesn't overflow */
 }
 
 .row img {
     width: 100%;
     height: auto;
-    border-radius: 15px;
+    border-radius: 10px; /* Add border-radius for rounded corners */
     transition: transform 0.3s;
 }
 
+
 .error_msg {
     color: red;
+}
+
+.purchase_button {
+    margin-top: 40px;
+    padding: 15px 30px; /* Adjusted padding */
+    font-size: 1.2rem; /* Increased font size */
+    cursor: pointer;
+    background-color: #aecbde; /* Updated background color to a shade of blue */
+    color: #fff; /* Set text color to white */
+    font-family: 'Montserrat', sans-serif; /* Use Montserrat font */
+    border: none; /* Remove border */
+    border-radius: 5px; /* Add border-radius for rounded corners */
+    transition: background-color 0.3s ease; /* Add transition for smoother color change */
+}
+
+.purchase_button:hover {
+    background-color: rgb(78, 128, 161); /* Darker shade of blue on hover */
 }

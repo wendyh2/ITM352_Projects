@@ -7,28 +7,56 @@ Description: My Homepage
 <script src="./products_data.js" type="text/javascript"></script>
 <script>
     // get the query string and put it into a searchParams Object
-  const params = (new URL(document.location)).searchParams
+    const params = (new URL(document.location)).searchParams
 
-  // This will be executed after the page is loaded
-  window.onload = function() {
+    // This will be executed after the page is loaded
+    window.onload = function () {
         // if there is quantity data in the query string, put it into the quanity textboxes
-    for (let i in products) {
-        if(params.has(`quantity${i}`)) {
-            let qty = params.get(`quantity${i}`);
-            // put qty value from query string into quantity textbox
-            document.getElementById(`quantity${i}`).value = qty;
+        for (let i in products) {
+            if (params.has(`quantity${i}`)) {
+                let qty = params.get(`quantity${i}`);
+                // put qty value from query string into quantity textbox
+                document.getElementById(`quantity${i}`).value = qty;
+            }
+            // IR2: if there is an error for the quantity for product i, display it in the error div
+            if (params.has(`quantity${i}_error`)) {
+                // IR2: print error message near input 
+                document.getElementById(`error_quantity${i}_div`).innerHTML = params.get(`quantity${i}_error`);
+                // IR2: we also make the textbox red 
+                document.getElementById(`quantity${i}`).style.border = '1px solid red';
+                // IR4: Change purchase button text from "Purchase" to text that indicates why the purchase is invalid
+                document.getElementById('purchase_button').value = params.get(`quantity${i}_error`);
+            }
+            // IR3: If there is an error for quantity exceeds available quantity for product i, display it in the error div
+            if (params.has(`quantity${i}_exceeds_error`)) {
+                // IR3: Print error message for we don't have xx available
+                document.getElementById(`error_quantity${i}_div`).innerHTML = params.get(`quantity${i}_exceeds_error`);
+                // IR3: Replace the input to the quantity available
+                document.getElementById(`quantity${i}`).value = products[i].sets_available;
+                // IR3: Change frame for the textbox to red
+                document.getElementById(`quantity${i}`).style.border = '1px solid red';
+                // IR4: Change purchase button text from "Purchase" to text that indicates why the purchase is invalid
+                document.getElementById('purchase_button').value = "Quantity of at least 1 product exceeds quantity available";
+            }
         }
+        // if the user did not select any quanitities, let them kmow
         // if the is an error for the quantity for product i, display it in the error div
-        if(params.has(`quantity${i}_error`)) {
-            document.getElementById(`error_quantity${i}_div`).innerHTML = params.get(`quantity${i}_error`);
+        if (params.has("noQty")) {
+            //IR4: Change purchase button text from "Purchase" to text that indicates why the purchase is invalid
+            document.getElementById('purchase_button').value = params.get("noQty");
+            alert(params.get("noQty"));
         }
     }
-    // if the user did not select any quanitities, let them kmow
-            // if the is an error for the quantity for product i, display it in the error div
-            if(params.has("noQty")) {
-                alert(params.get("noQty"));
+    // This is the function used to display what customers have on the text box
+    function update_total_selected() {
+        console.log('in update total selected');
+        let total_selected = 0;
+        for (let i in products) {{
+            total_selected += 1*(document.getElementById(`quantity${i}`).value);
         }
-  }
+        cart_total_span.innerHTML = total_selected;
+    }
+}
 
 </script>
 
@@ -57,26 +85,27 @@ Description: My Homepage
 
 <body>
     <header>
-        <a href="#"><img src="img/logo.png" class="logo" alt="my logo"></a>
+        <a href="index.html"><img src="img/logo.png" class="logo" alt="my logo"></a>
         <!--This is where my logo goes in my header-->
         <div class="navmenu">
             <a href="home.html">Home</a>
-            <a href="products_display.html">Shop</a>
             <a href="about.html">About</a>
             <a href="contact.html">Contact</a>
             <div class="cart-icon">
                 <a href="invoice.html"><i class="fa-solid fa-bag-shopping"></i></a>
+                <div class="cart-text">
+                    Total Sets Selected: <span id="cart_total_span"> 0 </span>
+                </div>
             </div>
         </div>
     </header>
     <!--My Shop-->
     <section class="popular-products" id="popular">
+        <div class="collection-name">
+            <h4>The Lorelei Collective</h4>
+        </div>
         <!-- Form wrapper -->
         <form id="purchaseForm" action="./purchase" method="POST">
-            <!-- Title text -->
-            <div class="center-text">
-                <h2>Our Most Popular <span>Holiday</span> Nail Sets</h2>
-            </div>
             <!-- Container for all products -->
             <div class="products" id="productContainer">
                 <script>
@@ -87,9 +116,12 @@ Description: My Homepage
                                 <div class="product-text">
                                     <h4>${products[i].name}</h4>
                                     <p>$${products[i].price}</p>
+                                    <p>Sets available: ${products[i].sets_available}</p>
+                                    <!-- IR1: Display total quantity sold -->
+                                    <p>Sets sold: ${products[i].sets_sold}</p>
                                     <div class="qty">
                                     <label id="quantity${i}_label">Sets Desired:</label>
-                                    <input type="text" name="quantity${i}" id="quantity${i}" placeholder="0" min="0" max="${products[i].sets_available}" value="0">
+                                    <input type="text" name="quantity${i}" id="quantity${i}" placeholder="0" value="0" onkeyup="update_total_selected();">
                                     <div class="error_msg" id="error_quantity${i}_div"> 
                                         </div>
                                     </div>
@@ -108,73 +140,6 @@ Description: My Homepage
         </form>
     </section>
 
-    </section>
-
-        <!--Myscript to validate the form/invoice -->
-        <script>
-            /*
-            function validateForm() {
-                /// Creating variables for condition 1 and my formValid
-                let condition1= false;
-                let condition2= true;
-                let condition3= true;
-                let formValid = true;
-
-                 // Loop through products array
-            for (i = 0; i < products.length; i++) {
-                // Get values of quantity for each quantity input on the form
-                const quantityInput = document.getElementById(`quantity${i}`);
-                const quantity = parseInt(quantityInput.value);
-    
-                // Update Condition 1: Checks if at least 1 quantity is not 0, if it is then condition 1 is satisfied
-                if (quantity > 0) {
-                    condition1 = true;
-                }
-
-
-                // Update Condition 2: Checks to make sure inputs are non-negative integers.
-                // Also fulfills IR2 requirement
-                if (quantity < 0) {
-                    document.getElementById(`quantity${i}_errors_span`).textContent = 'Please input a non-negative integer.';
-                    document.getElementById(`quantity${i}`).style.border = "1px solid red";
-                    condition2 = false;
-                } else if(isNaN(quantity)){
-                    document.getElementById(`quantity${i}_errors_span`).textContent = 'Quantity must be a number!';
-                    condition2 = false;
-                } else{
-                    document.getElementById(`quantity${i}_errors_span`).textContent = `You want ${quantity} sets`;
-                }
-    
-                // Update Condition 3: Check if quantity exceeds available sets for any input
-                // Also fulfills IR3 requirement
-                if (quantity > products[i].sets_available) {
-                    document.getElementById(`quantity${i}_errors_span`).textContent = `We don\'t have ${quantity} sets available.`;
-                    document.getElementById(`quantity${i}`).value = products[i].sets_available
-                    condition3 = false;
-                }
-            }
-    
-            // If any of the conditions are not met, print an alert and set formValid to false 
-            // The if statement for condition 1 also fulfills IR4 
-            if (!condition1) {
-                alert('Please select at least one quantity greater than zero.');
-                document.getElementById(`purchase_button`).value = "Please Select Some Items to Purchase";
-                formValid = false;
-            }else if(!condition2){
-                alert('Please check values on the form and make sure they are all non-negative integers.');
-                formValid = false;
-            }else if(!condition3){
-                alert('Quantity selected exceeds available amount of sets for at least 1 input, please try again.');
-                formValid = false;
-            }
-    
-            return formValid;
-        }
-        */
-    </script>
-
-    </section>
-
     <!--Taken from my home.html it's my contact page -->
     <section class="contact">
         <div class="contact-info">
@@ -186,13 +151,14 @@ Description: My Homepage
                 <p>wendyh2@hawaii.edu</p>
 
                 <div class="socialmedia-icon">
-                    <a href="#"><i class="fa-brands fa-linkedin"></i></a>
-                    <a href="#"><i class="fa-brands fa-github"></i></a>
-                    <a href="#"><i class="fa-brands fa-youtube"></i></a>
-                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://www.linkedin.com/in/huang-wendy/"><i class="fa-brands fa-linkedin"></i></a>
+                    <a href="https://wendyh2.github.io/"><i class="fa-brands fa-github"></i></a>
+                    <a href="https://www.youtube.com/channel/UC7GrQn40st8X4YaYTeQXbOg"><i class="fa-brands fa-youtube"></i></a>
+                    <a href="https://www.instagram.com/we.nailed/?hl=en"><i class="fa-brands fa-instagram"></i></a>
                 </div>
             </div>
         </div>
     </section>
-    </body>
+</body>
+
 </html>

@@ -29,9 +29,9 @@ header {
     right: 0;
     z-index: 1000;
     display: flex;
-    align-items: center;
     justify-content: space-between;
-    padding: 20px 2%; /* Adjusted padding */
+    align-items: center;
+    padding: 20px 2%;
     background-image: url(img/purpstarsky.jpg);
     background-position: center;
     background-size: cover;
@@ -39,9 +39,10 @@ header {
 }
 
 /* Logo styles */
-.logo img {
-    max-width: 150px; /* Adjusted max-width */
+.logo {
+    max-width: 120px; /* Adjusted max-width */
     height: auto;
+    margin-left: 80px; /* Adjusted margin */
 }
 
 /* Navigation menu styles */
@@ -60,16 +61,7 @@ header {
     padding: 20px 40px;
     text-decoration: none; /* Removing the underline that was part of it */
     transition: all .40s ease;
-}
-
-.cart-icon {
-    display: flex;
-    align-items: center;
-    margin-right: 50px; /* Adjusted margin */
-}
-
-.cart-icon i {
-    font-size: 25px;
+    margin-left: 50px;
 }
 
 /* Styling for preventing logo cut-off and main-home section */
@@ -78,12 +70,6 @@ header {
     justify-content: space-between;
     align-items: center;
     padding: 20px 2%;
-}
-
-.logo {
-    max-width: 30%;
-    height: auto;
-    margin-left: 50px;
 }
 
 .main-text {
@@ -147,7 +133,7 @@ section {
 
 /*Styling for the very first main homepage*/
 .main-home {
-    width: 100%;
+    width: 98.5%;
     height: 100vh;
     background-image: url(img/whiteskymove.gif);
     background-size: cover;
@@ -162,15 +148,21 @@ section {
 /*Adding a popular page for the products*/
 .popular-products{
     background-image: url(img/treesnow.gif);
-    width: 86%;
+    width: 86.5%;
     background-size: cover;
     background-position: center;
 }
 
-.downarrow{
+.downarrow {
     position: absolute;
-    top: 85%;
-    right: 11%; 
+    top: 115%; /* Adjusted position */
+    right: 33%; /*For some reason I couldn't just center it so had to do it this weird long way by changing the right*/
+    transform: translateY(-50%); /* Center vertically */
+    text-align: center;
+}
+
+.downarrow span {
+    color: red; /* This is so that my Holiday shows up as red, separate from the text altogether. I want it to be red to match the holiday season */
 }
 
 .down i {
@@ -179,11 +171,12 @@ section {
     border: 2px solid rgb(96, 96, 96);
     border-radius: 50%;
     padding: 13px 17px;
+    margin-top: 10px; /* Adjusted margin */
 }
 
-.down i:hover{
+.down i:hover {
     color: white;
-    background-color: rgb(219, 191, 249); 
+    background-color: rgb(219, 191, 249);
 }
 
 /* Here is where I have my popular Holiday nail sets styling section */
@@ -254,7 +247,7 @@ section {
 /*Styling my contact section in my homepage to be better and fit nicer*/
 .contact{
     background-image: url(img/purpstarsky.jpg);
-    width: 86%;
+    width: 86.5%;
     background-size: cover;
     color: rgb(74, 74, 74);
     background-position: center;
