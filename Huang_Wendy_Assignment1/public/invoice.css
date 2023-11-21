@@ -26,6 +26,7 @@ header {
 .product-description {
     display: none;
     position: absolute;
+    z-index: 10;
     top: 100%;
     left: 50%;
     transform: translateX(-50%);
@@ -107,3 +108,13 @@ strong {
     color: #e44d26; /* Orange color */
 }
 
+.flex-box{
+    width: 80%;
+    justify-self: center;
+}
+
+.flex-box-container{
+    width: 100%; 
+    display: flex;
+    justify-content: center;
+}

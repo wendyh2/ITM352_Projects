@@ -2,7 +2,7 @@
 Author: Wendy Huang
 Assignment 1
 Date: 11/10/2023
-Description: Merged CSS for Shop Page
+Description: CSS for Shop/Products Display Page
 */
 
 /* Resetting some default styles */
@@ -64,7 +64,8 @@ header {
     display: flex;
     align-items: center;
     margin-right: 20px; /* Adjusted margin */
-    position: relative; /* Relative positioning for child absolute positioning */
+    justify-content: center;
+    /* position: relative; Relative positioning for child absolute positioning */
 }
 
 /* Cart icon styling */
@@ -72,13 +73,26 @@ header {
     font-size: 25px;
 }
 
+.cart-icon:hover .cart-text{
+    display: block;
+}
+
 /* Cart text below the icon */
 .cart-text {
     position: absolute;
-    top: 100%; /* Position it below the cart icon */
-    left: 50%; /* Center it horizontally */
-    transform: translateX(-50%); /* Adjust for centering */
     color: white;
+    display: none;
+    background-color: white;
+    color: black;
+    padding: 10px;
+    border-radius: 10px;
+    text-align: center;
+    margin-top: 100px;
+    margin-left: 50px;
+}
+
+i:hover .cart-text{
+    display: block;
 }
 
 /* Styling for preventing logo cut-off and main-home section */
