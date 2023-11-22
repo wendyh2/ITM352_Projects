@@ -35,7 +35,7 @@ header {
 .logo {
     max-width: 120px; /* Adjusted max-width */
     height: auto;
-    margin-left: 80px; /* Adjusted margin */
+    margin-left: 100px; /* Adjusted margin */
 }
 
 /* Navigation menu styles */
@@ -54,7 +54,7 @@ header {
     padding: 20px 40px;
     text-decoration: none; /* Removing the underline that was part of it */
     transition: all .40s ease;
-    margin-left: 50px;
+    margin-left: 120px;
 }
 
 /* Styling for preventing logo cut-off and main-home section */

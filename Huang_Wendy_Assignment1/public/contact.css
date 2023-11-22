@@ -8,7 +8,8 @@ Description: My CSS stylesheet for my contact.html
 /* Resetting some default styles for consistency across browsers */
 body {
     width: 100%;
-    margin: 0;
+    margin: 0px;
+    padding: 0;
 }
 
 /* General styling for the document */
@@ -32,6 +33,7 @@ header {
     justify-content: space-between;
     align-items: center;
     padding: 20px;
+    background-image: url(img/purpstarsky.jpg);
     background-position: center;
     background-size: cover;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.06);
@@ -41,7 +43,7 @@ header {
 .logo {
     max-width: 120px; /* Adjusted max-width */
     height: auto;
-    margin-left: 80px; /* Adjusted margin */
+    margin-left: 100px; /* Adjusted margin */
 }
 
 /* Navigation menu styles */
@@ -60,7 +62,7 @@ header {
     padding: 20px 40px;
     text-decoration: none; /* Removing the underline that was part of it */
     transition: all .40s ease;
-    margin-left: 50px;
+    margin-left: 120px;
 }
 
 /* Styling for preventing logo cut-off and main-home section */
@@ -69,56 +71,6 @@ header {
     justify-content: space-between;
     align-items: center;
     padding: 20px 2%;
-}
-
-.main-text {
-    max-width: 600px;
-    margin: 0 auto;
-}
-.main-text h5 {
-    color: rgb(165, 165, 165);
-    font-size: 16px;
-    text-transform: capitalize;
-    font-weight: 400;
-    margin-bottom: 4px;
-}
-
-.main-text h1 {
-    color: rgb(96, 96, 96);
-    font-size: 65px;
-    margin: 6px 0 10px;
-    text-transform: capitalize;
-    font-weight: 700;
-    line-height: 1.1;
-}
-
-.main-text p {
-    color: rgb(165, 165, 165);
-    font-style: italic;
-    font-size: 16px;
-    margin-bottom: 4px;
-
-}
-
-/* Styles for the main button */
-.main-btn {
-    display: inline-block;
-    padding: 12px 25px;
-    margin-top: 20px;
-    background-color: rgb(219, 191, 249);
-    color: rgb(96, 96, 96);
-    font-weight: 600;
-    text-decoration: none;
-    border-radius: 5px;
-    transition: all .40s ease;
-}
-
-.main-btn:hover{
-    background-color: rgb(199, 232, 255);
-}
-
-.main-btn i{
-    vertical-align: middle;
 }
 
 /* Hover effect for navigation menu items */
@@ -130,131 +82,22 @@ section {
     padding: 5% 10%;
 }
 
-/*Styling for the very first main homepage*/
-.main-home {
-    width: 98.5%;
-    height: 100vh;
-    background-image: url(img/whiteskymove.gif);
-    background-size: cover;
+/* Styling my contact section in my homepage to be better and fit nicer */
+.contact {
+    min-height: 100vh;
+    background-image: url(img/purpsky.gif);
     background-position: center;
-    display: grid;
-    grid-template-columns: repeat(1, 1fr);
-    align-items: center;
-    text-align: center;
-    padding: 100px 50px; /* Adjusted padding */
-}
-
-/*Adding a popular page for the products*/
-.popular-products{
-    background-image: url(img/treesnow.gif);
-    width: 86.5%;
     background-size: cover;
-    background-position: center;
-}
-
-.downarrow {
-    position: absolute;
-    top: 115%; /* Adjusted position */
-    right: 33%; /*For some reason I couldn't just center it so had to do it this weird long way by changing the right*/
-    transform: translateY(-50%); /* Center vertically */
-    text-align: center;
-}
-
-.downarrow span {
-    color: red; /* This is so that my Holiday shows up as red, separate from the text altogether. I want it to be red to match the holiday season */
-}
-
-.down i {
-    font-size: 30px;
-    color: rgb(96, 96, 96);
-    border: 2px solid rgb(96, 96, 96);
-    border-radius: 50%;
-    padding: 13px 17px;
-    margin-top: 10px; /* Adjusted margin */
-}
-
-.down i:hover {
-    color: white;
-    background-color: rgb(219, 191, 249);
-}
-
-/* Here is where I have my popular Holiday nail sets styling section */
-.center-text h2 {
-    color: black;
-    font-size: 28px;
-    margin-bottom: 40px;
-    text-align: center;
-    text-transform: capitalize;
-}
-
-.center-text span {
-    color: red; /* This is so that my Holiday shows up as red, separate from the text altogether. I want it to be red to match the holiday season */
-}
-
-.products {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-    gap: 2rem;
-}
-
-
-.row {
-    width: 100%; /* Take the full width of the grid item */
-    max-width: 400px; /* Set a maximum width to control the size */
-    padding: 10px;
-    border: 1px solid white;
-    position: relative;
-}
-
-.row img {
+    background-repeat: no-repeat;
     width: 100%;
-    height: auto; /* Maintain the aspect ratio */
-    border-radius: 15px;
-    transition: transform 0.3s;
-}
-
-.row:hover {
-    transform: scale(0.92);
-}
-
-/* Add to cart button styles */
-.addtocart-icon {
-    position: absolute;
-    right: 10px; /* Adjusted right margin for better positioning */
-    bottom: 10px; /* Adjusted bottom margin for better positioning */
-    font-size: 22px;
-    transition: color 0.3s;
-}
-
-.addtocart-icon:hover {
-    color: pink;
-}
-/* Price styles */
-.price h4 {
-    color: black;
-    font-weight: 400;
-    font-size: 16px;
-    text-transform: capitalize;
-}
-
-.price p {
-    color: black;
-    font-weight: 600;
-    font-size: 13px;
-}
-
-/*Styling my contact section in my homepage to be better and fit nicer*/
-.contact{
-    height: 100vh;
-    background-image: url(img/purpstarsky.jpg);
-    width: 100%;
-    background-size: cover;
     color: rgb(74, 74, 74);
-    background-position: center;
     text-align: center;
     display: flex;
     justify-content: center;
+    align-items: center;
     padding: 0%;
+    margin-top: 50px;
+    overflow: hidden;
 }
 
 /*This is so that I can make the logo fit better right now it is too big*/
@@ -265,14 +108,14 @@ section {
 }
 
 .first-info h3{
-    font-size: 32px;
+    font-size: 50px;
+    line-height: 0;
 }
 
 .first-info p{
     font-size: 24px;
+    line-height: 0.6;
 }
-
-
 
 /*Styling my social media icons to look nicer and better along with an added transition to make it look cool*/
 .socialmedia-icon i{
@@ -280,6 +123,7 @@ section {
     font-size: 30px;
     margin-right: 10px;
     transition: all .40s;
+    margin-bottom: 50px;
 }
 
 .socialmedia-icon i{
