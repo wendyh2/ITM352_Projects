@@ -25,7 +25,18 @@ Description: My Homepage
                 // IR2: we also make the textbox red 
                 document.getElementById(`quantity${i}`).style.border = '1px solid red';
                 // IR4: Change purchase button text from "Purchase" to text that indicates why the purchase is invalid
-                document.getElementById('purchase_button').value = params.get(`quantity${i}_error`);
+                // We save the error message into a variable
+                let errorMessage = params.get(`quantity${i}_error`);
+                
+                // We check if it includes <br> and replace it with a space instead.
+                if(errorMessage.includes('<br>')){
+                    var newErrorMessage = errorMessage.split('<br>').join(' ');
+                    //Update the purchase button text
+                    document.getElementById('purchase_button').value = newErrorMessage;
+                }else{
+                    // Update purchase button text to just the error message if there is no <br> in the string.
+                    document.getElementById('purchase_button').value = errorMessage;
+                }
             }
             // IR3: If there is an error for quantity exceeds available quantity for product i, display it in the error div
             if (params.has(`quantity${i}_exceeds_error`)) {

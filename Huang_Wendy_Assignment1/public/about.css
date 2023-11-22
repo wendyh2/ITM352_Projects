@@ -123,6 +123,7 @@ h3 span {
 
 .socialmedia-icon {
     z-index: 1001;
+    margin-top: 24px;
 }
 
 /*Styling my social media icons to look nicer and better along with an added transition to make it look cool*/
