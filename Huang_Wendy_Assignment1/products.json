@@ -1,7 +1,7 @@
 [
     {
         "name": "Pink Bowsy",
-        "price": 60.00,
+        "price": 52.00,
         "image": "bow.jpg",
         "sets_available": 5,
         "sets_sold": 5,
@@ -17,7 +17,7 @@
     },
     {
         "name": "Ligeia",
-        "price": 63.00,
+        "price": 58.00,
         "image": "mermaid.jpg",
         "sets_available": 8,
         "sets_sold": 2,
@@ -33,7 +33,7 @@
     },
     {
         "name": "Eloise",
-        "price": 63.00,
+        "price": 56.00,
         "image": "starbow.jpg",
         "sets_available": 4,
         "sets_sold": 8,

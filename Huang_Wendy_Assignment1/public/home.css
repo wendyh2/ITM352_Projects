@@ -161,8 +161,12 @@ section {
     text-align: center;
 }
 
+.downarrow h4{
+    color: rgb(123, 118, 118);
+}
+
 .downarrow span {
-    color: red; /* This is so that my Holiday shows up as red, separate from the text altogether. I want it to be red to match the holiday season */
+    color:  rgb(225, 50, 50); /* This is so that my Holiday shows up as red, separate from the text altogether. I want it to be red to match the holiday season */
 }
 
 .down i {
@@ -181,7 +185,7 @@ section {
 
 /* Here is where I have my popular Holiday nail sets styling section */
 .center-text h2 {
-    color: black;
+    color:  rgb(96, 96, 96);
     font-size: 28px;
     margin-bottom: 40px;
     text-align: center;
@@ -189,7 +193,7 @@ section {
 }
 
 .center-text span {
-    color: red; /* This is so that my Holiday shows up as red, separate from the text altogether. I want it to be red to match the holiday season */
+    color:  rgb(225, 50, 50); /* This is so that my Holiday shows up as red, separate from the text altogether. I want it to be red to match the holiday season */
 }
 
 .products {
@@ -205,6 +209,8 @@ section {
     padding: 10px;
     border: 1px solid white;
     position: relative;
+    background-color: white;
+    border-radius: 15px;
 }
 
 .row img {
@@ -225,21 +231,25 @@ section {
     bottom: 10px; /* Adjusted bottom margin for better positioning */
     font-size: 22px;
     transition: color 0.3s;
+    color: rgb(96, 96, 96);
 }
 
 .addtocart-icon:hover {
     color: pink;
 }
 /* Price styles */
+.price {
+    line-height: 0.4;
+}
 .price h4 {
-    color: black;
+    color: rgb(96, 96, 96);
     font-weight: 400;
     font-size: 16px;
     text-transform: capitalize;
 }
 
 .price p {
-    color: black;
+    color: rgb(96, 96, 96);
     font-weight: 600;
     font-size: 13px;
 }
@@ -254,9 +264,21 @@ section {
     text-align: center;
 }
 
+.contact-info h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    line-height: 1.5;
+}
+
+.contact-info p {
+    font-size: 1rem;
+    line-height: 0.5;
+    margin-bottom: 20px;
+}
+
 /*This is so that I can make the logo fit better right now it is too big*/
 .first-info img{
-    width: 140px;
+    width: 160px;
     height: auto;
 }
 

@@ -82,8 +82,8 @@ header {
     position: absolute;
     color: white;
     display: none;
-    background-color: white;
-    color: black;
+    background-color: pink;
+    color: rgb(96, 96, 96);
     padding: 10px;
     border-radius: 10px;
     text-align: center;
@@ -163,13 +163,13 @@ header {
     background-image: url(img/purpstarsky.jpg);
     background-size: cover;
     width: 100%;
-    color: rgb(66, 63, 63);
+    color: rgb(74, 74, 74);
 }
 
 .contact-info img {
-    width: 143px;
+    width: 160px;
     border-radius: 50%;
-    margin-bottom: 15px;
+    margin-bottom: 0px;
     height: auto;
 }
 
@@ -185,6 +185,7 @@ header {
 
 /* Styling for social media icons from the home CSS */
 .socialmedia-icon i {
+    margin-top: 15px;
     color: white;
     font-size: 30px;
     margin-right: 10px;
@@ -203,6 +204,10 @@ header {
         flex-wrap: wrap; /* Allow products to wrap to the next row */
         gap: 20px; /* Adjusted gap between products */
     }
+
+.product-text {
+    color: rgb(96, 96, 96); /*Changing my product text to a more gray color*/
+}
 
 .row {
     width: 100%;
@@ -241,5 +246,5 @@ header {
 }
 
 .purchase_button:hover {
-    background-color: rgb(78, 128, 161); /* Darker shade of blue on hover */
+    background-color: rgb(114, 164, 197); /* Darker shade of blue on hover */
 }

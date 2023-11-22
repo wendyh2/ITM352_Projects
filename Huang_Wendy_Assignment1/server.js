@@ -93,9 +93,9 @@ app.listen(8080, () => console.log(`listening on port 8080`));
 
 function findNonNegInt(q, returnErrors = false) {
     const errors = [];
-    if (Number(q) != q) errors.push("Not a number!");
-    if (q < 0) errors.push("Negative value!");
-    if (parseInt(q) != q) errors.push("Not an integer!");
+    if (Number(q) != q) errors.push('Please enter a number!'); // Check if string is a number value
+    if (q < 0) errors.push('Please enter a non-negative value!'); // Check if it is non-negative
+    if (parseInt(q) != q) errors.push('This is not an integer!'); // Check that it is an integer
+    
+    return returnErrors ? errors : errors.length === 0;};
 
-    return returnErrors ? errors : errors.length === 0;
-}
