@@ -1,0 +1,70 @@
+{
+    "mytest@edu.com": {
+      "name": "My Test",
+      "password": "558b937c706b4a38a9133f85dbd47b9dcae6fa22722255572ae6a1ea29844297"
+    },
+    "testingregistration@edu.com": {
+      "name": "Testing Registration",
+      "password": "558b937c706b4a38a9133f85dbd47b9dcae6fa22722255572ae6a1ea29844297"
+    },
+    "testtesta@edu.com": {
+      "name": "Test Testa",
+      "password": "558b937c706b4a38a9133f85dbd47b9dcae6fa22722255572ae6a1ea29844297"
+    },
+    "testingform@edu.com": {
+      "name": "Testing Form",
+      "password": "558b937c706b4a38a9133f85dbd47b9dcae6fa22722255572ae6a1ea29844297"
+    },
+    "testingggg@edu.com": {
+      "name": "Hello World",
+      "password": "558b937c706b4a38a9133f85dbd47b9dcae6fa22722255572ae6a1ea29844297"
+    },
+    "hellothere@edu.com": {
+      "name": "Hello There",
+      "password": "558b937c706b4a38a9133f85dbd47b9dcae6fa22722255572ae6a1ea29844297"
+    },
+    "whatsup@edu.com": {
+      "name": "Whats Up",
+      "password": "558b937c706b4a38a9133f85dbd47b9dcae6fa22722255572ae6a1ea29844297"
+    },
+    "asdfasdf@edu.com": {
+      "name": "Asdf Asdfz",
+      "password": "558b937c706b4a38a9133f85dbd47b9dcae6fa22722255572ae6a1ea29844297"
+    },
+    "testingthis@edu.com": {
+      "name": "Testing This",
+      "password": "558b937c706b4a38a9133f85dbd47b9dcae6fa22722255572ae6a1ea29844297"
+    },
+    "quieres@edu.com": {
+      "name": "Quieres Quieres",
+      "password": "558b937c706b4a38a9133f85dbd47b9dcae6fa22722255572ae6a1ea29844297"
+    },
+    "testing123@edu.com": {
+      "name": "Test Test",
+      "password": "558b937c706b4a38a9133f85dbd47b9dcae6fa22722255572ae6a1ea29844297"
+    },
+    "asdf123az4@edu.com": {
+      "name": "Testing Please",
+      "password": "558b937c706b4a38a9133f85dbd47b9dcae6fa22722255572ae6a1ea29844297"
+    },
+    "helloworlo@edu.com": {
+      "name": "Testing Please",
+      "password": "558b937c706b4a38a9133f85dbd47b9dcae6fa22722255572ae6a1ea29844297"
+    },
+    "jsmith@edu.com": {
+      "name": "Joe Smith",
+      "password": "558b937c706b4a38a9133f85dbd47b9dcae6fa22722255572ae6a1ea29844297"
+    },
+    "joever@gmail.com": {
+      "name": "Testing Please",
+      "password": "558b937c706b4a38a9133f85dbd47b9dcae6fa22722255572ae6a1ea29844297"
+    },
+    "heythere1@edu.com": {
+      "name": "Hey There",
+      "password": "558b937c706b4a38a9133f85dbd47b9dcae6fa22722255572ae6a1ea29844297"
+    },
+    "mynames@edu.com": {
+      "name": "My Name",
+      "password": "558b937c706b4a38a9133f85dbd47b9dcae6fa22722255572ae6a1ea29844297"
+    }
+  }

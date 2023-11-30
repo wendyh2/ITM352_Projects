@@ -1,0 +1,261 @@
+/*
+Author: Wendy Huang
+Assignment 2
+Date: 11/28/2023
+Description: CSS stylesheet for registration page 
+ */
+
+
+/* Header styles */
+header {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    right: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 2%;
+    background-image: url(img/purpstarsky.jpg);
+    background-position: center;
+    background-size: cover;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.06);
+}
+
+/* Logo styles */
+.logo {
+    max-width: 120px; /* Adjusted max-width */
+    height: auto;
+    margin-left: 100px; /* Adjusted margin */
+}
+
+/* Navigation menu styles */
+.navmenu {
+    display: flex;
+    font-family: 'Montserrat', sans-serif;
+    gap: 100px;
+    margin-right: 250px;
+}
+
+.navmenu a {
+    font-size: 18px;
+    color: white;
+    text-transform: capitalize;
+    font-weight: 400;
+    padding: 20px 40px;
+    text-decoration: none; /* Removing the underline that was part of it */
+    transition: all .40s ease;
+    margin-left: 120px;
+}
+
+/* Styling for preventing logo cut-off and main-home section */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 2%;
+}
+
+/* Shop name */
+h1{
+    font-family: 'Palanquin-Dark', sans-serif;
+    font-size: 50px;
+    margin-top: 20px;
+    margin-bottom: -10px;
+    background-color: #c1e6e6;
+    padding-bottom: 1px;
+    padding-top: 1px;
+    color:rgb(55, 104, 99);
+    justify-items: center;
+    height: 110px;
+}
+
+h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 30px;
+    font-weight: bold;
+    color:rgb(55, 104, 99);
+    justify-items: center;
+}
+
+/* navbar styling */
+.navbar {
+    display: flex;
+    align-items: left;
+    background-color: rgb(171, 224, 219);
+    color: #fff;
+    padding: 10px;
+    padding-top: 15px;
+    left: 0;
+    right: 0;
+    top: 0;
+}
+
+.navbar .button{
+    margin-right: 20px;
+    font-size: 12px;
+    display: block;
+    background-color: rgb(62, 107, 104);
+    border-radius: 10px;
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    font-family: 'Montserrat', sans-serif;    
+    font-size: 17px;
+    padding: 10px 20px;
+    width: auto;
+    height: 20px;
+    text-decoration: none;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.navbar .logo {
+    width: 10%;
+    height: 10%;
+    padding-right: 20px;
+}
+
+.navbar .button:hover{
+    background-color: rgb(0, 0, 0);
+}
+
+body {
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+    color: black;
+    text-align: center;
+    font-size: 15px;
+    background-color: #c1e2e4;
+  }
+
+.item img{
+    width: 50px;
+    height: 50px;
+}
+/* decoration */
+.create-account-section {
+    border-collapse: collapse;
+    background-color: #e7fcfb;
+    overflow: hidden;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 50px;
+    padding-bottom: 30px;
+    border: 10px solid #def7f6;
+    border-radius: 10px;
+    width: 34%;;
+}
+
+.input-section{
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.label {
+    font-size: 20px;
+    margin-top: 10px;
+    padding-top: 20px;
+}
+
+.input_box {
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 1px solid rgb(62, 107, 104);
+    background-color: #e7fcfb;
+    font-size: 15px;
+    font-family: 'Montserrat', sans-serif;
+    width: 280px;
+    height: 20px;
+}
+
+#generate_password {
+    display: block;
+    background-color: rgb(62, 107, 104);
+    color: #ffffff;
+    border-color: rgb(62, 107, 104);
+    border-radius: 10px;
+    font-family: 'Montserrat', sans-serif;    
+    font-size: 12px;
+    border-width: 1.5px;
+    padding: 5px 10px;
+    margin: 0 auto;
+    margin-top: 2px;
+    margin-bottom: -10px;
+    cursor: pointer;
+}
+
+#generate_password:hover{
+    background-color: black;
+    border-color: rgb(62, 107, 104);
+    color: white;
+}
+
+/* Register button styling */
+#register_button {
+    display: block;
+    background-color: rgb(62, 107, 104);
+    color: #ffffff;
+    border-color: rgb(62, 107, 104);
+    border-radius: 10px;
+    font-family: 'Montserrat', sans-serif;    
+    font-size: 17px;
+    border-width: 1.5px;
+    min-width: 100px;
+    padding: 10px 20px;
+    margin: 0 auto;
+    margin-top: 20px;
+    cursor: pointer;
+  }
+
+#register_button:hover{
+    background-color: #ffffff;
+    border-color: rgb(62, 107, 104);
+    color: rgb(62, 107, 104);
+}
+
+#password_suggestion_span {
+    background-color: #ffffff;
+    border-color: rgb(62, 107, 104);
+    color: rgb(62, 107, 104);
+    border-radius: 10px;
+    font-family: 'Montserrat', sans-serif;    
+    font-size: 14px;
+    border-width: 1.5px;
+    padding: 5px 10px;
+    margin: 0 auto;
+    margin-top: 5px;
+    margin-bottom: -10px;
+    cursor: pointer;
+}
+
+#selection_span {
+    font-size: 12px;
+    margin-top: 10px;
+}
+
+span {
+    visibility: hidden;
+    display: inline-block;
+    max-width: 400px;
+}
+
+#password_suggestion_span:hover{
+    background-color: rgb(62, 107, 104);
+    color: #ffffff;
+    border-color: rgb(62, 107, 104);
+    background-color: #ffffff;
+    border-color: rgb(62, 107, 104);
+    color: rgb(62, 107, 104);
+}
+
+.header-spacing {
+    margin-top: 180px;
+}
+
+.error-span{
+ color: red;   
+}
