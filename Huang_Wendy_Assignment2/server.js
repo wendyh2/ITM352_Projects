@@ -140,8 +140,10 @@ app.post("/purchase", function (request, response, next) {
             // Track total quantity of each item sold - code from Assignment 1
             products[i].sets_sold += Number(request.body[`quantity${i}`]);
         }
+        
         // Redirects to the login screen and put values wanted/sold into query string
         response.redirect("./login.html?" + querystring.stringify(request.body));
+        console.log("HAIIIII :3")
     } else { // This is if there were errors we send them back to the products display and are notified of the problems 
         response.redirect(
             "./products_display.html?" + querystring.stringify(request.body) + "&" + querystring.stringify(errors)
