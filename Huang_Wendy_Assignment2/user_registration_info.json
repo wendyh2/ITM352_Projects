@@ -78,5 +78,35 @@
   "ollie@yahoo.com": {
     "name": "Oliver Smith",
     "password": "ee3306b353b2c60213a8da587f9d58cfb89124be9a5772f9f3d8e1e8e5428080"
+  },
+  "lola@hawaii.edu": {
+    "name": "Lola Kim",
+    "password": "cbda979e53fe4a828d8d1860685d53b5dc8ed93cffbe733ba7fa54a06ae35965"
+  },
+  "itm352@hawaii.edu": {
+    "name": "Michelle Grader",
+    "password": "8bc10c0ca5f0a4c0486f3c46312d1d99c796644ad5f2512133d5713d5dd7a6b0"
+  },
+  "peter@yahoo.com": {
+    "name": "Peter Ba",
+    "password": "b89770e19b4e62e0fd906c62aeb55b3097b2c788ed5bf2605c8fc6d39c8d4843"
+  },
+  "karie@yahoo.com": {
+    "name": "Karie Smith",
+    "password": "cbda979e53fe4a828d8d1860685d53b5dc8ed93cffbe733ba7fa54a06ae35965",
+    "lastLoginDate": 1701670223061,
+    "loginCount": 4
+  },
+  "xander@yahoo.com": {
+    "name": "Xander Woo",
+    "password": "cbda979e53fe4a828d8d1860685d53b5dc8ed93cffbe733ba7fa54a06ae35965",
+    "lastLoginDate": 1701658070244,
+    "loginCount": 1
+  },
+  "tony@hawaii.edu": {
+    "name": "Tony Lot",
+    "password": "cbda979e53fe4a828d8d1860685d53b5dc8ed93cffbe733ba7fa54a06ae35965",
+    "lastLoginDate": 1701670349026,
+    "loginCount": 1
   }
 }

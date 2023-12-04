@@ -57,6 +57,11 @@ header {
     margin-left: 120px;
 }
 
+/* Hover effect for navigation menu items */
+.navmenu a:hover{
+    color: pink;
+}
+
 /* Styling for preventing logo cut-off and main-home section */
 header {
     display: flex;

@@ -38,33 +38,6 @@ if (fs.existsSync(filename)) {
 // Middleware for decoding form data
 app.use(express.urlencoded({ extended: true }));
 
-
-// IR4: Keep track of the number of times a user logged in and the last time they logged in.
-const userLoginInfo = {};
-
-// Middleware to keep track of user logins - code referenced from ChatGPT
-app.use((request, response, next) => {
-    // Get username (email)
-    const username = request.body.username;
-    if (username) {
-        // Check if userLoginInfo object already has an entry for this user, if it doesn't then add it
-        if (!userLoginInfo[username]) {
-            userLoginInfo[username] = {
-                loginCount: 1,
-                lastLogin: new Date(),
-            };
-            // If userLoginInfo object already has an entry, just update loginCount and lastLogin
-        } else {
-            userLoginInfo[username].loginCount++;
-            userLoginInfo[username].lastLogin = new Date();
-        }
-    }
-
-    // Use the next() function to pass control to the next middleware/route handler.
-    // In this case, it would pass control back to the login route handler.
-    next();
-});
-
 // Log all requests
 app.all('*', function (request, response, next) {
     console.log(request.method + ' to ' + request.path);
@@ -133,17 +106,9 @@ app.post("/purchase", function (request, response, next) {
 
     // A loop, so when theres no errors at all the customers are send into the invoice 
     if (Object.keys(errors).length === 0) {
-        // When the purchase is valid this will reduce our inventory by the amounts purchased
-        for (const i in products) {
-            // Update sets available
-            products[i].sets_available -= Number(request.body[`quantity${i}`]);
-            // Track total quantity of each item sold - code from Assignment 1
-            products[i].sets_sold += Number(request.body[`quantity${i}`]);
-        }
-        
+
         // Redirects to the login screen and put values wanted/sold into query string
         response.redirect("./login.html?" + querystring.stringify(request.body));
-        console.log("HAIIIII :3")
     } else { // This is if there were errors we send them back to the products display and are notified of the problems 
         response.redirect(
             "./products_display.html?" + querystring.stringify(request.body) + "&" + querystring.stringify(errors)
@@ -163,62 +128,61 @@ app.post("/login", function (request, response, next) {
     let username = request.body["username"].toLowerCase();
     let password = request.body["password"];
 
-    // Check if username is empty
-    if (username == "") {
-        errors[`email_error`] = "Enter an email address!";
-
-        // Create a regular expression to check if username is in valid format
-        // Code referenced from w3schools + ChatGPT
-    } else if (!/^[a-zA-Z0-9._]+@[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/.test(username)) {
-        errors[`email_error`] = `${username} is in an invalid format.`;
-
-        // Check if username email is in user data file
-    } else if (user_registration_info.hasOwnProperty(username) !== true) {
-        errors[`username_error`] = `${username} is not a registered email.`;
-
-        // Check if password is empty 
-    } else if (password == "") {
-        errors[`password_error`] = "Enter a password.";
-
-        // IR1: Encrypt the password and check it against the user_registration_info encrypted password
-    } else if (hashPassword(password) !== user_registration_info[username].password) {
-        errors[`password_error`] = "Password is incorrect.";
+    // Check if username exists in user_registration_info.json
+    if (user_registration_info.hasOwnProperty(username) === true) {
+        // IR1: Encrypt the password and check it against the user_registration_info encrypted password 
+            if (hashPassword(password) !== user_registration_info[username].password) {
+                errors[`password_error`] = "Password is incorrect.";
+        } 
     } else {
-        var name = user_registration_info[username].name;
+        errors[`username_error`] = `${username} is not a registered email.`;
+    }
+    
+
+// If all the login information is valid, redirect to invoice.html with quantities of items purchased, and username and name of user
+if (Object.keys(errors).length === 0) {
+    let name = user_registration_info[username].name;
+    // IR4 - Keep track of the number of times a user logged in and the last time they logged in.
+    let user_last_login_date = user_registration_info[username].lastLoginDate;
+    user_registration_info[username].loginCount += 1;
+    user_registration_info[username].lastLoginDate = Date.now();
+/*
+    let user_last_login = userLoginInfo[username];
+
+    // IR5: Add username to keep track of amount of logged in users
+    // Check if loggedInUsers already has the username so that we don't login more than once for the same user
+    if (!loggedInUsers.includes(username)) {
+        loggedInUsers.push(username);
+    }
+*/
+    // Create params variable and add username and name fields
+    let params = new URLSearchParams(request.body);
+    params.append("username", username);
+    params.append("loginCount", user_registration_info[username].loginCount);
+    params.append("lastLogin", user_registration_info[username].lastLoginDate);
+    params.append("name", name);
+
+    // When the purchase is valid this will reduce our inventory by the amounts purchased
+
+    for (let i in products) {
+        // Update sets available
+        products[i].sets_available -= Number(request.body[`quantity${i}`]);
+        // Track total quantity of each item sold - code from Assignment 1
+        products[i].sets_sold += Number(request.body[`quantity${i}`]);
     }
 
-    // If all the login information is valid, redirect to invoice.html with quantities of items purchased, and username and name of user
-    if (Object.keys(errors).length === 0) {
-
-        // Get info about number of logins and last time logged in
-        const loginInfo = userLoginInfo[username];
-
-        // IR5: Add username to keep track of amount of logged in users
-        // Check if loggedInUsers already has the username so that we don't login more than once for the same user
-        if (!loggedInUsers.includes(username)) {
-            loggedInUsers.push(username);
-        }
-
-        // Create params variable and add username and name fields
-        let params = new URLSearchParams(request.body);
-        params.append("username", username);
-        params.append("loginCount", loginInfo.loginCount);
-        params.append("lastLogin", loginInfo.lastLogin);
-        params.append("name", name);
-
-        // Redirect to invoice.html with the new params values
-        response.redirect("./invoice.html?" + params.toString());
-    }
-    // If login information is invalid, redirects to login page and gives error
-    else {
-        // Create params variable and add username, name, and errorString fields
-        let params = new URLSearchParams(request.body);
-        params.append("username", username);
-        params.append("name", name);
-        params.append("errorString", JSON.stringify(errors));
-        // Redirect to login.html with new params values
-        response.redirect("./login.html?" + params.toString());
-    }
+    // Redirect to invoice.html with the new params values
+    response.redirect("./invoice.html?" + params.toString());
+}
+// If login information is invalid, redirects to login page and gives error
+else {
+    // Create params variable and add username, name, and errorString fields
+    let params = new URLSearchParams(request.body);
+    params.append("username", username);
+    params.append("errorString", JSON.stringify(errors));
+    // Redirect to login.html with new params values
+    response.redirect("./login.html?" + params.toString());
+}
 });
 
 // Register route, this is a post request and is referenced from the Assignment 2 example code.
@@ -305,11 +269,12 @@ app.post("/register", function (request, response, next) {
         user_registration_info[username].name = request.body.name;
         // IR1: Store encrypted password into user_registration_info
         user_registration_info[username].password = hashPassword(request.body.password);
+        // IR4 add lastLoginDate and loginCount for this new user make it a string
+        user_registration_info[username].lastLoginDate = Date.now();
+        user_registration_info[username].loginCount = 1;
+
         // Write to our user_registration_info.json file, we add the null and 2 option to account for a null replacer, and indentation
         fs.writeFileSync(filename, JSON.stringify(user_registration_info, null, 2));
-
-        // Get info about number of logins and last time logged in
-        const loginInfo = userLoginInfo[username];
 
         // IR5: Add username to keep track of amount of logged in users
         // Check if loggedInUsers already has the username so that we don't login more than once for the same user
@@ -317,15 +282,25 @@ app.post("/register", function (request, response, next) {
             loggedInUsers.push(username);
         }
 
+        // When the purchase is valid this will reduce our inventory by the amounts purchased
+
+        for (let i in products) {
+            // Update sets available
+            products[i].sets_available -= Number(request.body[`quantity${i}`]);
+            // Track total quantity of each item sold - code from Assignment 1
+            products[i].sets_sold += Number(request.body[`quantity${i}`]);
+        }
+
         // Create params variable and add username and name fields
         let params = new URLSearchParams(request.body);
         params.append("username", username);
         params.append("name", name);
-        params.append("loginCount", loginInfo.loginCount);
-        params.append("lastLogin", loginInfo.lastLogin);
+        params.append("loginCount", user_registration_info[username].loginCount);
+        params.append("lastLogin", user_registration_info[username].lastLoginDate);
         response.redirect("./invoice.html?" + params.toString());
 
         return;
+
         // If any errors exist, redirect to registration.html with the errors
     } else {
         let params = new URLSearchParams();

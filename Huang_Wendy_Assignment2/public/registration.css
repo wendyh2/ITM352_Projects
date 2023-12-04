@@ -49,6 +49,11 @@ header {
     margin-left: 120px;
 }
 
+/* Hover effect for navigation menu items */
+.navmenu a:hover{
+    color: pink;
+}
+
 /* Styling for preventing logo cut-off and main-home section */
 header {
     display: flex;
@@ -63,10 +68,10 @@ h1{
     font-size: 50px;
     margin-top: 20px;
     margin-bottom: -10px;
-    background-color: #c1e6e6;
+    background-color: #e6c1e4;
     padding-bottom: 1px;
     padding-top: 1px;
-    color:rgb(55, 104, 99);
+    color:rgb(234, 114, 190);
     justify-items: center;
     height: 110px;
 }
@@ -75,60 +80,17 @@ h2 {
     font-family: 'Montserrat', sans-serif;
     font-size: 30px;
     font-weight: bold;
-    color:rgb(55, 104, 99);
+    color:rgb(153, 99, 135);
     justify-items: center;
 }
 
-/* navbar styling */
-.navbar {
-    display: flex;
-    align-items: left;
-    background-color: rgb(171, 224, 219);
-    color: #fff;
-    padding: 10px;
-    padding-top: 15px;
-    left: 0;
-    right: 0;
-    top: 0;
-}
-
-.navbar .button{
-    margin-right: 20px;
-    font-size: 12px;
-    display: block;
-    background-color: rgb(62, 107, 104);
-    border-radius: 10px;
-    color: #ffffff;
-    border: none;
-    border-radius: 10px;
-    font-family: 'Montserrat', sans-serif;    
-    font-size: 17px;
-    padding: 10px 20px;
-    width: auto;
-    height: 20px;
-    text-decoration: none;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-}
-
-.navbar .logo {
-    width: 10%;
-    height: 10%;
-    padding-right: 20px;
-}
-
-.navbar .button:hover{
-    background-color: rgb(0, 0, 0);
-}
 
 body {
     margin: 0;
     font-family: 'Montserrat', sans-serif;
-    color: black;
     text-align: center;
     font-size: 15px;
-    background-image: url(img/butterflyflower.jpg);
+    background-image: url(img/cloudmove.gif);
     background-position: center;
     background-size: cover;
   }
@@ -140,13 +102,13 @@ body {
 /* decoration */
 .create-account-section {
     border-collapse: collapse;
-    background-color: #e7fcfb;
+    background-color: rgb(246, 219, 254);
     overflow: hidden;
     margin-left: auto;
     margin-right: auto;
     margin-top: 220px;
     padding-bottom: 30px;
-    border: 10px solid #def7f6;
+    border: 10px solid rgb(233, 202, 243);
     border-radius: 10px;
     width: 34%;;
 }
@@ -166,8 +128,8 @@ body {
     border-top: none;
     border-left: none;
     border-right: none;
-    border-bottom: 1px solid rgb(62, 107, 104);
-    background-color: #e7fcfb;
+    border-bottom: 1px solid rgb(190, 141, 205);
+    background-color: rgb(246, 219, 254);
     font-size: 15px;
     font-family: 'Montserrat', sans-serif;
     width: 280px;
@@ -176,9 +138,9 @@ body {
 
 #generate_password {
     display: block;
-    background-color: rgb(62, 107, 104);
+    background-color: rgb(167, 123, 181);
     color: #ffffff;
-    border-color: rgb(62, 107, 104);
+    border-color: rgb(167, 123, 181);
     border-radius: 10px;
     font-family: 'Montserrat', sans-serif;    
     font-size: 12px;
@@ -192,16 +154,16 @@ body {
 
 #generate_password:hover{
     background-color: black;
-    border-color: rgb(62, 107, 104);
+    border-color:rgb(167, 123, 181);
     color: white;
 }
 
 /* Register button styling */
 #register_button {
     display: block;
-    background-color: rgb(62, 107, 104);
+    background-color: rgb(167, 123, 181);
     color: #ffffff;
-    border-color: rgb(62, 107, 104);
+    border-color: rgb(167, 123, 181);
     border-radius: 10px;
     font-family: 'Montserrat', sans-serif;    
     font-size: 17px;
@@ -216,14 +178,14 @@ body {
 
 #register_button:hover{
     background-color: #ffffff;
-    border-color: rgb(62, 107, 104);
-    color: rgb(62, 107, 104);
+    border-color: rgb(167, 123, 181);
+    color: rgb(167, 123, 181);
 }
 
 #password_suggestion_span {
     background-color: #ffffff;
-    border-color: rgb(62, 107, 104);
-    color: rgb(62, 107, 104);
+    border-color: rgb(167, 123, 181);
+    color: rgb(167, 123, 181);
     border-radius: 10px;
     font-family: 'Montserrat', sans-serif;    
     font-size: 14px;
@@ -247,12 +209,12 @@ span {
 }
 
 #password_suggestion_span:hover{
-    background-color: rgb(62, 107, 104);
+    background-color: rgb(167, 123, 181);
     color: #ffffff;
-    border-color: rgb(62, 107, 104);
+    border-color: rgb(167, 123, 181);
     background-color: #ffffff;
-    border-color: rgb(62, 107, 104);
-    color: rgb(62, 107, 104);
+    border-color: rgb(167, 123, 181);
+    color: rgb(167, 123, 181);
 }
 
 .header-spacing {
