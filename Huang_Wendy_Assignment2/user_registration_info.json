@@ -1,96 +1,4 @@
 {
-  "mytest@edu.com": {
-    "name": "My Test",
-    "password": "558b937c706b4a38a9133f85dbd47b9dcae6fa22722255572ae6a1ea29844297"
-  },
-  "testingregistration@edu.com": {
-    "name": "Testing Registration",
-    "password": "558b937c706b4a38a9133f85dbd47b9dcae6fa22722255572ae6a1ea29844297"
-  },
-  "testtesta@edu.com": {
-    "name": "Test Testa",
-    "password": "558b937c706b4a38a9133f85dbd47b9dcae6fa22722255572ae6a1ea29844297"
-  },
-  "testingform@edu.com": {
-    "name": "Testing Form",
-    "password": "558b937c706b4a38a9133f85dbd47b9dcae6fa22722255572ae6a1ea29844297"
-  },
-  "testingggg@edu.com": {
-    "name": "Hello World",
-    "password": "558b937c706b4a38a9133f85dbd47b9dcae6fa22722255572ae6a1ea29844297"
-  },
-  "hellothere@edu.com": {
-    "name": "Hello There",
-    "password": "558b937c706b4a38a9133f85dbd47b9dcae6fa22722255572ae6a1ea29844297"
-  },
-  "whatsup@edu.com": {
-    "name": "Whats Up",
-    "password": "558b937c706b4a38a9133f85dbd47b9dcae6fa22722255572ae6a1ea29844297"
-  },
-  "asdfasdf@edu.com": {
-    "name": "Asdf Asdfz",
-    "password": "558b937c706b4a38a9133f85dbd47b9dcae6fa22722255572ae6a1ea29844297"
-  },
-  "testingthis@edu.com": {
-    "name": "Testing This",
-    "password": "558b937c706b4a38a9133f85dbd47b9dcae6fa22722255572ae6a1ea29844297"
-  },
-  "quieres@edu.com": {
-    "name": "Quieres Quieres",
-    "password": "558b937c706b4a38a9133f85dbd47b9dcae6fa22722255572ae6a1ea29844297"
-  },
-  "testing123@edu.com": {
-    "name": "Test Test",
-    "password": "558b937c706b4a38a9133f85dbd47b9dcae6fa22722255572ae6a1ea29844297"
-  },
-  "asdf123az4@edu.com": {
-    "name": "Testing Please",
-    "password": "558b937c706b4a38a9133f85dbd47b9dcae6fa22722255572ae6a1ea29844297"
-  },
-  "helloworlo@edu.com": {
-    "name": "Testing Please",
-    "password": "558b937c706b4a38a9133f85dbd47b9dcae6fa22722255572ae6a1ea29844297"
-  },
-  "jsmith@edu.com": {
-    "name": "Joe Smith",
-    "password": "558b937c706b4a38a9133f85dbd47b9dcae6fa22722255572ae6a1ea29844297"
-  },
-  "joever@gmail.com": {
-    "name": "Testing Please",
-    "password": "558b937c706b4a38a9133f85dbd47b9dcae6fa22722255572ae6a1ea29844297"
-  },
-  "heythere1@edu.com": {
-    "name": "Hey There",
-    "password": "558b937c706b4a38a9133f85dbd47b9dcae6fa22722255572ae6a1ea29844297"
-  },
-  "mynames@edu.com": {
-    "name": "My Name",
-    "password": "558b937c706b4a38a9133f85dbd47b9dcae6fa22722255572ae6a1ea29844297"
-  },
-  "wendyh2@hawaii.edu": {
-    "name": "Wendy Huang",
-    "password": "cee29127a9937d6672b9b83d48faa127966435dbdb1a898b239d613ff1f71881"
-  },
-  "karenyoung@gmail.com": {
-    "name": "Karen Young",
-    "password": "a201194a14de0ab80dbd2f14a5a470dbbc2c9ffb64f6f251ebe77d7845bddfed"
-  },
-  "ollie@yahoo.com": {
-    "name": "Oliver Smith",
-    "password": "ee3306b353b2c60213a8da587f9d58cfb89124be9a5772f9f3d8e1e8e5428080"
-  },
-  "lola@hawaii.edu": {
-    "name": "Lola Kim",
-    "password": "cbda979e53fe4a828d8d1860685d53b5dc8ed93cffbe733ba7fa54a06ae35965"
-  },
-  "itm352@hawaii.edu": {
-    "name": "Michelle Grader",
-    "password": "8bc10c0ca5f0a4c0486f3c46312d1d99c796644ad5f2512133d5713d5dd7a6b0"
-  },
-  "peter@yahoo.com": {
-    "name": "Peter Ba",
-    "password": "b89770e19b4e62e0fd906c62aeb55b3097b2c788ed5bf2605c8fc6d39c8d4843"
-  },
   "karie@yahoo.com": {
     "name": "Karie Smith",
     "password": "cbda979e53fe4a828d8d1860685d53b5dc8ed93cffbe733ba7fa54a06ae35965",
@@ -107,6 +15,36 @@
     "name": "Tony Lot",
     "password": "cbda979e53fe4a828d8d1860685d53b5dc8ed93cffbe733ba7fa54a06ae35965",
     "lastLoginDate": 1701670349026,
+    "loginCount": 1
+  },
+  "itm352@hawaii.edu": {
+    "name": "Michelle Zhang",
+    "password": "1c543c5e4336fdff03dcac8a8242ac9eb496c123b429b3f2cc7af6d9529f332a",
+    "lastLoginDate": 1701759112981,
+    "loginCount": 2
+  },
+  "apple@edu.com": {
+    "name": "Adam Apple",
+    "password": "558b937c706b4a38a9133f85dbd47b9dcae6fa22722255572ae6a1ea29844297",
+    "lastLoginDate": 1701749454090,
+    "loginCount": 1
+  },
+  "asdf@edu.com": {
+    "name": "Test Test",
+    "password": "558b937c706b4a38a9133f85dbd47b9dcae6fa22722255572ae6a1ea29844297",
+    "lastLoginDate": 1701753982310,
+    "loginCount": 1
+  },
+  "carol@hawaii.edu": {
+    "name": "Carol Lee",
+    "password": "cbda979e53fe4a828d8d1860685d53b5dc8ed93cffbe733ba7fa54a06ae35965",
+    "lastLoginDate": 1701759792737,
+    "loginCount": 1
+  },
+  "layla@hawaii.edu": {
+    "name": "Layla Dang",
+    "password": "cbda979e53fe4a828d8d1860685d53b5dc8ed93cffbe733ba7fa54a06ae35965",
+    "lastLoginDate": 1701763883420,
     "loginCount": 1
   }
 }

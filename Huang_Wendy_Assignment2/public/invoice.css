@@ -76,6 +76,14 @@ h1 {
     color: #1a1a1a;
 }
 
+h2{
+    text-align: center;
+}
+
+.text-spacing{
+    padding: 10px 0px;
+}
+
 table {
     width: 100%;
     margin-top: 20px;

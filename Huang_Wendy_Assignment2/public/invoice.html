@@ -12,6 +12,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Receipt Sales</title>
 
+  <script src="./getLoggedInUsers.js" type="text/javascript"></script>
   <script src="./products_data.js"></script>
   <link href="invoice.css" rel="stylesheet">
   <link rel="stylesheet" href="products_style.css">
@@ -43,6 +44,31 @@
     // Subtotal
     var subtotal = 0;
 
+    // IR4: Display login count and date of last login
+    // Get login count
+    const numLogins = params.get(`loginCount`);
+
+    // Extract the lastLogin value from the query parameters
+    const lastLoginStr = params.get('lastLogin');
+
+    // This code is referenced from chatGPT
+    // Convert the lastLogin string to a number (timestamp) 
+    const lastLoginTimestamp = parseInt(lastLoginStr);
+
+    // Create a new Date object using the timestamp
+    const date = new Date(lastLoginTimestamp);
+
+    // Get the year, month, and day
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+
+    // Create the date string in the format "YYYY-MM-DD"
+    const formattedDate = `${year}-${month}-${day}`;
+
+    // IR5: Print number of logged in users
+    const numActiveUsers = numLoggedInUsers;
+
 
   </script>
 </head>
@@ -68,6 +94,24 @@
   <div class="header-spacing"></div>
 
   <h1>Thank you for ordering!</h1>
+  <!-- IR4: Print last login date and login count -->
+  <h2 class="text-spacing">
+    <script>
+      document.write("Last login: ", formattedDate);
+    </script>
+  </h2>
+
+  <h2 class="text-spacing">
+    <script>
+      document.write("Login count: ", numLogins);
+    </script>
+  </h2>
+
+  <h2 class="text-spacing">
+    <script>
+      document.write("Number of active users: ", numActiveUsers);
+    </script>
+  </h2>
   <div class="flex-box-container">
     <div class="flex-box">
       <!--Where I will print my invoice-->

@@ -10,6 +10,7 @@
     <meta charinput-section="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="./getLoggedInUsers.js" type="text/javascript"></script>
     <link href="registration.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat" rel="stylesheet">
     <link
@@ -22,6 +23,8 @@
     <title>Create An Account</title>
 
     <script>
+        // IR5: Print number of logged in users
+        const numActiveUsers = numLoggedInUsers;
 
         var params = (new URL(document.location)).searchParams;
         // On window onload execute function
@@ -49,6 +52,7 @@
 
             const registerForm = document.getElementById("register_form");
             generateQuantityInputs(registerForm);
+            keepInputsSticky();
         }
 
         // IR3: When the user is registering, suggest a “strong” password that is 10 random characters including numbers and special characters. 
@@ -102,6 +106,26 @@
             }
         }
 
+        // Function to keep inputs sticky
+        function keepInputsSticky() {
+            // Check if there are any query string parameters
+            const urlParams = new URLSearchParams(window.location.search);
+
+            // We do not want the password or confirmPassword fields to be sticky
+            const excludeFields = ["password", "confirmPassword"];
+
+            // Loop through the query string parameters
+            for (const [param, value] of urlParams) {
+                // Check if the parameter name exists as an input element with the same name
+                const inputElement = document.getElementById(param);
+
+                if (inputElement && !excludeFields.includes(param)) {
+                    // Set the value of the input element to the value from the query string
+                    inputElement.value = value;
+                }
+            }
+        }
+
 
     </script>
 
@@ -125,6 +149,11 @@
     <form id="register_form" action="./register" method="POST">
         <!-- Div for entire create account section -->
         <div class="create-account-section">
+            <h2 class="text-spacing">
+                <script>
+                    document.write("Number of active users: ", numActiveUsers);
+                </script>
+            </h2>
             <h2>Create an Account</h2>
 
             <!-- Input section for name -->
@@ -137,7 +166,8 @@
             <!-- Input section for username (email) -->
             <div class="input-section">
                 <br><label for="username" class="label">Email Address</label>
-                <br><input type="text" id="username" name="username" class="input_box" placeholder="ex. wendyh2@hawaii.edu">
+                <br><input type="text" id="username" name="username" class="input_box"
+                    placeholder="ex. wendyh2@hawaii.edu">
                 <br><span id="username_error_span" class="error-span"></span>
             </div>
 

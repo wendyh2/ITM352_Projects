@@ -143,43 +143,15 @@ app.post("/login", function (request, response, next) {
     if (Object.keys(errors).length === 0) {
         let name = user_registration_info[username].name;
         // IR4 - Keep track of the number of times a user logged in and the last time they logged in.
-        let user_last_login_date = user_registration_info[username].lastLoginDate;
         user_registration_info[username].loginCount += 1;
         user_registration_info[username].lastLoginDate = Date.now();
-        /*
-            let user_last_login = userLoginInfo[username];
-        
-            // IR5: Add username to keep track of amount of logged in users
-            // Check if loggedInUsers already has the username so that we don't login more than once for the same user
-            if (!loggedInUsers.includes(username)) {
-                loggedInUsers.push(username);
-            }
-        
-            IR5 Keep track of the number of users currently logged in to the site and display this number with the personalization information. For example, if user “dport” is logged in and there are 4 other users logged in, then each page should say somewhere “Welcome Dan, there are 4 users currently using this system.” Whenever a user logs out (for this assignment, put a logout button on the invoice page that removes the login identification and sends the user to the login page), the number should decrease accordingly. HINT: Store this iunformation as a global array variable on the server. Whenever a user logs in or registers, add their email address (or username) to the array.
-        
-        // global variable to store IR5 stuff (users logged in)
-        let userLoggedin = {};
-        
-        // making a userInfo array within the server
-        app.get('/userLoggedin.js', function(request, response, next){
-           // the response will be js
-           response.type('.js');
-           // turning stuff into a string
-           let userLoggedin_str = `let userLoggedin = ${JSON.stringify(userLoggedin)}`;
-           // sends the string
-           response.send(userLoggedin_str);
-        });
-        
-        // add new logged in user, place above the redirect
-        userLoggedin[the_username] = true;            
-        response.redirect(`./invoice.html?${qs}`);
-        
-        // finding the number of users online 
-        Object.entries(userLoggedin).length
-        
-        // logging out
-        delete userLoggedin['erabidea']
-        */
+
+        // IR5: Add username to keep track of amount of logged in users
+        // Check if loggedInUsers already has the username so that we don't login more than once for the same user
+        if (!loggedInUsers.includes(username)) {
+            loggedInUsers.push(username);
+        }
+
         // Create params variable and add username and name fields
         let params = new URLSearchParams(request.body);
         params.append("username", username);

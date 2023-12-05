@@ -224,3 +224,7 @@ span {
 .error-span{
  color: red;   
 }
+
+.text-spacing{
+    padding: 10px 0px;
+}
