@@ -131,58 +131,83 @@ app.post("/login", function (request, response, next) {
     // Check if username exists in user_registration_info.json
     if (user_registration_info.hasOwnProperty(username) === true) {
         // IR1: Encrypt the password and check it against the user_registration_info encrypted password 
-            if (hashPassword(password) !== user_registration_info[username].password) {
-                errors[`password_error`] = "Password is incorrect.";
-        } 
+        if (hashPassword(password) !== user_registration_info[username].password) {
+            errors[`password_error`] = "Password is incorrect.";
+        }
     } else {
         errors[`username_error`] = `${username} is not a registered email.`;
     }
-    
 
-// If all the login information is valid, redirect to invoice.html with quantities of items purchased, and username and name of user
-if (Object.keys(errors).length === 0) {
-    let name = user_registration_info[username].name;
-    // IR4 - Keep track of the number of times a user logged in and the last time they logged in.
-    let user_last_login_date = user_registration_info[username].lastLoginDate;
-    user_registration_info[username].loginCount += 1;
-    user_registration_info[username].lastLoginDate = Date.now();
-/*
-    let user_last_login = userLoginInfo[username];
 
-    // IR5: Add username to keep track of amount of logged in users
-    // Check if loggedInUsers already has the username so that we don't login more than once for the same user
-    if (!loggedInUsers.includes(username)) {
-        loggedInUsers.push(username);
+    // If all the login information is valid, redirect to invoice.html with quantities of items purchased, and username and name of user
+    if (Object.keys(errors).length === 0) {
+        let name = user_registration_info[username].name;
+        // IR4 - Keep track of the number of times a user logged in and the last time they logged in.
+        let user_last_login_date = user_registration_info[username].lastLoginDate;
+        user_registration_info[username].loginCount += 1;
+        user_registration_info[username].lastLoginDate = Date.now();
+        /*
+            let user_last_login = userLoginInfo[username];
+        
+            // IR5: Add username to keep track of amount of logged in users
+            // Check if loggedInUsers already has the username so that we don't login more than once for the same user
+            if (!loggedInUsers.includes(username)) {
+                loggedInUsers.push(username);
+            }
+        
+            IR5 Keep track of the number of users currently logged in to the site and display this number with the personalization information. For example, if user “dport” is logged in and there are 4 other users logged in, then each page should say somewhere “Welcome Dan, there are 4 users currently using this system.” Whenever a user logs out (for this assignment, put a logout button on the invoice page that removes the login identification and sends the user to the login page), the number should decrease accordingly. HINT: Store this iunformation as a global array variable on the server. Whenever a user logs in or registers, add their email address (or username) to the array.
+        
+        // global variable to store IR5 stuff (users logged in)
+        let userLoggedin = {};
+        
+        // making a userInfo array within the server
+        app.get('/userLoggedin.js', function(request, response, next){
+           // the response will be js
+           response.type('.js');
+           // turning stuff into a string
+           let userLoggedin_str = `let userLoggedin = ${JSON.stringify(userLoggedin)}`;
+           // sends the string
+           response.send(userLoggedin_str);
+        });
+        
+        // add new logged in user, place above the redirect
+        userLoggedin[the_username] = true;            
+        response.redirect(`./invoice.html?${qs}`);
+        
+        // finding the number of users online 
+        Object.entries(userLoggedin).length
+        
+        // logging out
+        delete userLoggedin['erabidea']
+        */
+        // Create params variable and add username and name fields
+        let params = new URLSearchParams(request.body);
+        params.append("username", username);
+        params.append("loginCount", user_registration_info[username].loginCount);
+        params.append("lastLogin", user_registration_info[username].lastLoginDate);
+        params.append("name", name);
+
+        // When the purchase is valid this will reduce our inventory by the amounts purchased
+
+        for (let i in products) {
+            // Update sets available
+            products[i].sets_available -= Number(request.body[`quantity${i}`]);
+            // Track total quantity of each item sold - code from Assignment 1
+            products[i].sets_sold += Number(request.body[`quantity${i}`]);
+        }
+
+        // Redirect to invoice.html with the new params values
+        response.redirect("./invoice.html?" + params.toString());
     }
-*/
-    // Create params variable and add username and name fields
-    let params = new URLSearchParams(request.body);
-    params.append("username", username);
-    params.append("loginCount", user_registration_info[username].loginCount);
-    params.append("lastLogin", user_registration_info[username].lastLoginDate);
-    params.append("name", name);
-
-    // When the purchase is valid this will reduce our inventory by the amounts purchased
-
-    for (let i in products) {
-        // Update sets available
-        products[i].sets_available -= Number(request.body[`quantity${i}`]);
-        // Track total quantity of each item sold - code from Assignment 1
-        products[i].sets_sold += Number(request.body[`quantity${i}`]);
+    // If login information is invalid, redirects to login page and gives error
+    else {
+        // Create params variable and add username, name, and errorString fields
+        let params = new URLSearchParams(request.body);
+        params.append("username", username);
+        params.append("errorString", JSON.stringify(errors));
+        // Redirect to login.html with new params values
+        response.redirect("./login.html?" + params.toString());
     }
-
-    // Redirect to invoice.html with the new params values
-    response.redirect("./invoice.html?" + params.toString());
-}
-// If login information is invalid, redirects to login page and gives error
-else {
-    // Create params variable and add username, name, and errorString fields
-    let params = new URLSearchParams(request.body);
-    params.append("username", username);
-    params.append("errorString", JSON.stringify(errors));
-    // Redirect to login.html with new params values
-    response.redirect("./login.html?" + params.toString());
-}
 });
 
 // Register route, this is a post request and is referenced from the Assignment 2 example code.
