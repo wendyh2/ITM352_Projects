@@ -93,6 +93,7 @@ body {
     background-image: url(img/cloudmove.gif);
     background-position: center;
     background-size: cover;
+    background-repeat: no-repeat;
   }
 
 .item img{
