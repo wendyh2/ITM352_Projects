@@ -1,0 +1,159 @@
+/*
+Author: Wendy Huang
+Assignment 1
+Date: 11/20/2023
+Description: My CSS stylesheet for my about.html
+*/
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    margin: 20px;
+    padding: 0;
+    background-image: url(img/purpboatmove.gif);
+    background-position: center;
+    background-size: cover;
+}
+
+/* Header styles */
+header {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    right: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 2%;
+    background-image: url(img/purpstarsky.jpg);
+    background-position: center;
+    background-size: cover;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.06);
+}
+
+/* Logo styles */
+.logo {
+    max-width: 120px; /* Adjusted max-width */
+    height: auto;
+    margin-left: 100px; /* Adjusted margin */
+}
+
+/* Navigation menu styles */
+.navmenu {
+    display: flex;
+    font-family: 'Montserrat', sans-serif;
+    gap: 100px;
+    margin-right: 250px;
+}
+
+.navmenu a {
+    font-size: 18px;
+    color: white;
+    text-transform: capitalize;
+    font-weight: 400;
+    padding: 20px 40px;
+    text-decoration: none; /* Removing the underline that was part of it */
+    transition: all .40s ease;
+    margin-left: 120px;
+}
+
+/* Hover effect for navigation menu items */
+.navmenu a:hover{
+    color: pink;
+}
+
+/* Styling for preventing logo cut-off and main-home section */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 2%;
+}
+
+section {
+    padding: auto;
+}
+
+h2 {
+    margin-bottom: 155px;
+}
+
+p {
+    line-height: 1.6;
+    color: rgb(96, 96, 96);
+}
+
+/* Centering h3 tag */
+h3 {
+    text-align: center;
+    color: rgb(96, 96, 96);
+    font-size: 22px;
+}
+
+h3 span {
+    font-size: 50px;
+    color: rgb(136, 174, 206);
+}
+
+/* Contact section from the home CSS */
+.contact {
+    text-align: center;
+    padding: 40px 0;
+    background-image: url(img/purpstarsky.jpg);
+    background-size: cover;
+    width: 100%;
+    color: rgb(74, 74, 74);
+    margin-bottom: 0px;
+}
+
+.contact-info img {
+    width: 160px;
+    border-radius: 50%;
+    margin-bottom: -15px;
+    height: auto;
+}
+
+.contact-info h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0px;
+    line-height: 1.5;
+    color:  rgb(74, 74, 74)
+}
+
+.contact-info p {
+    font-size: 1rem;
+    margin-bottom: 0px;
+    line-height: 0.5;
+}
+
+.socialmedia-icon {
+    z-index: 1001;
+    margin-top: 24px;
+}
+
+/*Styling my social media icons to look nicer and better along with an added transition to make it look cool*/
+.socialmedia-icon i{
+    color: white;
+    font-size: 30px;
+    margin-right: 10px;
+    transition: all .40s;
+}
+
+/*Making it become bigger so that you can tell that you're hovering over it to make it look nicer and cooler*/
+.socialmedia-icon i:hover{
+    transform: scale(1.4);
+}
+
+/* Styling for the name in the 'With love' section */
+p strong {
+    color: rgb(96, 96, 96); /* Set the color to blue */
+    font-weight: bold; /* Make it bold */
+    font-size: 20px;
+}
+
+/* Styling for 'Wenailed' in the 'With love' section */
+p em {
+    color: rgb(136, 174, 206); /* Set the color to the specified blue */
+    font-weight: bold; /* Make it bold */
+    font-style: italic; /* Make it italicized */
+}

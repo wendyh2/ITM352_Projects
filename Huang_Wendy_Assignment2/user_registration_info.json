@@ -46,5 +46,17 @@
     "password": "cbda979e53fe4a828d8d1860685d53b5dc8ed93cffbe733ba7fa54a06ae35965",
     "lastLoginDate": 1701763883420,
     "loginCount": 1
+  },
+  "paris@hawaii.edu": {
+    "name": "Paris Hilton",
+    "password": "cbda979e53fe4a828d8d1860685d53b5dc8ed93cffbe733ba7fa54a06ae35965",
+    "lastLoginDate": 1701826690469,
+    "loginCount": 1
+  },
+  "london@hawaii.edu": {
+    "name": "London Tipton",
+    "password": "cbda979e53fe4a828d8d1860685d53b5dc8ed93cffbe733ba7fa54a06ae35965",
+    "lastLoginDate": 1701827274635,
+    "loginCount": 1
   }
 }

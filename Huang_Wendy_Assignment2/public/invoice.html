@@ -44,12 +44,30 @@
     // Subtotal
     var subtotal = 0;
 
+    const name = params.get(`name`);
+
     // IR4: Display login count and date of last login
     // Get login count
     const numLogins = params.get(`loginCount`);
 
     // Extract the lastLogin value from the query parameters
     const lastLoginStr = params.get('lastLogin');
+
+     // This function creates a hidden input to keep track of the username for logging out - code referenced from ChatGPT 
+     // Asked to help me make 
+     function generateUsernameInput(formElement) {
+      const input = document.createElement("input");
+      input.type = "hidden";
+      input.name = "username";
+      input.value = email;
+      formElement.appendChild(input); // Append the input field to the form
+    }
+
+    // Call the function for the login form when the page loads to generate and append the hidden inputs
+    window.onload = function () {
+      const logoutForm = document.getElementById("logout-form");
+      generateUsernameInput(logoutForm);
+    };
 
     // This code is referenced from chatGPT
     // Convert the lastLogin string to a number (timestamp) 
@@ -93,7 +111,11 @@
   <!-- Create div for spacing between header and rest of page -->
   <div class="header-spacing"></div>
 
-  <h1>Thank you for ordering!</h1>
+  <h1>
+    <script>
+      document.write("Thank you, ", name, " for your purchase");
+    </script>
+  </h1>
   <!-- IR4: Print last login date and login count -->
   <h2 class="text-spacing">
     <script>
@@ -204,6 +226,7 @@
       </table>
       <h4><strong> Our shipping policy is: A subtotal of $0-$80 will be $10 shipping. Subtotals over $80 will have free
           shipping</strong></h4>
+          <footer>&copy; 2023 Wenailed</footer>
     </div>
   </div>
 </body>

@@ -157,7 +157,7 @@ app.post("/login", function (request, response, next) {
         params.append("username", username);
         params.append("loginCount", user_registration_info[username].loginCount);
         params.append("lastLogin", user_registration_info[username].lastLoginDate);
-        params.append("name", name);
+        params.append("name", user_registration_info[username].name);
 
         // When the purchase is valid this will reduce our inventory by the amounts purchased
 
@@ -290,11 +290,9 @@ app.post("/register", function (request, response, next) {
 
         // Create params variable and add username and name fields
         let params = new URLSearchParams(request.body);
-        params.append("username", username);
-        params.append("name", name);
         params.append("loginCount", user_registration_info[username].loginCount);
         params.append("lastLogin", user_registration_info[username].lastLoginDate);
-        response.redirect("./invoice.html?" + params.toString());
+        response.redirect("./registrationsuccess.html?" + params.toString());
 
         return;
 
@@ -307,6 +305,20 @@ app.post("/register", function (request, response, next) {
         response.redirect("./registration.html?" + params.toString());
     }
 });
+
+app.post('/viewInvoice', (request, response) => {
+    const username = request.body["username"];
+    const name = request.body["name"];
+
+    // Create params variable and add username and name fields
+    let params = new URLSearchParams(request.body);
+    params.append("username", username);
+    params.append("name", name);
+    params.append("loginCount", user_registration_info[username].loginCount);
+    params.append("lastLogin", user_registration_info[username].lastLoginDate);
+    response.redirect("./invoice.html?" + params.toString());
+
+})
 
 //IR5: Logout route that sends user to login page
 app.post('/logout', (request, response) => {

@@ -1,0 +1,119 @@
+<!--
+Author: Wendy Huang
+Assignment 1
+Date: 11/10/2023
+Description: My Homepage
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <!--I was told about this useful tool through a friend who has previous experience with using it, and she said it comes in handy-->
+    <link rel="stylesheet" href="home.css">
+    <!--I used Google Fonts specifically Montserrat because it looks nice to me-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,200;0,300;0,600;0,700;1,600&family=Montserrat:wght@100;200;300;400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+</head>
+
+<body>
+    <!--Making my logo and Nav bar for homepage-->
+    <header>
+        <a href="index.html"><img src="img/logo.png" class="logo" alt="my logo"></a> <!--This is where my logo goes in my header-->
+        <div class="navmenu">
+            <a href="products_display.html">Shop</a>
+            <a href="about.html">About</a>
+            <a href="contact.html">Contact</a>
+        </div>
+    </header>
+    <section class="main-home">
+        <div class="main-text">
+            <h5>The Lorelei Collection</h5>
+            <h1>Our Newest <br>
+                Nail Collective</h1>
+            <p>Nails that Last</p>
+            <a href="products_display.html" class="main-btn">Shop Here <i class="fa-solid fa-right-to-bracket"></i></a>
+        </div>
+        <div class="downarrow">
+            <h4>Press the Arrow for Our <span> Holiday </span> Collective</h4>
+            <a href="#popular" class="down"><i class="fa-solid fa-turn-down"></i></a>
+        </div>
+    </section>    
+    <!--My Popular Holiday Products Section-->
+    <section class="popular-products"
+        id="popular">
+        <div class="center-text">
+            <h2>Our Most Popular <span>Holiday</span> Nail Sets</h2>
+        </div>
+        <div class="products">
+            <div class="row">
+                <img src="img/christmas.jpg" alt="">
+                <div class="product-text">
+                </div>
+                <div class="price">
+                    <h4>Golden Holly</h4>
+                    <p>$60.00</p>
+                </div>
+                <div class="addtocart-icon">
+                    <i class="fa-solid fa-cart-plus"></i>
+                </div>
+            </div>
+            <div class="row">
+                <img src="img/ornament.jpg" alt="">
+                <div class="product-text">
+                </div>
+                <div class="addtocart-icon">
+                    <i class="fa-solid fa-cart-plus"></i>
+                </div>
+                <div class="price">
+                    <h4>Carol's Ornaments</h4>
+                    <p>$55.00</p>
+                </div>
+            </div>
+            <div class="row">
+                <img src="img/wreath.jpg" alt="">
+                <div class="product-text">
+                </div>
+            
+                <div class="addtocart-icon">
+                    <i class="fa-solid fa-cart-plus"></i>
+                </div>
+                <div class="price">
+                    <h4>Plaid Christmas</h4>
+                    <p>$50.00</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!--This is what will be on my contact section so that people have a way to contact me at the very bottom-->
+   <section class="contact">
+    <div class="contact-info">
+        <div class="first-info">
+            <img src="img/logo.png" alt="">
+            <h3>Wendy Huang</h3>
+            <p>Honolulu, Hawaii</p>
+            <p>(808) 206-3329</p>
+            <p>wendyh2@hawaii.edu</p>
+
+            <div class="socialmedia-icon">
+                <a href="https://www.linkedin.com/in/huang-wendy/"><i class="fa-brands fa-linkedin"></i></a>
+                <a href="https://wendyh2.github.io/"><i class="fa-brands fa-github"></i></a>
+                <a href="https://www.youtube.com/channel/UC7GrQn40st8X4YaYTeQXbOg"><i class="fa-brands fa-youtube"></i></a>
+                <a href="https://www.instagram.com/we.nailed/?hl=en"><i class="fa-brands fa-instagram"></i></a>
+            </div>
+        </div>
+    </div>
+</section>
+    <script src="server.js"></script>
+</body>
+</html>

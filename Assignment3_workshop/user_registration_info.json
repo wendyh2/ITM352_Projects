@@ -1,0 +1,50 @@
+{
+  "karie@yahoo.com": {
+    "name": "Karie Smith",
+    "password": "cbda979e53fe4a828d8d1860685d53b5dc8ed93cffbe733ba7fa54a06ae35965",
+    "lastLoginDate": 1701670223061,
+    "loginCount": 4
+  },
+  "xander@yahoo.com": {
+    "name": "Xander Woo",
+    "password": "cbda979e53fe4a828d8d1860685d53b5dc8ed93cffbe733ba7fa54a06ae35965",
+    "lastLoginDate": 1701658070244,
+    "loginCount": 1
+  },
+  "tony@hawaii.edu": {
+    "name": "Tony Lot",
+    "password": "cbda979e53fe4a828d8d1860685d53b5dc8ed93cffbe733ba7fa54a06ae35965",
+    "lastLoginDate": 1701670349026,
+    "loginCount": 1
+  },
+  "itm352@hawaii.edu": {
+    "name": "Michelle Zhang",
+    "password": "1c543c5e4336fdff03dcac8a8242ac9eb496c123b429b3f2cc7af6d9529f332a",
+    "lastLoginDate": 1701759112981,
+    "loginCount": 2
+  },
+  "apple@edu.com": {
+    "name": "Adam Apple",
+    "password": "558b937c706b4a38a9133f85dbd47b9dcae6fa22722255572ae6a1ea29844297",
+    "lastLoginDate": 1701749454090,
+    "loginCount": 1
+  },
+  "asdf@edu.com": {
+    "name": "Test Test",
+    "password": "558b937c706b4a38a9133f85dbd47b9dcae6fa22722255572ae6a1ea29844297",
+    "lastLoginDate": 1701753982310,
+    "loginCount": 1
+  },
+  "carol@hawaii.edu": {
+    "name": "Carol Lee",
+    "password": "cbda979e53fe4a828d8d1860685d53b5dc8ed93cffbe733ba7fa54a06ae35965",
+    "lastLoginDate": 1701759792737,
+    "loginCount": 1
+  },
+  "layla@hawaii.edu": {
+    "name": "Layla Dang",
+    "password": "cbda979e53fe4a828d8d1860685d53b5dc8ed93cffbe733ba7fa54a06ae35965",
+    "lastLoginDate": 1701763883420,
+    "loginCount": 1
+  }
+}

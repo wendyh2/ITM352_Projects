@@ -1,0 +1,49 @@
+/*
+Author: Wendy Huang
+Assignment 1
+Date: 11/12/2023
+Description: My CSS stylesheet for my index.html
+Some of this was inspired from what we did in our SmartPhoneProducts2
+*/
+
+body {
+    text-align: center;
+    background-image: url(img/movetulip.gif);
+    background-position: center;
+    background-size: cover; /* Cover the entire background */
+    background-repeat: no-repeat; /* No repeating of the background image */
+    font-family: 'Montserrat', sans-serif; /* Set font to Montserrat */
+    margin: 0px;
+}
+
+/* Add a hover effect (black shadow) */
+
+img:hover {
+    box-shadow: 0 0 5px 1px rgb(177, 219, 233);
+}
+
+/* Styling for images */
+img {
+    border-radius: 4px;
+    padding: 0;
+    width: 100%;
+    max-width: 450px;
+    margin: 0;
+    margin-bottom: 10px; /* Add margin-bottom to create space between img and h1/h2 */
+}
+
+h1 {
+    color: rgb(96, 96, 96);
+    font-size: 50px;
+    margin-top: 40px; 
+    margin-bottom: 10px; /* Add the same margin-bottom as img */
+}
+
+h2 {
+    color: rgb(96, 96, 96);
+    font-size: 30px;
+    font-weight: 500;
+    display: block; /* Ensure each span is on a new line */
+    margin-top: 0px; /* Adjust margin-top to create the same spacing as h1 and img */
+    margin-bottom: 40px;
+}
