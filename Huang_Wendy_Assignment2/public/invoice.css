@@ -67,7 +67,7 @@ header {
     font-size: 24px;
 }
 
-.header-spacing{
+.header-spacing {
     margin-top: 140px;
 }
 
@@ -76,11 +76,11 @@ h1 {
     color: #1a1a1a;
 }
 
-h2{
+h2 {
     text-align: center;
 }
 
-.text-spacing{
+.text-spacing {
     padding: 10px 0px;
 }
 
@@ -90,7 +90,8 @@ table {
     border-collapse: collapse;
 }
 
-th, td {
+th,
+td {
     padding: 15px;
     text-align: center;
 }
@@ -112,16 +113,41 @@ h4 {
 }
 
 strong {
-    color: #e44d26; /* Orange color */
+    color: #e44d26;
+    /* Orange color */
 }
 
-.flex-box{
+.flex-box {
     width: 80%;
     justify-self: center;
 }
 
-.flex-box-container{
-    width: 100%; 
+.flex-box-container {
+    width: 100%;
     display: flex;
     justify-content: center;
+}
+
+/* Styling for my log out button */
+#logoutButton {
+    display: block;
+    background-color: rgb(167, 123, 181);
+    color: #ffffff;
+    border-color: rgb(167, 123, 181);
+    border-radius: 10px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    border-width: 1.5px;
+    padding: 5px 10px;
+    margin: 0 auto;
+    margin-top: 2px;
+    margin-bottom: -10px;
+    cursor: pointer;
+}
+
+/* Hover effect for the log out button */
+#logoutButton:hover {
+    background-color: pink;
+    border-color: rgb(167, 123, 181);
+    color: white;
 }

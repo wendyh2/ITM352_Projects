@@ -15,7 +15,7 @@ const crypto = require('crypto');
 
 // IR5:  Keep track of the number of users currently logged in to the site and display this number with the personalization information.
 // This is the global array variable
-const loggedInUsers = [];
+const loggedInUsers = {};
 
 function hashPassword(password) {
     //We use any secret key of our choosing, here we use test.
@@ -59,7 +59,9 @@ app.get("/products_data.js", function (request, response, next) {
 app.get('/getLoggedInUsers.js', (request, response) => {
     // We just used the same code as products_data.js but modified it for numLoggedInUsers
     response.type('.js');
-    const numLoggedInUsers = `const numLoggedInUsers = ${loggedInUsers.length}`;
+    // We create an array of logged-in usernames
+    const loggedInUsernames = Object.keys(loggedInUsers);
+    const numLoggedInUsers = `const numLoggedInUsers = ${loggedInUsernames.length}`;
     response.send(numLoggedInUsers);
 })
 
@@ -147,12 +149,12 @@ app.post("/login", function (request, response, next) {
 
         // IR5: Add username to keep track of amount of logged in users
         // Check if loggedInUsers already has the username so that we don't login more than once for the same user
-        if (!loggedInUsers.includes(username)) {
-            loggedInUsers.push(username);
+        if (!loggedInUsers.hasOwnProperty(username)) {
+            loggedInUsers[username] = true; // You can use `true` to indicate that the user is logged in.
         }
 
         // Create params variable and add username and name fields
-        let params = new URLSearchParams(request.body);
+        let params = new URLSearchParams();
         params.append("username", username);
         params.append("loginCount", user_registration_info[username].loginCount);
         params.append("lastLogin", user_registration_info[username].lastLoginDate);
@@ -161,6 +163,8 @@ app.post("/login", function (request, response, next) {
         // When the purchase is valid this will reduce our inventory by the amounts purchased
 
         for (let i in products) {
+            // Append quantities purchased to params
+            params.append(`quantity${i}`, request.body[`quantity${i}`]);
             // Update sets available
             products[i].sets_available -= Number(request.body[`quantity${i}`]);
             // Track total quantity of each item sold - code from Assignment 1
@@ -274,8 +278,8 @@ app.post("/register", function (request, response, next) {
 
         // IR5: Add username to keep track of amount of logged in users
         // Check if loggedInUsers already has the username so that we don't login more than once for the same user
-        if (!loggedInUsers.includes(username)) {
-            loggedInUsers.push(username);
+        if (!loggedInUsers.hasOwnProperty(username)) {
+            loggedInUsers[username] = true; // You can use `true` to indicate that the user is logged in.
         }
 
         // When the purchase is valid this will reduce our inventory by the amounts purchased
@@ -323,22 +327,66 @@ app.post('/viewInvoice', (request, response) => {
 app.get('/logout', (request, response) => {
     // Get username and index of that username in loggedInUsers array
     const username = request.query["username"];
-console.log(`logging out username ${username}`);
-    const index = loggedInUsers.indexOf(username);
+    console.log(`logging out username ${username}`);
 
-    // Remove username from loggedInUsers array (logging the user out)
-    if (index !== -1) {
-        loggedInUsers.splice(index, 1);
+    // Remove username from loggedInUsers object (logging the user out)
+    if (loggedInUsers.hasOwnProperty(username)) {
+        delete loggedInUsers[username];
     }
 
     // Thank user for purchase and tell them they are logged out then redirect to home.html
     response.send(`
-    Thank you for  your purchase ${user_registration_info[username].name}. 
-    Logged out ${username}. 
-    <br>
-    You will be sent to the home page in 5 seconds. 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-image: url(img/topback.png);
+            background-position: center;
+            background-size: cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .message-container {
+            text-align: center;
+        }
+        .thank-you-message {
+            font-size: 30px; /* Adjusted font size to 30px */
+            margin-bottom: 10px;
+        }
+        .bold-red {
+            font-weight: bold;
+            color: red;
+        }
+        .logout-message {
+            font-size: 24px; /* Adjusted font size to 24px */
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="message-container">
+        <div class="thank-you-message">
+            Thank you for your purchase, <span class="bold-red">${user_registration_info[username].name}</span>.
+        </div>
+        <div class="logout-message">
+            Logged out ${username}.
+        </div>
+        <div>
+            You will be redirected to the home page in 5 seconds.
+        </div>
+    </div>
     <meta http-equiv="refresh" content="5;url=home.html">
-    `); 
+</body>
+</html>
+`);
 });
 
 // Serve static files

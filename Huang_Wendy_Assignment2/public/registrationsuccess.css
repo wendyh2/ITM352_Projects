@@ -1,10 +1,4 @@
 /* Header styles */
-header {
-    /* ... (existing styles) */
-    background-repeat: no-repeat; /* Prevent background image from repeating */
-    background-attachment: fixed; /* Keep the background image fixed while scrolling */
-}
-
 /* Styling for preventing logo cut-off and main-home section */
 header {
     /* ... (existing styles) */
