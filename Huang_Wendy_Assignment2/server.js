@@ -13,6 +13,10 @@ const fs = require("fs");
 // IR1: Use crypto library to encrypt password
 const crypto = require('crypto');
 
+// IR5:  Keep track of the number of users currently logged in to the site and display this number with the personalization information.
+// This is the global array variable
+const loggedInUsers = [];
+
 function hashPassword(password) {
     //We use any secret key of our choosing, here we use test.
     const secret = 'test';
@@ -50,10 +54,6 @@ app.get("/products_data.js", function (request, response, next) {
     const products_str = `var products = ${JSON.stringify(products)}`;
     response.send(products_str);
 });
-
-// IR5:  Keep track of the number of users currently logged in to the site and display this number with the personalization information.
-// This is the global array variable
-const loggedInUsers = [];
 
 // Route for getting number of logged in users
 app.get('/getLoggedInUsers.js', (request, response) => {
@@ -137,7 +137,6 @@ app.post("/login", function (request, response, next) {
     } else {
         errors[`username_error`] = `${username} is not a registered email.`;
     }
-
 
     // If all the login information is valid, redirect to invoice.html with quantities of items purchased, and username and name of user
     if (Object.keys(errors).length === 0) {
@@ -321,9 +320,10 @@ app.post('/viewInvoice', (request, response) => {
 })
 
 //IR5: Logout route that sends user to login page
-app.post('/logout', (request, response) => {
+app.get('/logout', (request, response) => {
     // Get username and index of that username in loggedInUsers array
-    const username = request.body["username"];
+    const username = request.query["username"];
+console.log(`logging out username ${username}`);
     const index = loggedInUsers.indexOf(username);
 
     // Remove username from loggedInUsers array (logging the user out)
@@ -331,8 +331,8 @@ app.post('/logout', (request, response) => {
         loggedInUsers.splice(index, 1);
     }
 
-    // Redirect the user to the login page after logout
-    response.redirect('/login.html');
+    // Thank user for purchase and tell them they are logged out then redirect to home.html
+    response.send(`Thank you for  your purchase ${user_registration_info[username].name}. Logged out ${username}. You will be sent to the home page in 5 seconds. <meta http-equiv="refresh" content="5;url=home.html">`); 
 });
 
 // Serve static files

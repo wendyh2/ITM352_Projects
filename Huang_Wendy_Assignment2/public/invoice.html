@@ -27,6 +27,11 @@
     // get the query string and put it into a searchParams Object
     var params = (new URL(document.location)).searchParams
 
+    // if we don't have the username, then the user is not logged in so we redurect to login
+    if(!params.has('username')) {
+      location.href = "./login.html"+location.search;
+    }
+
     /*
     Sales Receipt
     */
@@ -43,8 +48,9 @@
 
     // Subtotal
     var subtotal = 0;
-
+    // get users name and email from query string
     const name = params.get(`name`);
+    const username = params.get(`username`);
 
     // IR4: Display login count and date of last login
     // Get login count
@@ -52,22 +58,6 @@
 
     // Extract the lastLogin value from the query parameters
     const lastLoginStr = params.get('lastLogin');
-
-     // This function creates a hidden input to keep track of the username for logging out - code referenced from ChatGPT 
-     // Asked to help me make 
-     function generateUsernameInput(formElement) {
-      const input = document.createElement("input");
-      input.type = "hidden";
-      input.name = "username";
-      input.value = email;
-      formElement.appendChild(input); // Append the input field to the form
-    }
-
-    // Call the function for the login form when the page loads to generate and append the hidden inputs
-    window.onload = function () {
-      const logoutForm = document.getElementById("logout-form");
-      generateUsernameInput(logoutForm);
-    };
 
     // This code is referenced from chatGPT
     // Convert the lastLogin string to a number (timestamp) 
@@ -134,6 +124,11 @@
       document.write("Number of active users: ", numActiveUsers);
     </script>
   </h2>
+  <div style="text-align: center;">
+  <script>
+    document.write(`<input type = "button" value="Log Out" onclick="location.href ='./logout?username=${username}'">`)
+  </script>
+</div> 
   <div class="flex-box-container">
     <div class="flex-box">
       <!--Where I will print my invoice-->

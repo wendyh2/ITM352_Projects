@@ -58,5 +58,11 @@
     "password": "cbda979e53fe4a828d8d1860685d53b5dc8ed93cffbe733ba7fa54a06ae35965",
     "lastLoginDate": 1701827274635,
     "loginCount": 1
+  },
+  "miley@hawaii.edu": {
+    "name": "Miley Cyrus",
+    "password": "cbda979e53fe4a828d8d1860685d53b5dc8ed93cffbe733ba7fa54a06ae35965",
+    "lastLoginDate": 1701839518382,
+    "loginCount": 1
   }
 }
