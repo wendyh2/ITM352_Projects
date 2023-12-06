@@ -332,7 +332,13 @@ console.log(`logging out username ${username}`);
     }
 
     // Thank user for purchase and tell them they are logged out then redirect to home.html
-    response.send(`Thank you for  your purchase ${user_registration_info[username].name}. Logged out ${username}. You will be sent to the home page in 5 seconds. <meta http-equiv="refresh" content="5;url=home.html">`); 
+    response.send(`
+    Thank you for  your purchase ${user_registration_info[username].name}. 
+    Logged out ${username}. 
+    <br>
+    You will be sent to the home page in 5 seconds. 
+    <meta http-equiv="refresh" content="5;url=home.html">
+    `); 
 });
 
 // Serve static files
