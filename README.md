@@ -1,14 +1,31 @@
-# hello-world
-"You know how in today's data-driven world, companies rely on skilled professionals to manage, clean, and interpret data sets to make informed decisions and drive success? Well, that's where I come in. I'm a junior triple majoring in MIS, management, and marketing, and my strong academic background across these three majors equips me to help companies harness the power of data to achieve their mission and goals.
+# Wendy Huang - GitHub README
 
-I'm **Wendy Huang**, a dedicated and driven Business Administration student from Honolulu, Hawaii. With a robust academic foundation and an unwavering passion for delivering exceptional results, I've not only excelled in my studies, but also in my professional roles.
+## Overview
 
-In my current position as an Employment Services Office Assistant, I've finely tuned my customer service and organizational skills while managing a range of responsibilities, from handling HR functions to coordinating workshops.
+Hello! I'm Wendy Huang, a BBA candidate at the Shidler College of Business at the University of Hawaii at Manoa. My academic focus revolves around a trio of majors: Management Information Systems, Marketing, and Management. I'm passionate about leveraging technology to enhance business processes and drive innovation.
 
-I've also gained hands-on retail experience at Footlocker, where I've consistently provided outstanding customer service and effectively managed inventory.
+## ITM 352 Class - Fall Semester
 
-But my expertise doesn't end there. I've actively contributed to various projects, including crafting engaging presentations and creating impactful web content. With technical proficiency in tools like Microsoft Office, Google Suite, Canva, and more, as well as a strong social media presence, I stand out in today's competitive landscape.
+### Introduction
 
-Beyond my academic and professional endeavors, I'm deeply engaged in extracurricular activities. I've led student teams, actively participated in professional development programs, and contributed to community organizations.
+During the fall semester, I had the pleasure of taking my first class in the MIS major known as ITM352. This course delved into various aspects of web development, providing a comprehensive exploration of the tools and technologies essential for creating robust and dynamic web applications.
 
-In a nutshell, I'm a well-rounded, proactive, and highly motivated individual dedicated to excellence in all that I do. **Let's connect**  and explore how I can leverage my skills and dedication to make a positive impact on your team or project."
+### Contributions and Achievements
+
+Throughout the semester, I actively engaged in hands-on learning, tackling numerous labs and coding activities. These activities covered a spectrum of topics, from fundamental HTML and CSS concepts to more advanced JavaScript functionalities. Each task presented an opportunity to sharpen my coding skills and deepen my understanding of web development principles.
+
+### Final Project - E-Commerce Site
+
+As the culmination of the semester's efforts, I successfully designed and implemented an e-commerce site for my final project. This comprehensive endeavor involved combining the skills acquired throughout the course and incorporating both front-end and back-end development techniques.
+
+#### Project Highlights:
+
+- **User Authentication:** Implemented a secure login and registration system.
+- **Database Integration:** Utilized databases to store and manage product information and user data.
+- **Dynamic Content:** Ensured a dynamic and responsive user interface for an enhanced user experience.
+
+### Repository Link
+
+For a detailed exploration of my ITM 352 journey and a closer look at the e-commerce site project, please check out my GitHub repository [here](https://github.com/wendyh2/ITM352_F23_repo).
+
+Feel free to explore my code, provide feedback, or reach out for any collaborative opportunities. I'm excited to continue growing and applying my skills from this course to real-world projects. **Thank you for visiting my GitHub!**
