@@ -1,0 +1,79 @@
+<!-- Author: Wendy Huang -->
+<!-- Assignment 2 -->
+<!-- Date: 11/28/2023 -->
+<!-- Registration Page -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charinput-section="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="./getLoggedInUsers.js" type="text/javascript"></script>
+    <link href="registration.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari&family=Palanquin+Dark:wght@500&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Palanquin+Dark:wght@500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+
+    <title>Registration Success</title>
+
+    <script>
+        // IR5: Print number of logged in users
+        const numActiveUsers = numLoggedInUsers;
+
+        var params = (new URL(document.location)).searchParams;
+        // On window onload execute function
+        window.onload = function () {
+            const viewInvoiceForm = document.getElementById("view_invoice_form");
+            generateQuantityInputs(viewInvoiceForm);
+        }
+
+        // This function keeps track of the quantity values of each product by adding it as hidden input types to a given form element
+        function generateQuantityInputs(formElement) {
+            const urlParams = new URLSearchParams(window.location.search);
+
+            // Loop through the querystring parameters to get params and their values
+            for (const [param, value] of urlParams) {
+                const input = document.createElement("input");
+                input.type = "hidden";
+                input.name = param;
+                input.value = decodeURIComponent(value);
+                formElement.appendChild(input); // Append the input field to the form
+            }
+        }
+
+    </script>
+
+</head>
+
+<!--Making my logo and Nav bar for homepage-->
+<header>
+    <a href="index.html"><img src="img/logo.png" class="logo" alt="my logo"></a>
+    <!--This is where my logo goes in my header-->
+    <div class="navmenu">
+        <a href="home.html">Home</a>
+        <a href="products_display.html">Shop</a>
+        <a href="contact.html">Contact</a>
+    </div>
+</header>
+
+<body>
+    <!-- Create div for spacing between header and rest of page -->
+    <div class="header-spacing"></div>
+
+    <form id="view_invoice_form" action="./viewInvoice" method="POST">
+
+        <h2>Registration Success!</h2>
+
+        <!-- Register button -->
+        <input type="submit" id="register_button" value="View Invoice">
+    </form>
+</body>
+
+
+</html>
