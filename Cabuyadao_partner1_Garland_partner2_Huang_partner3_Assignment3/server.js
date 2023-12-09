@@ -7,7 +7,7 @@
 const express = require('express');
 const app = express();
 const querystring = require('querystring');
-const products = require(__dirname + '/products.json');
+const all_products = require(__dirname + '/products.json');
 const fs = require("fs");
 const cookieParser = require('cookie-parser');
 app.use(cookieParser());
@@ -53,7 +53,7 @@ app.all('*', function (request, response, next) {
 // Route to provide products data as a JavaScript file
 app.get("/products_data.js", function (request, response, next) {
     response.type('.js');
-    const products_str = `var products = ${JSON.stringify(products)}`;
+    const products_str = `let all_products = ${JSON.stringify(all_products)}`;
     response.send(products_str);
 });
 
@@ -146,7 +146,7 @@ app.post("/login", function (request, response, next) {
     if (Object.keys(errors).length === 0) {
         let name = user_registration_info[username].name;
         // send a usernames cookie to indicate they're logged in
-        response.cookie ("username", username, {expire: Date.now() + 5*1000});
+        response.cookie ("userinfo", JSON.stringify({"email": username, "full_name": name}), {expire: Date.now() + 60*1000});
         // IR4 - Keep track of the number of times a user logged in and the last time they logged in.
         user_registration_info[username].loginCount += 1;
         user_registration_info[username].lastLoginDate = Date.now();
@@ -159,10 +159,8 @@ app.post("/login", function (request, response, next) {
 
         // Create params variable and add username and name fields
         let params = new URLSearchParams();
-        params.append("username", username);
         params.append("loginCount", user_registration_info[username].loginCount);
         params.append("lastLogin", user_registration_info[username].lastLoginDate);
-        params.append("name", user_registration_info[username].name);
 
         // When the purchase is valid this will reduce our inventory by the amounts purchased
 

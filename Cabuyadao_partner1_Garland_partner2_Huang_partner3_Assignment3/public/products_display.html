@@ -7,7 +7,12 @@ Description: My Homepage
 <script src="./products_data.js" type="text/javascript"></script>
 <script>
     // get the query string and put it into a searchParams Object
-    const params = (new URL(document.location)).searchParams
+    const params = (new URL(document.location)).searchParams;
+    let prod_key = "Jasmine Collection";
+    if(params.has('product_type')) {
+        prod_key = params.get('product_type');
+    }
+    let products = all_products[prod_key];
 
     // This will be executed after the page is loaded
     window.onload = function () {
@@ -102,6 +107,15 @@ Description: My Homepage
             <a href="home.html">Home</a>
             <a href="about.html">About</a>
             <a href="contact.html">Contact</a>
+            <script>
+                for (let pkey in all_products)
+                {
+                    if (pkey === prod_key) {
+                        continue;
+                    } 
+                    document.write(`<a href="products_display.html?product_type=${pkey}">${pkey}</a>`);
+                }
+            </script>   
             <div class="cart-icon">
                 <a href="#"><i class="fa-solid fa-bag-shopping"></i></a>
                 <div class="cart-text">
@@ -113,7 +127,10 @@ Description: My Homepage
     <!--My Shop-->
     <section class="popular-products" id="popular">
         <div class="collection-name">
-            <h4>The Lorelei Collective</h4>
+            <script>
+                document.write(`<h4>The ${prod_key} </h4>`);
+            </script>
+           
         </div>
         <!-- Form wrapper -->
         <form id="purchaseForm" action="./purchase" method="POST">

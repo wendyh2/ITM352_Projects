@@ -43,15 +43,10 @@
     // get the query string and put it into a searchParams Object
     let params = (new URL(document.location)).searchParams;
     // if user does not have username cookies, send them to login
-    if (getCookie('username') === ''){
+    if (getCookie('userinfo') === ''){
       location.href = "./login.html";
     }
-    let email = getCookie('username');
-    alert()
-    // if we don't have the username, then the user is not logged in so we redurect to login
-    if(!params.has('username')) {
-      location.href = "./login.html"+location.search;
-    }
+    let userinfo = JSON.parse(getCookie('userinfo'));
 
     /*
     Sales Receipt
@@ -69,9 +64,6 @@
 
     // Subtotal
     var subtotal = 0;
-    // get users name and email from query string
-    const name = params.get(`name`);
-    const username = params.get(`username`);
 
     // IR4: Display login count and date of last login
     // Get login count
@@ -124,7 +116,7 @@
 
   <h1>
     <script>
-      document.write("Thank you, ", name, " for your purchase");
+      document.write("Thank you, ", userinfo['full_name'], " for your purchase");
     </script>
   </h1>
   <!-- IR4: Print last login date and login count -->
@@ -242,6 +234,10 @@
       </table>
       <h4><strong> Our shipping policy is: A subtotal of $0-$80 will be $10 shipping. Subtotals over $80 will have free
           shipping</strong></h4>
+          <script>
+            document.write(`We have emailed your invoice to ${userinfo ['email']}`)
+            </script>
+            
           <footer>&copy; 2023 Wenailed</footer>
     </div>
   </div>
