@@ -8,7 +8,7 @@ Description: My Homepage
 <script>
     // get the query string and put it into a searchParams Object
     const params = (new URL(document.location)).searchParams;
-    let prod_key = "Jasmine Collection";
+    let prod_key = "Lorelei Collection";
     if(params.has('product_type')) {
         prod_key = params.get('product_type');
     }
@@ -17,7 +17,7 @@ Description: My Homepage
     // This will be executed after the page is loaded
     window.onload = function () {
         // if there is quantity data in the query string, put it into the quanity textboxes
-        for (let i in products) {
+        for (let i in all_products) {
             if (params.has(`quantity${i}`)) {
                 let qty = params.get(`quantity${i}`);
                 // put qty value from query string into quantity textbox
@@ -48,7 +48,7 @@ Description: My Homepage
                 // IR3: Print error message for we don't have xx available
                 document.getElementById(`error_quantity${i}_div`).innerHTML = params.get(`quantity${i}_exceeds_error`);
                 // IR3: Replace the input to the quantity available
-                document.getElementById(`quantity${i}`).value = products[i].sets_available;
+                document.getElementById(`quantity${i}`).value = all_products[i].sets_available;
                 // IR3: Change frame for the textbox to red
                 document.getElementById(`quantity${i}`).style.border = '1px solid red';
                 // IR4: Change purchase button text from "Purchase" to text that indicates why the purchase is invalid
@@ -67,7 +67,7 @@ Description: My Homepage
     function update_total_selected() {
         console.log('in update total selected');
         let total_selected = 0;
-        for (let i in products) {{
+        for (let i in all_products) {{
             total_selected += 1*(document.getElementById(`quantity${i}`).value);
         }
         cart_total_span.innerHTML = total_selected;

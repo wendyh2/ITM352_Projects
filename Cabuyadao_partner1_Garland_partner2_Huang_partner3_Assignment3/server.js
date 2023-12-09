@@ -76,7 +76,7 @@ app.post("/purchase", function (request, response, next) {
     let hasQty = false; // assuming user did not select any valid quantities/products
     let hasInput = false;
     // validates data and loops it through our array in products.json file 
-    for (let i in products) {
+    for (let i in all_products) {
         const qty = request.body[`quantity${i}`];
 
         // Check if no quantities were selected - code from Assignment 1
@@ -98,7 +98,7 @@ app.post("/purchase", function (request, response, next) {
         // Check if a quantity input for an item exceeds the quantity available for that item - code from Assignment 1
         // Check that quantity entered does not exceed the quantity available on server - code from Assignment 1
         // If the quantity selected is greater than the products available then send back an error
-        if (qty > products[i].sets_available) {
+        if (qty > all_products[i].sets_available) {
             errors[`quantity${i}_exceeds_error`] = `We don't have ${qty} available!`;
             hasInput = true;
         }
@@ -164,13 +164,13 @@ app.post("/login", function (request, response, next) {
 
         // When the purchase is valid this will reduce our inventory by the amounts purchased
 
-        for (let i in products) {
+        for (let i in all_products) {
             // Append quantities purchased to params
             params.append(`quantity${i}`, request.body[`quantity${i}`]);
             // Update sets available
-            products[i].sets_available -= Number(request.body[`quantity${i}`]);
+            all_products[i].sets_available -= Number(request.body[`quantity${i}`]);
             // Track total quantity of each item sold - code from Assignment 1
-            products[i].sets_sold += Number(request.body[`quantity${i}`]);
+            all_products[i].sets_sold += Number(request.body[`quantity${i}`]);
         }
 
         // Redirect to invoice.html with the new params values
@@ -286,11 +286,11 @@ app.post("/register", function (request, response, next) {
 
         // When the purchase is valid this will reduce our inventory by the amounts purchased
 
-        for (let i in products) {
+        for (let i in all_products) {
             // Update sets available
-            products[i].sets_available -= Number(request.body[`quantity${i}`]);
+            all_products[i].sets_available -= Number(request.body[`quantity${i}`]);
             // Track total quantity of each item sold - code from Assignment 1
-            products[i].sets_sold += Number(request.body[`quantity${i}`]);
+            all_products[i].sets_sold += Number(request.body[`quantity${i}`]);
         }
 
         // Create params variable and add username and name fields
