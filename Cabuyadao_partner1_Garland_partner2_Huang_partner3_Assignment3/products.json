@@ -42,12 +42,12 @@
             "description": "A pink themed super star and bow nail set"
         }
     ],
-    "Aurora Collection":
+    "Aureliana Collection":
     [
         {
-            "name": "Aurora Collection 1",
+            "name": "Aurors Collection 1",
             "price": 100.00,
-            "image": "Aurora_Collection_1_image",
+            "image": "nail1.jpg",
             "sets_available": 10,
             "sets_sold": 0,
             "description": "Aurora Collection 1 description"
