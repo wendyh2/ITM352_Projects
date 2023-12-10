@@ -13,7 +13,7 @@
   <title>Receipt Sales</title>
 
   <script src="./getLoggedInUsers.js" type="text/javascript"></script>
-  <script src="./products_data.js"></script>
+  <script src="./products_data.js" type="text/javascript"></script>
   <link href="invoice.css" rel="stylesheet">
   <link rel="stylesheet" href="products_style.css">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat" rel="stylesheet">
@@ -24,6 +24,12 @@
     rel="stylesheet">
 
   <script>
+     let params = (new URL(document.location)).searchParams;
+     let prod_key = "Lorelei Collection"; //Default to Lorelei page if product_type isn't specified in the querystring
+    if(params.has('product_type')) {
+        prod_key = params.get('product_type');
+    }
+    let products = all_products[prod_key];
     // Got this from W3 schools get cookie section
     function getCookie(cname) {
   let name = cname + "=";
@@ -40,8 +46,7 @@
   }
   return "";
 }
-    // get the query string and put it into a searchParams Object
-    let params = (new URL(document.location)).searchParams;
+    
     // if user does not have username cookies, send them to login
     if (getCookie('userinfo') === ''){
       location.href = "./login.html";
@@ -236,6 +241,7 @@
           shipping</strong></h4>
           <script>
             document.write(`We have emailed your invoice to ${userinfo ['email']}`)
+      
             </script>
             
           <footer>&copy; 2023 Wenailed</footer>

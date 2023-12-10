@@ -4,6 +4,7 @@ body {
     background-image: url(img/flowers.jpg);
     background-position: center;
     background-size: cover;
+    color: rgb(81, 81, 81);
 
 }
 
@@ -84,22 +85,25 @@ header {
 
 /* Login and Create Account button styles */
 .login-form-section input[type="submit"] {
-    padding: 15px 30px;
+    color: rgb(96, 96, 96); 
+    padding: 10px 20px;
     font-size: 16px;
     font-weight: 500;
     font-family: 'Montserrat', sans-serif;
     text-align: center;
     text-decoration: none;
-    color: black;
     background-color: rgb(197, 233, 245); /* Blue color */
-    border: none;
+    border-color: rgb(197, 233, 245); 
+    border-width: 1.5px;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
 }
 
 .login-form-section input[type="submit"]:hover {
-    background-color: #90b8d3; /* Darker blue on hover */
+       background-color: #ffffff;
+    border-color: rgb(149, 196, 211);
+    color: rgb(149, 196, 211);
 }
 
 .eye-icon {

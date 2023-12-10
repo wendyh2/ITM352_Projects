@@ -12,6 +12,10 @@ const fs = require("fs");
 const cookieParser = require('cookie-parser');
 app.use(cookieParser());
 
+const session = require('express-session');
+
+app.use(session({secret: "MySecretKey", resave: true, saveUninitialized: true}));
+
 // IR1: Use crypto library to encrypt password
 const crypto = require('crypto');
 
@@ -46,7 +50,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Log all requests
 app.all('*', function (request, response, next) {
-    console.log(request.method + ' to ' + request.path);
+    reconsole.log(request.method + ' to ' + request.path);
     next();
 });
 
@@ -115,6 +119,27 @@ app.post("/purchase", function (request, response, next) {
         // Redirects to the login screen and put values wanted/sold into query string
         response.redirect("./login.html?" + querystring.stringify(request.body));
     } else { // This is if there were errors we send them back to the products display and are notified of the problems 
+       
+        // Make an empty cart in our session for user if one already doesn't exist 
+        if (typeof request.session.cart === 'undefined'){
+            request.session.cart = {};
+        }
+         // Add purchase quantities to session
+         // ASK DAN FOR HELP ON THIS 
+         request.session.cart[request.query.product_type] = {};
+         for (let i in products) {
+            const qty = request.body[`quantity${i}`];
+    
+            // Check if no quantities were selected - code from Assignment 1
+            // Did the user select any products? 
+            if (qty > 0) {
+                hasQty = true; //If they had quantity selected then 
+                hasInput = true;
+                request.session.cart[request.query.product_type] = [`quantity${i}`] =
+                user_quantity_data [`quantity${i}`];
+            }
+          
+        }
         response.redirect(
             "./products_display.html?" + querystring.stringify(request.body) + "&" + querystring.stringify(errors)
         ); //We will be redirected to either a invoice page with the data we input if there are errors then we will be redirected to our products display with the errors we found

@@ -7,9 +7,9 @@ Description: My Homepage
 <script src="./products_data.js" type="text/javascript"></script>
 <script>
     // get the query string and put it into a searchParams Object
-    const params = (new URL(document.location)).searchParams;
-    let prod_key = "Lorelei Collection";
-    if(params.has('product_type')) {
+    let params = (new URL(document.location)).searchParams;
+    let prod_key = "Lorelei Collection"; //Default to Lorelei page if product_type isn't specified in the querystring
+    if (params.has('product_type')) {
         prod_key = params.get('product_type');
     }
     let products = all_products[prod_key];
@@ -32,13 +32,13 @@ Description: My Homepage
                 // IR4: Change purchase button text from "Purchase" to text that indicates why the purchase is invalid
                 // We save the error message into a variable
                 let errorMessage = params.get(`quantity${i}_error`);
-                
+
                 // We check if it includes <br> and replace it with a space instead.
-                if(errorMessage.includes('<br>')){
+                if (errorMessage.includes('<br>')) {
                     var newErrorMessage = errorMessage.split('<br>').join(' ');
                     //Update the purchase button text
                     document.getElementById('purchase_button').value = newErrorMessage;
-                }else{
+                } else {
                     // Update purchase button text to just the error message if there is no <br> in the string.
                     document.getElementById('purchase_button').value = errorMessage;
                 }
@@ -59,19 +59,20 @@ Description: My Homepage
         // if the is an error for the quantity for product i, display it in the error div
         if (params.has("noQty")) {
             //IR4: Change purchase button text from "Purchase" to text that indicates why the purchase is invalid
-            document.getElementById('purchase_button').value = params.get("noQty");  
+            document.getElementById('purchase_button').value = params.get("noQty");
         }
     }
     // This is the function used to display what customers have on the text box
     function update_total_selected() {
         console.log('in update total selected');
         let total_selected = 0;
-        for (let i in products) {{
-            total_selected += 1*(document.getElementById(`quantity${i}`).value);
+        for (let i in products) {
+            {
+                total_selected += 1 * (document.getElementById(`quantity${i}`).value);
+            }
+            cart_total_span.innerHTML = total_selected;
         }
-        cart_total_span.innerHTML = total_selected;
     }
-}
 
 </script>
 
@@ -106,13 +107,14 @@ Description: My Homepage
             <a href="home.html">Home</a>
             <a href="about.html">About</a>
             <a href="contact.html">Contact</a>
-           
+
             <div class="cart-icon">
                 <a href="#"><i class="fa-solid fa-bag-shopping"></i></a>
-                <div class="cart-text">
-                    Total Sets Selected: <span id="cart_total_span"> 0 </span>
-                </div>
+                <span>0</span>
+                <!-- <div class="cart-text">
+                   Total Sets Selected: <span id="cart_total_span"> 0 </span>-->
             </div>
+        </div>
         </div>
     </header>
     <!--My Shop-->
@@ -121,46 +123,46 @@ Description: My Homepage
             <script>
                 document.write(`<h4>The ${prod_key} </h4>`);
             </script>
-           
+
         </div>
         <!-- Form wrapper -->
         <form id="purchaseForm" action="./purchase" method="POST">
             <script>
                 document.write(`<input type="hidden" name="product_type" value="${prod_key}"`);
             </script>
-            <!-- Container for all products -->
-            <div class="products" id="productContainer">
-                <script>
-                    for (let i in products) {
-                        document.write(
-                            `<div class="row">
-                                <img src="./img/${products[i].image}" alt="${products[i].name}"/>
-                                <div class="product-text">
-                                    <h4>${products[i].name}</h4>
-                                    <p>$${products[i].price}</p>
-                                    <p>Sets available: ${products[i].sets_available}</p>
-                                    <!-- IR1: Display total quantity sold -->
-                                    <p>Sets sold: ${products[i].sets_sold}</p>
-                                    <div class="qty">
-                                    <label id="quantity${i}_label">Sets Desired:</label>
-                                    <input type="text" name="quantity${i}" id="quantity${i}" placeholder="0" value="0" onkeyup="update_total_selected();">
-                                    <div class="error_msg" id="error_quantity${i}_div">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            `
-                        )
-                    };
-                </script>
-            </div>
+<!-- Container for all products -->
+<div class="products" id="productContainer">
+    <script>
+        for (let i in products) {
+            document.write(
+                `<div class="row">
+                    <img src="./img/${products[i].image}" alt="${products[i].name}" />
+                    <div class="product-text">
+                        <h4>${products[i].name}</h4>
+                        <p>$${products[i].price}</p>
+                        <p>Sets available: ${products[i].sets_available}</p>
+                        <!-- IR1: Display total quantity sold -->
+                        <p>Sets sold: ${products[i].sets_sold}</p>
+                        <div class="qty">
+                            <label id="quantity${i}_label">Sets Desired:</label>
+                            <input type="text" name="quantity${i}" id="quantity${i}" placeholder="0" value="0" onkeyup="update_total_selected();">
+                            <div class="error_msg" id="error_quantity${i}_div"></div>
+                        </div>
+                        <button class="add-to-cart" onclick="addToCart(${i})">Add to Cart</button>
+                    </div>
+                </div>`
+            );
+        };
+    </script>
+</div>
+
 
             <!-- Purchase button -->
             <input type="submit" class="purchase_button" id="purchase_button" value="Purchase">
             <div class="pagination">
                 <script>
                     let pageNum = 1; // Initialize the page number counter
-                    
+
                     // Loop through each product key in the 'all_products' object
                     for (let pkey in all_products) {
                         // Check if the current product key matches the provided 'prod_key'
@@ -171,13 +173,13 @@ Description: My Homepage
                             // If false, write a link with the page number and a link to 'products_display.html' with the current product key
                             document.write(`<a href="products_display.html?product_type=${pkey}">${pageNum}</a>`);
                         }
-                        
+
                         // Increment the page number for the next iteration
                         pageNum++;
                     }
-                </script>                
+                </script>
             </div>
-            
+
 
         </form>
     </section>
@@ -196,7 +198,8 @@ Description: My Homepage
                 <div class="socialmedia-icon">
                     <a href="https://www.linkedin.com/in/huang-wendy/"><i class="fa-brands fa-linkedin"></i></a>
                     <a href="https://wendyh2.github.io/"><i class="fa-brands fa-github"></i></a>
-                    <a href="https://www.youtube.com/channel/UC7GrQn40st8X4YaYTeQXbOg"><i class="fa-brands fa-youtube"></i></a>
+                    <a href="https://www.youtube.com/channel/UC7GrQn40st8X4YaYTeQXbOg"><i
+                            class="fa-brands fa-youtube"></i></a>
                     <a href="https://www.instagram.com/we.nailed/?hl=en"><i class="fa-brands fa-instagram"></i></a>
                 </div>
             </div>

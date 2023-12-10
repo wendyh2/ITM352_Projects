@@ -94,6 +94,7 @@ body {
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
+    color: rgb(81, 81, 81);
   }
 
 .item img{

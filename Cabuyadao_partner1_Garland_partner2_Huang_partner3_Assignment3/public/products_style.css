@@ -56,28 +56,46 @@ header {
     padding: 20px 40px;
     text-decoration: none; /* Removing the underline that was part of it */
     transition: all .40s ease;
-    margin-left: 0px;
+    margin-left: 40px;
 }
 
 /* Cart icon styles */
 .cart-icon {
+    margin-top: 15px;
+    height: 30px;
     display: flex;
     align-items: center;
     margin-right: 20px; /* Adjusted margin */
     justify-content: center;
-    /* position: relative; Relative positioning for child absolute positioning */
+    position: relative;
+   
+}
+
+.cart-icon span {
+display: flex;
+height: 20px;
+width: 20px;
+background-color: pink;
+justify-content: center;
+align-items: center;
+color: black;
+border-radius: 50%;
+position: absolute;
+top: 60%;
+right: 30px;
+font-size: 14px;
 }
 
 /* Cart icon styling */
 .cart-icon i {
-    font-size: 25px;
+    font-size: 35px;
 }
 
 .cart-icon:hover .cart-text{
     display: block;
 }
 
-/* Cart text below the icon */
+/* Cart text below the icon 
 .cart-text {
     position: absolute;
     color: white;
@@ -93,7 +111,7 @@ header {
 
 i:hover .cart-text{
     display: block;
-}
+}*/
 
 /* Styling for preventing logo cut-off and main-home section */
 header {
@@ -232,6 +250,8 @@ header {
     color: red;
 }
 
+/*Remember that i need to delete the purchase button later when i make the add to cart buttons work*/
+
 .purchase_button {
     margin-top: 40px;
     padding: 15px 30px; /* Adjusted padding */
@@ -262,7 +282,7 @@ header {
     margin: 0 4px;
     text-decoration: none;
     color: #fff;
-    background-color: #8c7f97; /* Green background color */
+    background-color: pink; /* pink background color */
     border-radius: 5px;
 }
 
@@ -271,7 +291,24 @@ header {
 }
 
 .pagination .current {
-    background-color: #5045a0; /* Darker green for the current page */
+    background-color: #aecbde;; /* light blue for the current page */
     cursor: default;
 }
 
+/* Styling for the Add to Cart button */
+.add-to-cart {
+    margin-top: 30px;
+    padding: 15px 30px; /* Adjusted padding */
+    font-size: 1.2rem; /* Increased font size */
+    cursor: pointer;
+    background-color: #aecbde; /* Updated background color to a shade of blue */
+    color: #fff; /* Set text color to white */
+    font-family: 'Montserrat', sans-serif; /* Use Montserrat font */
+    border: none; /* Remove border */
+    border-radius: 5px; /* Add border-radius for rounded corners */
+    transition: background-color 0.3s ease; /* Add transition for smoother color change */
+}
+
+.add-to-cart:hover {
+    background-color: rgb(114, 164, 197); /* Darker shade of blue on hover */
+}
