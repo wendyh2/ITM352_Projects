@@ -70,13 +70,14 @@ app.get('/getLoggedInUsers.js', (request, response) => {
 // Process purchase request
 app.post("/purchase", function (request, response, next) {
     console.log(request.body);
-
+    let prod_key = request.body.product_type;
+    let products = all_products[prod_key]; 
     // validate quantities
     const errors = {}; //assume no errors at start
     let hasQty = false; // assuming user did not select any valid quantities/products
     let hasInput = false;
     // validates data and loops it through our array in products.json file 
-    for (let i in all_products) {
+    for (let i in products) {
         const qty = request.body[`quantity${i}`];
 
         // Check if no quantities were selected - code from Assignment 1
@@ -98,7 +99,7 @@ app.post("/purchase", function (request, response, next) {
         // Check if a quantity input for an item exceeds the quantity available for that item - code from Assignment 1
         // Check that quantity entered does not exceed the quantity available on server - code from Assignment 1
         // If the quantity selected is greater than the products available then send back an error
-        if (qty > all_products[i].sets_available) {
+        if (qty > products[i].sets_available) {
             errors[`quantity${i}_exceeds_error`] = `We don't have ${qty} available!`;
             hasInput = true;
         }

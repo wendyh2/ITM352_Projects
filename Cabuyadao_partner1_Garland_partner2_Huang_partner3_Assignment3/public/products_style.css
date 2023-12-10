@@ -248,3 +248,30 @@ header {
 .purchase_button:hover {
     background-color: rgb(114, 164, 197); /* Darker shade of blue on hover */
 }
+
+/* Pagination styles */
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px; /* Adjusted margin */
+}
+
+.pagination a,
+.pagination .current {
+    padding: 8px 16px;
+    margin: 0 4px;
+    text-decoration: none;
+    color: #fff;
+    background-color: #8c7f97; /* Green background color */
+    border-radius: 5px;
+}
+
+.pagination a:hover {
+    background-color: #7597b9; /* Darker green on hover */
+}
+
+.pagination .current {
+    background-color: #5045a0; /* Darker green for the current page */
+    cursor: default;
+}
+

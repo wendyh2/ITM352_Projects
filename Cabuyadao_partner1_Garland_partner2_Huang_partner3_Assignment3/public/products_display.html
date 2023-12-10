@@ -17,7 +17,7 @@ Description: My Homepage
     // This will be executed after the page is loaded
     window.onload = function () {
         // if there is quantity data in the query string, put it into the quanity textboxes
-        for (let i in all_products) {
+        for (let i in products) {
             if (params.has(`quantity${i}`)) {
                 let qty = params.get(`quantity${i}`);
                 // put qty value from query string into quantity textbox
@@ -48,7 +48,7 @@ Description: My Homepage
                 // IR3: Print error message for we don't have xx available
                 document.getElementById(`error_quantity${i}_div`).innerHTML = params.get(`quantity${i}_exceeds_error`);
                 // IR3: Replace the input to the quantity available
-                document.getElementById(`quantity${i}`).value = all_products[i].sets_available;
+                document.getElementById(`quantity${i}`).value = products[i].sets_available;
                 // IR3: Change frame for the textbox to red
                 document.getElementById(`quantity${i}`).style.border = '1px solid red';
                 // IR4: Change purchase button text from "Purchase" to text that indicates why the purchase is invalid
@@ -59,15 +59,14 @@ Description: My Homepage
         // if the is an error for the quantity for product i, display it in the error div
         if (params.has("noQty")) {
             //IR4: Change purchase button text from "Purchase" to text that indicates why the purchase is invalid
-            document.getElementById('purchase_button').value = params.get("noQty");
-            alert(params.get("noQty"));
+            document.getElementById('purchase_button').value = params.get("noQty");  
         }
     }
     // This is the function used to display what customers have on the text box
     function update_total_selected() {
         console.log('in update total selected');
         let total_selected = 0;
-        for (let i in all_products) {{
+        for (let i in products) {{
             total_selected += 1*(document.getElementById(`quantity${i}`).value);
         }
         cart_total_span.innerHTML = total_selected;
@@ -107,15 +106,7 @@ Description: My Homepage
             <a href="home.html">Home</a>
             <a href="about.html">About</a>
             <a href="contact.html">Contact</a>
-            <script>
-                for (let pkey in all_products)
-                {
-                    if (pkey === prod_key) {
-                        continue;
-                    } 
-                    document.write(`<a href="products_display.html?product_type=${pkey}">${pkey}</a>`);
-                }
-            </script>   
+           
             <div class="cart-icon">
                 <a href="#"><i class="fa-solid fa-bag-shopping"></i></a>
                 <div class="cart-text">
@@ -134,6 +125,9 @@ Description: My Homepage
         </div>
         <!-- Form wrapper -->
         <form id="purchaseForm" action="./purchase" method="POST">
+            <script>
+                document.write(`<input type="hidden" name="product_type" value="${prod_key}"`);
+            </script>
             <!-- Container for all products -->
             <div class="products" id="productContainer">
                 <script>
@@ -150,7 +144,7 @@ Description: My Homepage
                                     <div class="qty">
                                     <label id="quantity${i}_label">Sets Desired:</label>
                                     <input type="text" name="quantity${i}" id="quantity${i}" placeholder="0" value="0" onkeyup="update_total_selected();">
-                                    <div class="error_msg" id="error_quantity${i}_div"> 
+                                    <div class="error_msg" id="error_quantity${i}_div">
                                         </div>
                                     </div>
                                 </div>
@@ -163,7 +157,27 @@ Description: My Homepage
 
             <!-- Purchase button -->
             <input type="submit" class="purchase_button" id="purchase_button" value="Purchase">
-
+            <div class="pagination">
+                <script>
+                    let pageNum = 1; // Initialize the page number counter
+                    
+                    // Loop through each product key in the 'all_products' object
+                    for (let pkey in all_products) {
+                        // Check if the current product key matches the provided 'prod_key'
+                        if (pkey === prod_key) {
+                            // If true, write a span with the page number and a 'current' class for styling
+                            document.write(`<span class="current">${pageNum}</span>`);
+                        } else {
+                            // If false, write a link with the page number and a link to 'products_display.html' with the current product key
+                            document.write(`<a href="products_display.html?product_type=${pkey}">${pageNum}</a>`);
+                        }
+                        
+                        // Increment the page number for the next iteration
+                        pageNum++;
+                    }
+                </script>                
+            </div>
+            
 
         </form>
     </section>
