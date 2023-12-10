@@ -50,7 +50,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Log all requests
 app.all('*', function (request, response, next) {
-    reconsole.log(request.method + ' to ' + request.path);
+    console.log(request.method + ' to ' + request.path);
     next();
 });
 
