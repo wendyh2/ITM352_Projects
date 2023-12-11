@@ -54,7 +54,7 @@ header {
     padding: 20px 40px;
     text-decoration: none; /* Removing the underline that was part of it */
     transition: all .40s ease;
-    margin-left: 120px;
+    margin-left: 40px;
 }
 
 /* Hover effect for navigation menu items */
