@@ -50,6 +50,10 @@ app.use(express.urlencoded({ extended: true }));
 
 // Log all requests
 app.all('*', function (request, response, next) {
+    // if user does not have cart in session, set it up for them here **empty cart**
+    if(typeof request.session.cart === 'undefined') {
+        request.session.cart = {};
+    }
     console.log(request.method + ' to ' + request.path);
     next();
 });
@@ -115,9 +119,11 @@ app.post("/purchase", function (request, response, next) {
 
     // A loop, so when theres no errors at all the customers are send into the invoice 
     if (Object.keys(errors).length === 0) {
-
+        // add users selections to cart **SESSIONS**
+        
         // Redirects to the login screen and put values wanted/sold into query string
-        response.redirect("./login.html?" + querystring.stringify(request.body));
+        response.redirect("./products_display.html?" + querystring.stringify(request.body));
+        request.session.cart = request.body;
     } else { // This is if there were errors we send them back to the products display and are notified of the problems 
        
         // Make an empty cart in our session for user if one already doesn't exist 

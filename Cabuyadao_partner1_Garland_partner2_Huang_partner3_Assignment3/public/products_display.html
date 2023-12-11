@@ -148,7 +148,9 @@ Description: My Homepage
                             <input type="text" name="quantity${i}" id="quantity${i}" placeholder="0" value="0" onkeyup="update_total_selected();">
                             <div class="error_msg" id="error_quantity${i}_div"></div>
                         </div>
-                        <button class="add-to-cart" onclick="addToCart(${i})">Add to Cart</button>
+                        <!-- leave out for now -- adding individual items to cart
+                            <button class="add-to-cart" onclick="addToCart(${i})">Add to Cart</button>
+                            -->
                     </div>
                 </div>`
             );
@@ -168,10 +170,10 @@ Description: My Homepage
                         // Check if the current product key matches the provided 'prod_key'
                         if (pkey === prod_key) {
                             // If true, write a span with the page number and a 'current' class for styling
-                            document.write(`<span class="current">${pageNum}</span>`);
+                            document.write(`<span class="current">${pkey}</span>`);
                         } else {
                             // If false, write a link with the page number and a link to 'products_display.html' with the current product key
-                            document.write(`<a href="products_display.html?product_type=${pkey}">${pageNum}</a>`);
+                            document.write(`<a href="products_display.html?product_type=${pkey}">${pkey}</a>`);
                         }
 
                         // Increment the page number for the next iteration
