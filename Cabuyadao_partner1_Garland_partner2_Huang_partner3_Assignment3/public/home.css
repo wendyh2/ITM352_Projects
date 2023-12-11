@@ -61,7 +61,7 @@ header {
     padding: 20px 40px;
     text-decoration: none; /* Removing the underline that was part of it */
     transition: all .40s ease;
-    margin-left: 120px;
+    margin-left: 40px;
 }
 
 /* Styling for preventing logo cut-off and main-home section */
@@ -153,19 +153,13 @@ section {
     background-position: center;
 }
 
-.downarrow {
-    position: absolute;
-    top: 115%; /* Adjusted position */
-    right: 33%; /*For some reason I couldn't just center it so had to do it this weird long way by changing the right*/
-    transform: translateY(-50%); /* Center vertically */
-    text-align: center;
+
+.main-text h4{
+    margin-top: 60px;
+    color: rgb(96, 96, 96);
 }
 
-.downarrow h4{
-    color: rgb(123, 118, 118);
-}
-
-.downarrow span {
+.main-text span {
     color:  rgb(225, 50, 50); /* This is so that my Holiday shows up as red, separate from the text altogether. I want it to be red to match the holiday season */
 }
 
@@ -181,16 +175,20 @@ section {
 .down i:hover {
     color: white;
     background-color: rgb(219, 191, 249);
-}
+} 
 
-/* Here is where I have my popular Holiday nail sets styling section */
+/* Centering the text in the popular Holiday nail sets styling section */
 .center-text h2 {
     color:  rgb(96, 96, 96);
     font-size: 28px;
     margin-bottom: 40px;
     text-align: center;
     text-transform: capitalize;
+    margin-left: auto; /* Set left margin to auto */
+    margin-right: auto; /* Set right margin to auto */
+    width: 50%; /* Set a width to control the centering */
 }
+
 
 .center-text span {
     color:  rgb(225, 50, 50); /* This is so that my Holiday shows up as red, separate from the text altogether. I want it to be red to match the holiday season */
@@ -211,6 +209,7 @@ section {
     position: relative;
     background-color: white;
     border-radius: 15px;
+    text-align: center;
 }
 
 .row img {
@@ -222,20 +221,6 @@ section {
 
 .row:hover {
     transform: scale(0.92);
-}
-
-/* Add to cart button styles */
-.addtocart-icon {
-    position: absolute;
-    right: 10px; /* Adjusted right margin for better positioning */
-    bottom: 10px; /* Adjusted bottom margin for better positioning */
-    font-size: 22px;
-    transition: color 0.3s;
-    color: rgb(96, 96, 96);
-}
-
-.addtocart-icon:hover {
-    color: pink;
 }
 /* Price styles */
 .price {
