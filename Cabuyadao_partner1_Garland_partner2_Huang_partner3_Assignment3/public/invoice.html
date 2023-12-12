@@ -24,31 +24,51 @@
     rel="stylesheet">
 
   <script>
-     let params = (new URL(document.location)).searchParams;
-     let prod_key = "Lorelei Collection"; //Default to Lorelei page if product_type isn't specified in the querystring
-    if(params.has('product_type')) {
-        prod_key = params.get('product_type');
+    // This function asks the server for a "service" and converts the response to text. 
+    function loadJSON(service, callback) {
+      let xobj = new XMLHttpRequest();
+      xobj.overrideMimeType("application/json");
+      xobj.open('POST', service, false);
+      xobj.onreadystatechange = function () {
+        if (xobj.readyState == 4 && xobj.status == "200") {
+          // Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
+          callback(xobj.responseText);
+        }
+      };
+      xobj.send(null);
+    }
+
+    var cart_data;
+    loadJSON('cart_data', function (response) {
+      // Parsing JSON string into object
+      cart_data = JSON.parse(response);
+    });
+
+    let params = (new URL(document.location)).searchParams;
+    let prod_key = "Lorelei Collection"; //Default to Lorelei page if product_type isn't specified in the querystring
+    if (params.has('product_type')) {
+      prod_key = params.get('product_type');
     }
     let products = all_products[prod_key];
     // Got this from W3 schools get cookie section
     function getCookie(cname) {
-  let name = cname + "=";
-  let decodedCookie = decodeURIComponent(document.cookie);
-  let ca = decodedCookie.split(';');
-  for(let i = 0; i <ca.length; i++) {
-    let c = ca[i];
-    while (c.charAt(0) == ' ') {
-      c = c.substring(1);
+      let name = cname + "=";
+      let decodedCookie = decodeURIComponent(document.cookie);
+      let ca = decodedCookie.split(';');
+      for (let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) == ' ') {
+          c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+          return c.substring(name.length, c.length);
+        }
+      }
+      return "";
     }
-    if (c.indexOf(name) == 0) {
-      return c.substring(name.length, c.length);
-    }
-  }
-  return "";
-}
-    
+
     // if user does not have username cookies, send them to login
-    if (getCookie('userinfo') === ''){
+    if (getCookie('userinfo') === '') {
       location.href = "./login.html";
     }
     let userinfo = JSON.parse(getCookie('userinfo'));
@@ -57,15 +77,6 @@
     Sales Receipt
     */
 
-    //Quantities Arrayq
-    const quantities = []
-
-    // written by me in store 1 wod
-    for (i in products) {
-      if (params.has(`quantity${i}`)) {
-        const album = params.get(`quantity${i}`); quantities.push(album);
-      }
-    }
 
     // Subtotal
     var subtotal = 0;
@@ -145,8 +156,8 @@
   <div style="text-align: center;">
     <script>
       document.write(`<input id="logoutButton" type="button" value="Log Out" onclick="location.href ='./logout?username=${username}'">`)
-  </script>
-</div> 
+    </script>
+  </div>
   <div class="flex-box-container">
     <div class="flex-box">
       <!--Where I will print my invoice-->
@@ -163,18 +174,20 @@
           </tr>
           <script>
             // generates rows with prices based on quantities
-            function generate_item_rows(quantities) {
-              for (let i in quantities) {
-                if (quantities[i] == 0) { continue };
-                errors = findNonNegInt(quantities[i], true);
-                if (errors.length == 0) {
-                  var extended_price = quantities[i] * products[i].price;
-                  subtotal += extended_price;
-                }
-                else (extended_price = 0);
+            function generate_item_rows() {
+              for (let pkey in cart_data) {
+                let products = all_products[pkey];
+                for (let i in products) {
+                  let qty = cart_data [pkey]['quantity' + i ];
+                  errors = findNonNegInt(qty, true);
+                  if (errors.length == 0) {
+                    var extended_price = qty * products[i].price;
+                    subtotal += extended_price;
+                  }
+                  else (extended_price = 0);
 
-                // IR 5 - When diplaying the invoice, add a small icon image of the product to the line item, show description on mouseover
-                document.write(`
+                  // IR 5 - When diplaying the invoice, add a small icon image of the product to the line item, show description on mouseover
+                  document.write(`
             <tr>
              <td height="70px" width="11%">
               <div class="img-mouseover">
@@ -184,11 +197,12 @@
                   </div>
                 </div></td>
               <td width="26%">${products[i].name}</td>
-              <td align="center" width="11%">${quantities[i]}<br><font color = "red">${errors.join('<br>')}</td>
+              <td align="center" width="11%">${qty}<br><font color = "red">${errors.join('<br>')}</td>
               <td width="13%">$${products[i].price}</td>
               <td width="20%">$${(extended_price).toFixed(2)}</td>
             </tr>
             `)
+                }
               }
             }
 
@@ -201,7 +215,7 @@
               return returnErrors ? errors : (errors.length == 0);
             }
 
-            generate_item_rows(quantities);
+            generate_item_rows();
             // Tax rate
             var tax_rate = 0.04712;
             var tax = tax_rate * subtotal;
@@ -239,10 +253,10 @@
       </table>
       <h4><strong> Our shipping policy is: A subtotal of $0-$80 will be $10 shipping. Subtotals over $80 will have free
           shipping</strong></h4>
-          <script>
-            document.write(`We have emailed your invoice to ${userinfo ['email']}`)
-      
-            </script>
+      <script>
+        document.write(`We have emailed your invoice to ${userinfo['email']}`)
+
+      </script>
     </div>
   </div>
 </body>

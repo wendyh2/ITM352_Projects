@@ -65,6 +65,12 @@ app.get("/products_data.js", function (request, response, next) {
     response.send(products_str);
 });
 
+// Route to provide service to give sessions current shopping cart data, a microservice
+app.post("/cart_data", function (request, response, next) {
+    response.type('json');
+    response.send (JSON.stringify(request.session.cart));
+});
+
 // Route for getting number of logged in users
 app.get('/getLoggedInUsers.js', (request, response) => {
     // We just used the same code as products_data.js but modified it for numLoggedInUsers
@@ -122,8 +128,9 @@ app.post("/purchase", function (request, response, next) {
         // add users selections to cart **SESSIONS**
         
         // Redirects to the login screen and put values wanted/sold into query string
+        request.session.cart[request.body.product_type] = request.body;
         response.redirect("./products_display.html?" + querystring.stringify(request.body));
-        request.session.cart = request.body;
+        return
     } else { // This is if there were errors we send them back to the products display and are notified of the problems 
        
         // Make an empty cart in our session for user if one already doesn't exist 
