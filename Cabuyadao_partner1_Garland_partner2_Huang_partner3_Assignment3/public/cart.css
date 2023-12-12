@@ -1,0 +1,103 @@
+/*
+Author: Wendy Huang
+Assignment 2
+Date: 11/28/2023
+Description: CSS stylesheet for registration page 
+ */
+
+
+/* Header styles */
+header {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    right: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 2%;
+    background-image: url(img/purpstarsky.jpg);
+    background-position: center;
+    background-size: cover;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.06);
+}
+
+/* Logo styles */
+.logo {
+    max-width: 120px; /* Adjusted max-width */
+    height: auto;
+    margin-left: 100px; /* Adjusted margin */
+}
+
+/* Navigation menu styles */
+.navmenu {
+    display: flex;
+    font-family: 'Montserrat', sans-serif;
+    gap: 100px;
+    margin-right: 250px;
+}
+
+.navmenu a {
+    font-size: 18px;
+    color: white;
+    text-transform: capitalize;
+    font-weight: 400;
+    padding: 20px 40px;
+    text-decoration: none; /* Removing the underline that was part of it */
+    transition: all .40s ease;
+    margin-left: 120px;
+}
+
+/* Hover effect for navigation menu items */
+.navmenu a:hover{
+    color: pink;
+}
+
+/* Styling for preventing logo cut-off and main-home section */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 2%;
+}
+
+/* Cart Page Main Styles */
+body {
+    background-color: pink; /* Set the main background color */
+    font-family: 'Montserrat', sans-serif;
+}
+
+.flex-box-container {
+    background-color: pink; /* Set the background color for the container */
+    padding: 20px;
+    border-radius: 10px;
+    margin: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.flex-box {
+    background-color: white; /* Set the background color for each box */
+    padding: 20px;
+    border-radius: 10px;
+    margin: 20px;
+}
+.main-btn {
+    display: inline-block; /* Aligns the button correctly */
+    padding: 10px 20px; /* Adds space inside the button */
+    margin-top: 20px; /* Space above the button */
+    background-color: #007bff; /* Button background color */
+    color: white; /* Text color */
+    text-align: center; /* Centers the text inside the button */
+    border-radius: 5px; /* Rounds the corners of the button */
+    text-decoration: none; /* Removes the underline from the text */
+    font-weight: bold; /* Makes the font bold */
+    border: none; /* Removes the border */
+    cursor: pointer; /* Changes cursor to a hand icon when hovered */
+    transition: background-color 0.3s; /* Smooth background color transition on hover */
+    font-family: 'Montserrat', sans-serif; /* Font family (change as needed) */
+}
+
+.main-btn:hover {
+    background-color: #0056b3; /* Darker shade for hover state */
+}

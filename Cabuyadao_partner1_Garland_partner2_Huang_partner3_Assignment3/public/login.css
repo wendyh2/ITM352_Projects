@@ -49,7 +49,7 @@ header {
     padding: 20px 40px;
     text-decoration: none; /* Removing the underline that was part of it */
     transition: all .40s ease;
-    margin-left: 120px;
+    margin-left: 0px;
 }
 
 /* Hover effect for navigation menu items */
@@ -117,4 +117,42 @@ header {
 
 .text-spacing{
     padding: 10px 0px;
+}
+
+
+
+/* Cart icon styles */
+.cart-icon {
+    margin-top: 15px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    margin-right: 20px; /* Adjusted margin */
+    justify-content: center;
+    position: relative;
+   
+}
+
+.cart-icon span {
+display: flex;
+height: 20px;
+width: 20px;
+background-color: pink;
+justify-content: center;
+align-items: center;
+color: black;
+border-radius: 50%;
+position: absolute;
+top: 60%;
+right: 30px;
+font-size: 14px;
+}
+
+/* Cart icon styling */
+.cart-icon i {
+    font-size: 35px;
+}
+
+.cart-icon:hover .cart-text{
+    display: block;
 }

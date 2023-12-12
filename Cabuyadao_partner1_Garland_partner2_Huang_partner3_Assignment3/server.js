@@ -14,7 +14,7 @@ app.use(cookieParser());
 
 const session = require('express-session');
 
-app.use(session({secret: "MySecretKey", resave: true, saveUninitialized: true}));
+app.use(session({ secret: "MySecretKey", resave: true, saveUninitialized: true }));
 
 // IR1: Use crypto library to encrypt password
 const crypto = require('crypto');
@@ -51,7 +51,7 @@ app.use(express.urlencoded({ extended: true }));
 // Log all requests
 app.all('*', function (request, response, next) {
     // if user does not have cart in session, set it up for them here **empty cart**
-    if(typeof request.session.cart === 'undefined') {
+    if (typeof request.session.cart === 'undefined') {
         request.session.cart = {};
     }
     console.log(request.method + ' to ' + request.path);
@@ -65,10 +65,17 @@ app.get("/products_data.js", function (request, response, next) {
     response.send(products_str);
 });
 
+// Route to provide cart data as a JavaScript file
+app.get("/get_cart.js", function (request, response) {
+    response.type('.js');
+    const cart_str = `let cart = ${JSON.stringify(request.session.cart)}`;
+    response.send(cart_str);
+});
+
 // Route to provide service to give sessions current shopping cart data, a microservice
 app.post("/cart_data", function (request, response, next) {
     response.type('json');
-    response.send (JSON.stringify(request.session.cart));
+    response.send(JSON.stringify(request.session.cart));
 });
 
 // Route for getting number of logged in users
@@ -81,11 +88,21 @@ app.get('/getLoggedInUsers.js', (request, response) => {
     response.send(numLoggedInUsers);
 })
 
+// Check if an object is empty, code referenced from chatGPT
+function isEmpty(obj) {
+    // Check if the object is null or undefined first
+    if (obj == null || typeof obj === 'undefined') {
+        return true;
+    }
+
+    // Then check if the object has any keys
+    return Object.keys(obj).length === 0 && obj.constructor === Object;
+}
+
 // Process purchase request
 app.post("/purchase", function (request, response, next) {
-    console.log(request.body);
     let prod_key = request.body.product_type;
-    let products = all_products[prod_key]; 
+    let products = all_products[prod_key];
     // validate quantities
     const errors = {}; //assume no errors at start
     let hasQty = false; // assuming user did not select any valid quantities/products
@@ -126,38 +143,92 @@ app.post("/purchase", function (request, response, next) {
     // A loop, so when theres no errors at all the customers are send into the invoice 
     if (Object.keys(errors).length === 0) {
         // add users selections to cart **SESSIONS**
-        
-        // Redirects to the login screen and put values wanted/sold into query string
-        request.session.cart[request.body.product_type] = request.body;
-        response.redirect("./products_display.html?" + querystring.stringify(request.body));
-        return
-    } else { // This is if there were errors we send them back to the products display and are notified of the problems 
-       
-        // Make an empty cart in our session for user if one already doesn't exist 
-    //    if (typeof request.session.cart === 'undefined'){
-      //      request.session.cart = {};
-      //  }
-         // Add purchase quantities to session
-         // ASK DAN FOR HELP ON THIS 
-       //  request.session.cart[request.query.product_type] = {};
-      //   for (let i in products) {
-      //      const qty = request.body[`quantity${i}`];
-    
-            // Check if no quantities were selected - code from Assignment 1
-            // Did the user select any products? 
-         //   if (qty > 0) {
-      //          hasQty = true; //If they had quantity selected then 
-    //            hasInput = true;
-     //           request.session.cart[request.query.product_type] = [`quantity${i}`] =
-    //            user_quantity_data [`quantity${i}`];
-//         }
- //   }      
+
+        // Set prod_key to be the product_type which is the different nail collections
+        let prod_key = request.body.product_type;
+
+        // If cart is empty, fill it with values 
+        if (isEmpty(request.session.cart)) {
+            // Get the products of the collection we selected
+            let products = all_products[prod_key];
+            // Initialize quantities object
+            let quantities = {};
+
+            // Fill the quantities object with values from our request body
+            for (let i in products) {
+                quantities[`quantity${i}`] = request.body[`quantity${i}`];
+            }
+
+            // Add quantities to our session cart
+            request.session.cart[prod_key] = quantities;
+
+            response.redirect("./products_display.html?" + querystring.stringify(request.body));
+            return
+            // If cart already has items in it, adjust quantities if adding more of same items 
+        } else {
+            // This is to check the collection, the prod_key can be empty if we already have
+            // another collection added and chose a new collection
+            if (isEmpty(request.session.cart[prod_key])) {
+                // Get the products of the collection we selected
+                let products = all_products[prod_key];
+                // Initialize quantities object
+                let quantities = {};
+
+                // Fill the quantities object with values from our request body
+                for (let i in products) {
+                    quantities[`quantity${i}`] = request.body[`quantity${i}`];
+                }
+
+                // Add quantities to our session cart
+                request.session.cart[prod_key] = quantities;
+
+                response.redirect("./products_display.html?" + querystring.stringify(request.body));
+                return
+                // Update quantities if we already have some quantities of the same collection selected
+            } else {
+                // Get the products of the collection we selected
+                let products = all_products[prod_key];
+                // Initialize quantities object
+                let quantities = {};
+
+                // Add our request body quantities to our existing cart quantities
+                for (let i in products) {
+                    quantities[`quantity${i}`] = Number(request.body[`quantity${i}`]) + Number(request.session.cart[prod_key][`quantity${i}`]);
+                }
+
+                // Update session cart
+                request.session.cart[prod_key] = quantities;
+                response.redirect("./products_display.html?" + querystring.stringify(request.body));
+                return
+            }
         }
-        response.redirect(
-            "./products_display.html?" + querystring.stringify(request.body) + "&" + querystring.stringify(errors)
-        ); //We will be redirected to either a invoice page with the data we input if there are errors then we will be redirected to our products display with the errors we found
-        console.log(request.body);
+    } else { // This is if there were errors we send them back to the products display and are notified of the problems 
+
+        // Make an empty cart in our session for user if one already doesn't exist 
+        //    if (typeof request.session.cart === 'undefined'){
+        //      request.session.cart = {};
+        //  }
+        // Add purchase quantities to session
+        // ASK DAN FOR HELP ON THIS 
+        //  request.session.cart[request.query.product_type] = {};
+        //   for (let i in products) {
+        //      const qty = request.body[`quantity${i}`];
+
+        // Check if no quantities were selected - code from Assignment 1
+        // Did the user select any products? 
+        //   if (qty > 0) {
+        //          hasQty = true; //If they had quantity selected then 
+        //            hasInput = true;
+        //           request.session.cart[request.query.product_type] = [`quantity${i}`] =
+        //            user_quantity_data [`quantity${i}`];
+        //         }
+        //   }      
     }
+    response.redirect(
+        "./products_display.html?" + querystring.stringify(request.body) + "&" + querystring.stringify(errors)
+    ); //We will be redirected to either a invoice page with the data we input if there are errors then we will be redirected to our products display with the errors we found
+    console.log(request.body);
+}
 );
 
 
@@ -185,7 +256,7 @@ app.post("/login", function (request, response, next) {
     if (Object.keys(errors).length === 0) {
         let name = user_registration_info[username].name;
         // send a usernames cookie to indicate they're logged in
-        response.cookie ("userinfo", JSON.stringify({"email": username, "full_name": name}), {expire: Date.now() + 60*1000});
+        response.cookie("userinfo", JSON.stringify({ "email": username, "full_name": name }), { expire: Date.now() + 60 * 1000 });
         // IR4 - Keep track of the number of times a user logged in and the last time they logged in.
         user_registration_info[username].loginCount += 1;
         user_registration_info[username].lastLoginDate = Date.now();
@@ -203,13 +274,17 @@ app.post("/login", function (request, response, next) {
 
         // When the purchase is valid this will reduce our inventory by the amounts purchased
 
-        for (let i in all_products) {
-            // Append quantities purchased to params
-            params.append(`quantity${i}`, request.body[`quantity${i}`]);
+        for (let pkey in request.session.cart) {
+            let products = all_products[pkey];
+            // // Append quantities purchased to params
+            // params.append(`quantity${i}`, request.body[`quantity${i}`]);
             // Update sets available
-            all_products[i].sets_available -= Number(request.body[`quantity${i}`]);
-            // Track total quantity of each item sold - code from Assignment 1
-            all_products[i].sets_sold += Number(request.body[`quantity${i}`]);
+            // THIS IS BROKEN CURRENTLY
+            for (let product in products) {
+                all_products[pkey][product].sets_available -= Number(request.body[`quantity${product}`]);
+                // Track total quantity of each item sold - code from Assignment 1
+                all_products[pkey][product].sets_sold += Number(request.body[`quantity${product}`]);
+            }
         }
 
         // Redirect to invoice.html with the new params values

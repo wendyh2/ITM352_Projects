@@ -56,7 +56,7 @@ header {
     padding: 20px 40px;
     text-decoration: none; /* Removing the underline that was part of it */
     transition: all .40s ease;
-    margin-left: 40px;
+    margin-left: 0px;
 }
 
 /* Cart icon styles */
@@ -95,7 +95,7 @@ font-size: 14px;
     display: block;
 }
 
-/* Cart text below the icon 
+/* Cart text below the icon DELETE THIS
 .cart-text {
     position: absolute;
     color: white;

@@ -20,8 +20,8 @@
   "itm352@hawaii.edu": {
     "name": "Michelle Zhang",
     "password": "1c543c5e4336fdff03dcac8a8242ac9eb496c123b429b3f2cc7af6d9529f332a",
-    "lastLoginDate": 1701759112981,
-    "loginCount": 2
+    "lastLoginDate": 1702391281758,
+    "loginCount": 3
   },
   "apple@edu.com": {
     "name": "Adam Apple",
@@ -75,6 +75,12 @@
     "name": "Crystal Meth",
     "password": "cbda979e53fe4a828d8d1860685d53b5dc8ed93cffbe733ba7fa54a06ae35965",
     "lastLoginDate": 1701855882863,
+    "loginCount": 1
+  },
+  "colin@hawaii.edu": {
+    "name": "Colin Smith",
+    "password": "cbda979e53fe4a828d8d1860685d53b5dc8ed93cffbe733ba7fa54a06ae35965",
+    "lastLoginDate": 1702392155266,
     "loginCount": 1
   }
 }
