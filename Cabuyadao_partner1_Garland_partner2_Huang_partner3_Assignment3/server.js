@@ -68,6 +68,12 @@ if (fs.existsSync(filename)) {
 
     // Convert user_registration_info to object
     var user_registration_info = JSON.parse(user_registration_info_obj_JSON);
+// Function to check if a user is an admin
+function isAdmin(username) {
+    // Assuming user_registration_info contains a field 'role' for each user
+    return user_registration_info[username] && user_registration_info[username].role === 'admin';
+}
+
 
     // If file is not found
 } else {
@@ -242,7 +248,6 @@ app.post("/purchase", function (request, response, next) {
 
 // Login route, this is a post request and processes username and password against data in user_registration_info.json
 app.post("/login", function (request, response, next) {
-
     // Initialize empty errors
     const errors = {};
 
@@ -251,7 +256,7 @@ app.post("/login", function (request, response, next) {
     let password = request.body["password"];
 
     // Check if username exists in user_registration_info.json
-    if (user_registration_info.hasOwnProperty(username) === true) {
+    if (user_registration_info.hasOwnProperty(username)) {
         // IR1: Encrypt the password and check it against the user_registration_info encrypted password 
         if (hashPassword(password) !== user_registration_info[username].password) {
             errors[`password_error`] = "Password is incorrect.";
@@ -260,47 +265,37 @@ app.post("/login", function (request, response, next) {
         errors[`username_error`] = `${username} is not a registered email.`;
     }
 
-    // If all the login information is valid, redirect to invoice.html with quantities of items purchased, and username and name of user
+    // If all the login information is valid
     if (Object.keys(errors).length === 0) {
         let name = user_registration_info[username].name;
-        // send a usernames cookie to indicate they're logged in
-        response.cookie("userinfo", JSON.stringify({ "email": username, "full_name": name }), { expire: Date.now() + 60 * 1000 });
-        // IR4 - Keep track of the number of times a user logged in and the last time they logged in.
-        user_registration_info[username].loginCount += 1;
-        user_registration_info[username].lastLoginDate = Date.now();
 
-        // IR5: Add username to keep track of amount of logged in users
-        // Check if loggedInUsers already has the username so that we don't login more than once for the same user
-        if (!loggedInUsers.hasOwnProperty(username)) {
-            loggedInUsers[username] = true; // You can use `true` to indicate that the user is logged in.
-        }
+        // Check if the user is an admin
+        if (isAdmin(username)) {
+            // Redirect to the admin panel page
+            response.redirect("./admin_panel.html");
+        } else {
+            // Regular user logic
+            // send a usernames cookie to indicate they're logged in
+            response.cookie("userinfo", JSON.stringify({ "email": username, "full_name": name }), { expire: Date.now() + 60 * 1000 });
+            // IR4 - Keep track of the number of times a user logged in and the last time they logged in.
+            user_registration_info[username].loginCount += 1;
+            user_registration_info[username].lastLoginDate = Date.now();
 
-        // Create params variable and add username and name fields
-        let params = new URLSearchParams();
-        params.append("loginCount", user_registration_info[username].loginCount);
-        params.append("lastLogin", user_registration_info[username].lastLoginDate);
-
-        // When the purchase is valid this will reduce our inventory by the amounts purchased
-
-        for (let pkey in request.session.cart) {
-            let products = all_products[pkey];
-            // // Append quantities purchased to params
-            // params.append(`quantity${i}`, request.body[`quantity${i}`]);
-            // Update sets available
-            // THIS IS BROKEN CURRENTLY
-            for (let product in products) {
-                all_products[pkey][product].sets_available -= Number(request.body[`quantity${product}`]);
-                // Track total quantity of each item sold - code from Assignment 1
-                all_products[pkey][product].sets_sold += Number(request.body[`quantity${product}`]);
+            // IR5: Add username to keep track of amount of logged in users
+            if (!loggedInUsers.hasOwnProperty(username)) {
+                loggedInUsers[username] = true;
             }
-        }
 
-        // Redirect to invoice.html with the new params values
-        response.redirect("./invoice.html?" + params.toString());
-    }
-    // If login information is invalid, redirects to login page and gives error
-    else {
-        // Create params variable and add username, name, and errorString fields
+            // Create params variable and add username and name fields
+            let params = new URLSearchParams();
+            params.append("loginCount", user_registration_info[username].loginCount);
+            params.append("lastLogin", user_registration_info[username].lastLoginDate);
+
+            // Redirect to invoice.html with the new params values
+            response.redirect("./invoice.html?" + params.toString());
+        }
+    } else {
+        // If login information is invalid, redirects to login page and gives error
         let params = new URLSearchParams(request.body);
         params.append("username", username);
         params.append("errorString", JSON.stringify(errors));
@@ -515,6 +510,110 @@ app.get('/logout', (request, response) => {
 
 // Serve static files
 app.use(express.static(__dirname + '/public'));
+
+
+// Admin Routes
+
+// Admin login route
+app.post('/admin/login', function (request, response) {
+    let username = request.body.username;
+    let password = request.body.password;
+    if (isAdmin(username) && user_registration_info[username].password === hashPassword(password)) {
+        request.session.isAdmin = true;
+        response.send({ success: true });
+    } else {
+        response.send({ success: false, message: 'Invalid credentials or not an admin' });
+    }
+});
+
+// Admin add/edit/delete inventory route
+app.post('/admin/inventory', function (request, response) {
+    if (!request.session.isAdmin) {
+        response.status(403).send('Access denied');
+        return;
+    }
+
+    const action = request.body.action;
+    const product = request.body.product;
+
+    switch (action) {
+        case 'add':
+            all_products[product.id] = product; // Assuming product object contains all necessary details
+            break;
+        case 'edit':
+            if (all_products[product.id]) {
+                all_products[product.id] = product;
+            } else {
+                response.status(404).send('Product not found');
+                return;
+            }
+            break;
+        case 'delete':
+            if (all_products[product.id]) {
+                delete all_products[product.id];
+            } else {
+                response.status(404).send('Product not found');
+                return;
+            }
+            break;
+        default:
+            response.status(400).send('Invalid action');
+            return;
+    }
+
+    response.send({ success: true, message: 'Inventory updated' });
+});
+
+// Admin add/edit/delete user accounts route
+app.post('/admin/users', function (request, response) {
+    if (!request.session.isAdmin) {
+        return response.status(403).send('Access denied');
+    }
+
+    const { action, username, userData } = request.body;
+
+    switch (action) {
+        case 'add':
+            // Add a new user
+            if (!user_registration_info[username]) {
+                user_registration_info[username] = userData;
+            } else {
+                return response.status(400).send('User already exists');
+            }
+            break;
+        case 'edit':
+            // Edit an existing user
+            if (user_registration_info[username]) {
+                user_registration_info[username] = { ...user_registration_info[username], ...userData };
+            } else {
+                return response.status(404).send('User not found');
+            }
+            break;
+        case 'delete':
+            // Delete a user
+            if (user_registration_info[username]) {
+                delete user_registration_info[username];
+            } else {
+                return response.status(404).send('User not found');
+            }
+            break;
+        case 'toggleAdmin':
+            // Toggle admin role
+            if (user_registration_info[username]) {
+                user_registration_info[username].role = user_registration_info[username].role === 'admin' ? 'user' : 'admin';
+            } else {
+                return response.status(404).send('User not found');
+            }
+            break;
+        default:
+            return response.status(400).send('Invalid action');
+    }
+
+    // Save changes to file
+    fs.writeFileSync(filename, JSON.stringify(user_registration_info, null, 2));
+
+    response.send({ success: true, message: 'User account updated' });
+});
 
 // Start server
 app.listen(8080, () => console.log(`listening on port 8080`));

@@ -3,84 +3,111 @@
     "name": "Karie Smith",
     "password": "cbda979e53fe4a828d8d1860685d53b5dc8ed93cffbe733ba7fa54a06ae35965",
     "lastLoginDate": 1701670223061,
-    "loginCount": 4
+    "loginCount": 4,
+    "role": "user"
   },
   "xander@yahoo.com": {
     "name": "Xander Woo",
     "password": "cbda979e53fe4a828d8d1860685d53b5dc8ed93cffbe733ba7fa54a06ae35965",
     "lastLoginDate": 1701658070244,
-    "loginCount": 1
+    "loginCount": 1,
+    "role": "user"
   },
   "tony@hawaii.edu": {
     "name": "Tony Lot",
     "password": "cbda979e53fe4a828d8d1860685d53b5dc8ed93cffbe733ba7fa54a06ae35965",
     "lastLoginDate": 1701670349026,
-    "loginCount": 1
+    "loginCount": 1,
+    "role": "user"
   },
   "itm352@hawaii.edu": {
     "name": "Michelle Zhang",
     "password": "1c543c5e4336fdff03dcac8a8242ac9eb496c123b429b3f2cc7af6d9529f332a",
     "lastLoginDate": 1702391281758,
-    "loginCount": 3
+    "loginCount": 3,
+    "role": "user"
   },
   "apple@edu.com": {
     "name": "Adam Apple",
     "password": "558b937c706b4a38a9133f85dbd47b9dcae6fa22722255572ae6a1ea29844297",
     "lastLoginDate": 1701749454090,
-    "loginCount": 1
+    "loginCount": 1,
+    "role": "user"
   },
   "asdf@edu.com": {
     "name": "Test Test",
     "password": "558b937c706b4a38a9133f85dbd47b9dcae6fa22722255572ae6a1ea29844297",
     "lastLoginDate": 1701753982310,
-    "loginCount": 1
+    "loginCount": 1,
+    "role": "user"
   },
   "carol@hawaii.edu": {
     "name": "Carol Lee",
     "password": "cbda979e53fe4a828d8d1860685d53b5dc8ed93cffbe733ba7fa54a06ae35965",
     "lastLoginDate": 1701759792737,
-    "loginCount": 1
+    "loginCount": 1,
+    "role": "user"
   },
   "layla@hawaii.edu": {
     "name": "Layla Dang",
     "password": "cbda979e53fe4a828d8d1860685d53b5dc8ed93cffbe733ba7fa54a06ae35965",
     "lastLoginDate": 1701763883420,
-    "loginCount": 1
+    "loginCount": 1,
+    "role": "user"
   },
   "paris@hawaii.edu": {
     "name": "Paris Hilton",
     "password": "cbda979e53fe4a828d8d1860685d53b5dc8ed93cffbe733ba7fa54a06ae35965",
     "lastLoginDate": 1701826690469,
-    "loginCount": 1
+    "loginCount": 1,
+    "role": "user"
   },
   "london@hawaii.edu": {
     "name": "London Tipton",
     "password": "cbda979e53fe4a828d8d1860685d53b5dc8ed93cffbe733ba7fa54a06ae35965",
     "lastLoginDate": 1701827274635,
-    "loginCount": 1
+    "loginCount": 1,
+    "role": "user"
   },
   "miley@hawaii.edu": {
     "name": "Miley Cyrus",
     "password": "cbda979e53fe4a828d8d1860685d53b5dc8ed93cffbe733ba7fa54a06ae35965",
     "lastLoginDate": 1701839518382,
-    "loginCount": 1
+    "loginCount": 1,
+    "role": "user"
   },
   "barack@obama.com": {
     "name": "Barack Obama",
     "password": "cbda979e53fe4a828d8d1860685d53b5dc8ed93cffbe733ba7fa54a06ae35965",
     "lastLoginDate": 1701854901543,
-    "loginCount": 1
+    "loginCount": 1,
+    "role": "user"
   },
   "crystal@meth.com": {
     "name": "Crystal Meth",
     "password": "cbda979e53fe4a828d8d1860685d53b5dc8ed93cffbe733ba7fa54a06ae35965",
     "lastLoginDate": 1701855882863,
-    "loginCount": 1
+    "loginCount": 1,
+    "role": "user"
   },
   "colin@hawaii.edu": {
     "name": "Colin Smith",
     "password": "cbda979e53fe4a828d8d1860685d53b5dc8ed93cffbe733ba7fa54a06ae35965",
     "lastLoginDate": 1702392155266,
+    "loginCount": 1,
+    "role": "user"
+  },
+  "admin@hawaii.edu": {
+    "name": "Main Admin",
+    "password": "e8f47b347e0fd41a5c66b5fa74a734e3fc9f98cd6671d2901128d44a99fa5ab5",
+    "lastLoginDate": 1702502712904,
+    "loginCount": 1,
+    "role": "admin"
+  },
+  "scott997@hawaii.edu": {
+    "name": "Scott Garland",
+    "password": "5fae201379aebe543d83f6e866124532eea995d646ff3ece30b0dc815215a39f",
+    "lastLoginDate": 1702504576557,
     "loginCount": 1
   }
 }

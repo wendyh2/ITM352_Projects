@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+        }
+        .panel {
+            background: #fff;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .panel-heading {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+        .form-group {
+            margin-bottom: 10px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-group input[type="text"], 
+        .form-group input[type="email"], 
+        .form-group input[type="password"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .form-group button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            border: none;
+            background-color: #333;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .form-group button:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="panel">
+            <div class="panel-heading">Inventory Management</div>
+            <div class="form-group">
+                <label for="productId">Product ID</label>
+                <input type="text" id="productId" placeholder="Enter Product ID">
+            </div>
+            <div class="form-group">
+                <label for="productData">Product Data (JSON)</label>
+                <textarea id="productData" rows="4" placeholder="Enter Product Data as JSON"></textarea>
+            </div>
+            <div class="form-group">
+                <button onclick="handleInventoryUpdate()">Update Inventory</button>
+            </div>
+        </div>
+
+        <div class="panel">
+            <div class="panel-heading">User Account Management</div>
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" placeholder="Enter Username">
+            </div>
+            <div class="form-group">
+                <label for="userData">User Data (JSON)</label>
+                <textarea id="userData" rows="4" placeholder="Enter User Data as JSON"></textarea>
+            </div>
+            <div class="form-group">
+                <button onclick="handleUserUpdate()">Update User Account</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function handleInventoryUpdate() {
+    var productId = document.getElementById('productId').value;
+    var productData = JSON.parse(document.getElementById('productData').value);
+
+    fetch('/admin/inventory', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ action: 'edit', product: { id: productId, ...productData } })
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert(data.message);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+
+function handleUserUpdate() {
+    var username = document.getElementById('username').value;
+    var userData = JSON.parse(document.getElementById('userData').value);
+
+    fetch('/admin/users', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ action: 'edit', user: { username: username, ...userData } })
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert(data.message);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+
+    </script>
+</body>
+</html>
