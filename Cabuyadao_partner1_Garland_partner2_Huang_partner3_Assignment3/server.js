@@ -19,7 +19,7 @@ app.use(session({
     secret: "YourSecretKey",
     resave: false,
     saveUninitialized: true,
-    cookie: { maxAge: 24 * 60 * 60 * 1000 } // 24 hours, for example
+    cookie: { maxAge: 24 * 60 * 60 * 1000 } // set max cookie age for 24 hours so it does not stay and cause issues in the long term. 
 }));
 
 // Middleware to store and redirect to the last visited page
