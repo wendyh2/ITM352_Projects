@@ -230,27 +230,7 @@ app.post("/purchase", function (request, response, next) {
                 return
             }
         }
-    } else { // This is if there were errors we send them back to the products display and are notified of the problems 
-
-        // Make an empty cart in our session for user if one already doesn't exist 
-        //    if (typeof request.session.cart === 'undefined'){
-        //      request.session.cart = {};
-        //  }
-        // Add purchase quantities to session
-        // ASK DAN FOR HELP ON THIS 
-        //  request.session.cart[request.query.product_type] = {};
-        //   for (let i in products) {
-        //      const qty = request.body[`quantity${i}`];
-
-        // Check if no quantities were selected - code from Assignment 1
-        // Did the user select any products? 
-        //   if (qty > 0) {
-        //          hasQty = true; //If they had quantity selected then 
-        //            hasInput = true;
-        //           request.session.cart[request.query.product_type] = [`quantity${i}`] =
-        //            user_quantity_data [`quantity${i}`];
-        //         }
-        //   }      
+    } else {       
     }
     response.redirect(
         "./products_display.html?" + querystring.stringify(request.body) + "&" + querystring.stringify(errors)
