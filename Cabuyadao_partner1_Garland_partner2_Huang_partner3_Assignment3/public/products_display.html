@@ -55,10 +55,11 @@ Description: My Homepage
                 document.getElementById('purchase_button').value = "Quantity of at least 1 product exceeds quantity available";
             }
         }
+
         // if the user did not select any quanitities, let them kmow
         // if the is an error for the quantity for product i, display it in the error div
         if (params.has("noQty")) {
-            //IR4: Change purchase button text from "Purchase" to text that indicates why the purchase is invalid
+            // IR4: Change purchase button text from "Purchase" to text that indicates why the purchase is invalid
             document.getElementById('purchase_button').value = params.get("noQty");
         }
     }
@@ -73,6 +74,37 @@ Description: My Homepage
             cart_total_span.innerHTML = total_selected;
         }
     }
+    // IR3: Have a search feature that enables users to find products by name, type, or something in their description. Search results show up immediately on the current page and enable users to select them without leaving the current page. 
+    function filterProducts() {
+    // Declare variables to be used in the function
+    let input, filter, container, products, title, i, txtValue;
+    // Get the search input element by its ID
+    input = document.getElementById('searchInput');
+    // Convert the search input value to uppercase for case-insensitive comparison
+    filter = input.value.toUpperCase();
+    // Get the container element that holds all products
+    container = document.getElementById("productContainer");
+    // Retrieve all product elements within the container
+    products = container.getElementsByClassName('row');
+    // Iterate over each product
+    for (i = 0; i < products.length; i++) {
+        // Get the first element with class 'product-text' (assumed to be the title) within the product
+        title = products[i].getElementsByClassName("product-text")[0];
+        // If a title element is found
+        if (title) {
+            // Get the text content of the title element
+            txtValue = title.textContent || title.innerText;
+            // Check if the title text contains the search string
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                // If found, display the product
+                products[i].style.display = "";
+            } else {
+                // If not found, hide the product
+                products[i].style.display = "none";
+            }
+        }
+    }
+}
 
 </script>
 
@@ -107,12 +139,14 @@ Description: My Homepage
             <a href="home.html">Home</a>
             <a href="about.html">About</a>
             <a href="contact.html">Contact</a>
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Search Nail Sets" onkeyup="filterProducts()">
+                <i class='bx bx-search-alt' style='color:#eebaba'></i>            
+            </div>            
             <a href="login.html">Login</a>
-
             <div class="cart-icon">
                 <a href="cart.html"><i class="fa-solid fa-bag-shopping"></i></a>
                 <span>0</span>
-            </div>
         </div>
         </div>
     </header>
@@ -156,14 +190,11 @@ Description: My Homepage
         };
     </script>
 </div>
-
-
             <!-- Add to cart button -->
             <input type="submit" class="purchase_button" id="purchase_button" value="Add to Cart">
-            <div class="pagination">
-                <script>
-                    let pageNum = 1; // Initialize the page number counter
 
+            <div class="collection">
+                <script>
                     // Loop through each product key in the 'all_products' object
                     for (let pkey in all_products) {
                         // Check if the current product key matches the provided 'prod_key'
@@ -174,9 +205,6 @@ Description: My Homepage
                             // If false, write a link with the page number and a link to 'products_display.html' with the current product key
                             document.write(`<a href="products_display.html?product_type=${pkey}">${pkey}</a>`);
                         }
-
-                        // Increment the page number for the next iteration
-                        pageNum++;
                     }
                 </script>
             </div>
