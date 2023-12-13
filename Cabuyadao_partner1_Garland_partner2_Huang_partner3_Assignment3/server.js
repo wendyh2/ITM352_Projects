@@ -14,7 +14,35 @@ app.use(cookieParser());
 
 const session = require('express-session');
 
-app.use(session({ secret: "MySecretKey", resave: true, saveUninitialized: true }));
+//test for IR1
+app.use(session({
+    secret: "YourSecretKey",
+    resave: false,
+    saveUninitialized: true,
+    cookie: { maxAge: 24 * 60 * 60 * 1000 } // 24 hours, for example
+}));
+
+// Middleware to store and redirect to the last visited page
+app.use(function (request, response, next) {
+    const nonStorePaths = ['/login', '/logout', '/register', '/', '/index.html', '/server.js'];
+    const assetExtensions = ['.jpg', '.png', '.gif', '.css', '.js'];
+    const currentPath = request.url;
+
+    // Check if the path is not an asset and not in the nonStorePaths array
+    if (!assetExtensions.some(ext => currentPath.endsWith(ext)) && !nonStorePaths.includes(currentPath)) {
+        request.session.lastVisitedPage = currentPath;
+    }
+
+    // Redirect to the last visited page if the current request is for the home page and there's a stored page
+    if ((currentPath === '/' || currentPath === '/index.html') && request.session.lastVisitedPage) {
+        const lastPage = request.session.lastVisitedPage;
+        request.session.lastVisitedPage = null; // Clear to avoid repeated redirections
+        return response.redirect(lastPage);
+    }
+
+    next();
+});
+//End of test for IR1
 
 // IR1: Use crypto library to encrypt password
 const crypto = require('crypto');
