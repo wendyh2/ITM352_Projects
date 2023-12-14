@@ -58,7 +58,7 @@
             <a href="about.html">About</a>
             <a href="contact.html">Contact</a>
             <div class="cart-icon">
-                <a href="invoice.html"><i class="fa-solid fa-bag-shopping"></i></a>
+                <a href="cart.html"><i class="fa-solid fa-bag-shopping"></i></a>
             </div>
         </div>
     </header>
@@ -72,6 +72,8 @@
         <input type="submit">Login to Complete Purchase</input>
     </form> -->
 
+<!--form to post cart quantity updates-->
+<form id="updateCart" action="./update_cart" method="POST">
 
     <div class="flex-box-container">
         <div class="flex-box">
@@ -94,6 +96,7 @@
                                 let products = all_products[pkey];
                                 for (let i in products) {
                                     let qty = cart_data[pkey]['quantity' + i];
+                                    if(qty > 0){
                                     errors = findNonNegInt(qty, true);
                                     if (errors.length == 0) {
                                         var extended_price = qty * products[i].price;
@@ -112,12 +115,13 @@
                   </div>
                 </div></td>
               <td width="26%">${products[i].name}</td>
-              <td align="center" width="11%">${qty}<br><font color = "red">${errors.join('<br>')}</td>
+              <td align="center" width="11%"><input type="number" name="cart_${pkey}_${i}" value="${qty}" min="0" max="${products[i].sets_available}"></td>
               <td width="13%">$${products[i].price}</td>
               <td width="20%">$${(extended_price).toFixed(2)}</td>
             </tr>
             `)
                                 }
+                            }
                             }
                         }
 
@@ -166,6 +170,9 @@
                     </script>
                 </tbody>
             </table>
+            <input type="submit" class="purchase_button" id="purchase_button" value="Update Cart">
+    </div>
+</form>
                 <!-- Login to Check Out Button -->
                 <a href="./checkout"><button>Check Out</button></a>
             <h4><strong> Our shipping policy is: A subtotal of $0-$80 will be $10 shipping. Subtotals over $80 will have
