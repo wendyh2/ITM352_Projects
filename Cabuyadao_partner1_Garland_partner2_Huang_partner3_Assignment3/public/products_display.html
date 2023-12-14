@@ -106,6 +106,22 @@ Description: My Homepage
     }
 }
 
+function update_total_selected() {
+    let total_selected = 0; // Initialize a variable to hold the total quantity of selected items
+
+    // Loop through each product in the 'products' array/object
+    for (let i in products) {
+        // For each product, get the quantity from the corresponding input field
+        // Parse it as an integer. If it's not a number (NaN), use 0 as a default
+        total_selected += parseInt(document.getElementById(`quantity${i}`).value) || 0;
+    }
+
+    // Update the text content of the <span> inside the cart icon
+    // This <span> shows the total quantity of selected items
+    document.querySelector('.cart-icon span').textContent = total_selected;
+}
+
+
 </script>
 
 <!DOCTYPE html>

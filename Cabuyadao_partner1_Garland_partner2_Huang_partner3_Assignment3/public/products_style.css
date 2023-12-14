@@ -82,36 +82,18 @@ color: black;
 border-radius: 50%;
 position: absolute;
 top: 60%;
-right: 30px;
+right: 0px;
 font-size: 14px;
 }
 
 /* Cart icon styling */
 .cart-icon i {
-    font-size: 30px;
+    font-size: 35px;
 }
 
 .cart-icon:hover .cart-text{
     display: block;
 }
-
-/* Cart text below the icon DELETE THIS
-.cart-text {
-    position: absolute;
-    color: white;
-    display: none;
-    background-color: pink;
-    color: rgb(96, 96, 96);
-    padding: 10px;
-    border-radius: 10px;
-    text-align: center;
-    margin-top: 100px;
-    margin-left: 50px;
-}
-
-i:hover .cart-text{
-    display: block;
-}*/
 
 /* Styling for preventing logo cut-off and main-home section */
 header {
