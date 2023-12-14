@@ -1,0 +1,55 @@
+/* Header styles */
+header {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    right: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 2%;
+    background-image: url(img/purpstarsky.jpg);
+    background-position: center;
+    background-size: cover;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.06);
+}
+
+/* Logo styles */
+.logo {
+    max-width: 120px; /* Adjusted max-width */
+    height: auto;
+    margin-left: 100px; /* Adjusted margin */
+}
+
+/* Navigation menu styles */
+.navmenu {
+    display: flex;
+    font-family: 'Montserrat', sans-serif;
+    gap: 100px;
+    margin-right: 250px;
+}
+
+.navmenu a {
+    font-size: 18px;
+    color: white;
+    text-transform: capitalize;
+    font-weight: 400;
+    padding: 20px 40px;
+    text-decoration: none; /* Removing the underline that was part of it */
+    transition: all .40s ease;
+    margin-left: 0px;
+}
+
+/* Hover effect for navigation menu items */
+.navmenu a:hover{
+    color: pink;
+}
+
+/* Styling for preventing logo cut-off and main-home section */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 2%;
+}

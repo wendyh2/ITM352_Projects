@@ -74,10 +74,6 @@ section {
     padding: auto;
 }
 
-h2 {
-    margin-bottom: 155px;
-}
-
 p {
     line-height: 1.6;
     color: rgb(96, 96, 96);
@@ -88,11 +84,15 @@ h3 {
     text-align: center;
     color: rgb(96, 96, 96);
     font-size: 22px;
+    margin-bottom: 20px; /* Add margin to push it down */
 }
 
 h3 span {
     font-size: 50px;
     color: rgb(136, 174, 206);
+    display: block; /* Make it a block element */
+    text-align: center; /* Center the content horizontally */
+    margin-top: 185px;
 }
 
 /* Contact section from the home CSS */
