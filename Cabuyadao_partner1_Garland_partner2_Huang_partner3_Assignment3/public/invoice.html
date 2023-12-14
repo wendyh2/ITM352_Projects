@@ -187,6 +187,9 @@
                 let products = all_products[pkey];
                 for (let i in products) {
                   let qty = cart_data[pkey]['quantity' + i];
+                  if(qty == 0) {
+                    continue;
+                  }
                   errors = findNonNegInt(qty, true);
                   if (errors.length == 0) {
                     var extended_price = qty * products[i].price;

@@ -446,7 +446,7 @@ app.post('/viewInvoice', (request, response) => {
 
 app.get('/checkout', (request, response) => {
     // check if user is logged in. If not, redirect to login
-    if(!request.cookies.userinfo) {
+    if (!request.cookies.userinfo) {
         response.redirect('./login.html');
         return;
     }
@@ -471,62 +471,53 @@ app.get('/checkout', (request, response) => {
 
 // update the session quantities with updated amounts from cart
 app.post("/update_cart", function (request, response, next) {
-	// set updated_cart variable to the contents of the request body
-	var updated_cart = request.body;
+    // set updated_cart variable to the contents of the request body
+    var updated_cart = request.body;
 
-	// empty errors
-	var errors = {};
+    // empty errors
+    var errors = {};
+    // validate updated quantities
+    for (let updatekey in updated_cart) { // loop through updated cart
+        let prod_key = updatekey.split("_")[1]; // get product type
+        let prod_num = updatekey.split("_")[2]; // get product number
+        // updates the cart with the new quantities
+        request.session.cart[prod_key]["quantity"+prod_num]=updated_cart[updatekey];
+    }
 
-	if (Object.keys(errors).length == 0) {
-		for(let pkey in all_products){	
-        for (let i in all_products[pkey]) {
-				// if there is no value then move to the next product
-				if (typeof updated_cart[`cart_${pkey}_${i}`] == "undefined") {
-					continue;
-				}
+    if (Object.keys(errors).length == 0) {
+        // no errors so update cart
+    } else {
+        let params = new URLSearchParams();
+        params.append("errors", JSON.stringify(errors));
+        response.redirect(`./cart.html?${params.toString()}`);
+    }
 
-				// if quantity is 0, set to null,
-				if (updated_cart[`cart_${pkey}_${i}`] === 0) {
-					request.session.cart[pkey][i] = null;
-				}
-				// update the quantities of products in the cart
-				request.session.cart[pkey][i] = Number(
-					updated_cart[`cart_${pkey}_${i}`]
-			    );
-                }
-		}
-	} else {
-		let params = new URLSearchParams();
-		params.append("errors", JSON.stringify(errors));
-		response.redirect(`./cart.html?${params.toString()}`);
-	}
-
-	response.redirect(`./cart.html?`);
+    response.redirect(`./cart.html?`);
 });
 
 // function to find if a number is a non negative integer, and if not, output errors
 function findNonNegInt(q, returnErrors = false) {
-	//the function returns non-negative integers in the object.
-	errors = []; // assume no errors at first
-	if (Number(q) != q) errors.push("Not a number!"); // Check if string is a number value
-	if (q < 0) errors.push("Negative value!"); // Check if it is non-negative
-	if (parseInt(q) != q) errors.push("Not an integer!"); // Check that it is an integer
+    //the function returns non-negative integers in the object.
+    errors = []; // assume no errors at first
+    if (Number(q) != q) errors.push("Not a number!"); // Check if string is a number value
+    if (q < 0) errors.push("Negative value!"); // Check if it is non-negative
+    if (parseInt(q) != q) errors.push("Not an integer!"); // Check that it is an integer
 
-	return returnErrors ? errors : errors.length == 0;
+    return returnErrors ? errors : errors.length == 0;
 }
 
 //IR5: Logout route that sends user to login page
-    app.get('/logout', (req, res) => {
-        req.session.destroy(err => {
-            if (err) {
-                res.status(500).send('Error logging out');
-            } else {
-                res.redirect('/login.html'); // Redirect to login page after logout
-            }
-        });
-    });    
+app.get('/logout', (req, res) => {
+    req.session.destroy(err => {
+        if (err) {
+            res.status(500).send('Error logging out');
+        } else {
+            res.redirect('/login.html'); // Redirect to login page after logout
+        }
+    });
+});
 
-  // Logout route that sends user to the thank you page and then logs out ASK DA FOR HELP
+// Logout route that sends user to the thank you page and then logs out ASK DA FOR HELP
 app.get('/logout', (req, res) => {
     const username = req.session.username; // Assuming username is stored in the session
 
