@@ -479,7 +479,7 @@ app.post("/update_cart", function (request, response, next) {
 
 	if (Object.keys(errors).length == 0) {
 		for(let pkey in all_products){	
-        for (let i in pkey) {
+        for (let i in all_products[pkey]) {
 				// if there is no value then move to the next product
 				if (typeof updated_cart[`cart_${pkey}_${i}`] == "undefined") {
 					continue;
