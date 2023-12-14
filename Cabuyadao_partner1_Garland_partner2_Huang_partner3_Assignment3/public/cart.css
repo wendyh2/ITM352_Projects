@@ -66,38 +66,67 @@ header {
 body {
     background-color: pink; /* Set the main background color */
     font-family: 'Montserrat', sans-serif;
+    margin: 0; /* Remove default margin to prevent unwanted spacing */
 }
 
+/* Center the flex-box-container */
 .flex-box-container {
-    background-color: pink; /* Set the background color for the container */
+    background-color: white; /* Set the background color for the container */
     padding: 20px;
     border-radius: 10px;
-    margin: 20px;
+    margin: 0 auto; /* Center horizontally by setting margin to auto */
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    display: flex; /* Add flex display to create a flex container */
+    flex-wrap: wrap; /* Enable wrapping of flex items if they overflow */
+    gap: 20px; /* Add gap between flex items for spacing */
+    justify-content: center; /* Center the items horizontally within the container */
+    align-items: center; /* Center the items vertically within the container */
 }
 
 .flex-box {
     background-color: white; /* Set the background color for each box */
     padding: 20px;
     border-radius: 10px;
-    margin: 20px;
+    flex: 1; /* Distribute available space evenly among flex items */
 }
+
+
 .main-btn {
-    display: inline-block; /* Aligns the button correctly */
-    padding: 10px 20px; /* Adds space inside the button */
-    margin-top: 20px; /* Space above the button */
-    background-color: #007bff; /* Button background color */
-    color: white; /* Text color */
-    text-align: center; /* Centers the text inside the button */
-    border-radius: 5px; /* Rounds the corners of the button */
-    text-decoration: none; /* Removes the underline from the text */
-    font-weight: bold; /* Makes the font bold */
-    border: none; /* Removes the border */
-    cursor: pointer; /* Changes cursor to a hand icon when hovered */
-    transition: background-color 0.3s; /* Smooth background color transition on hover */
-    font-family: 'Montserrat', sans-serif; /* Font family (change as needed) */
+    display: block; /* Change to block-level element to take full width */
+    width: 100%; /* Set button width to 100% within the flex box */
+    padding: 10px 20px;
+    margin-top: 20px;
+    background-color: #007bff;
+    color: white;
+    text-align: center;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-family: 'Montserrat', sans-serif;
 }
 
 .main-btn:hover {
-    background-color: #0056b3; /* Darker shade for hover state */
+    background-color: #0056b3;
+}
+
+/* Centering the table */
+table {
+    margin: 0 auto;
+}
+
+/* Styling the checkout button */
+#checkout-button {
+    display: block;
+    width: 150px;
+    padding: 10px;
+    margin: 20px auto;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
 }
