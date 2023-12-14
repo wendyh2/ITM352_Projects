@@ -110,21 +110,42 @@
 
 function handleUserUpdate() {
     var username = document.getElementById('username').value;
-    var userData = JSON.parse(document.getElementById('userData').value);
+    var action = document.getElementById('userData').value; // This should contain action directly
+
+    try {
+        action = JSON.parse(action); // Parse the JSON to get the action object
+    } catch (error) {
+        console.error('Error parsing JSON:', error);
+        alert('Invalid JSON data.');
+        return;
+    }
+
+    // Make sure that the action object includes the "delete" action
+    if (action.action !== 'delete') {
+        alert('Invalid action. Only deletion is supported here.');
+        return;
+    }
 
     fetch('/admin/users', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ action: 'edit', user: { username: username, ...userData } })
+        body: JSON.stringify({ action: action.action, username: username }) // Send the correct format
     })
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) {
+            // If the response is not ok, throw an error to catch it in the catch block
+            return response.text().then(text => { throw new Error(text) });
+        }
+        return response.json();
+    })
     .then(data => {
-        alert(data.message);
+        alert(data.message); // Show success message
     })
     .catch(error => {
         console.error('Error:', error);
+        alert('An error occurred: ' + error.message); // Show the error message
     });
 }
 
