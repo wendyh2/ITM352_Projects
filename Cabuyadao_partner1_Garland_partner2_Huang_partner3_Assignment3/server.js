@@ -58,6 +58,16 @@ function hashPassword(password) {
     const hash = crypto.createHmac('sha256', secret).update(password).digest('hex');
     return hash;
 }
+/*
+// Add the rating to the specified product
+if (typeof products[i].rating === "undefined") {
+    products[i].rating = [];
+ }
+ products[i].rating.push(rating);
+// Write the updated products object back to the file
+ fs.writeFileSync('./products.json', JSON.stringify(products, null, 2), 'utf8');
+response.send(`Thank you for rating ${products[i].name} ${rating} stars`);
+*/
 
 // We use user_registration_info.json to hold users registration data (name, password, email)
 var filename = __dirname + "/user_registration_info.json";

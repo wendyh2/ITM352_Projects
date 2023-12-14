@@ -7,7 +7,8 @@
             "image": "bow.jpg",
             "sets_available": 12,
             "sets_sold": 5,
-            "description": "An adorable blend of pink and white, adorned with charming bows, delicate pearls, and touches of elegant gold in the design."
+            "description": "An adorable blend of pink and white, adorned with charming bows, delicate pearls, and touches of elegant gold in the design.",
+            "rating":4.0
         },
         {
             "name": "Nerissa",

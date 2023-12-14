@@ -160,11 +160,11 @@
   <div style="text-align: center;">
     <script>
       document.write(`<input id="logoutButton" type="button" value="Log Out" onclick="logoutUser()">`);
-    
+
       function logoutUser() {
         window.location.href = '/logout';
       }
-    </script>    
+    </script>
   </div>
   <div class="flex-box-container">
     <div class="flex-box">
@@ -179,6 +179,8 @@
             <th style="text-align: center;" width="11%">Quantity</th>
             <th style="text-align: center;" width="13%">Price</th>
             <th style="text-align: center;" width="20%">Price Altogether</th>
+            <th style="text-align: center;" width="10%">Rating</th>
+            <th style="text-align: center;" width="20%">Comments</th>
           </tr>
           <script>
             // generates rows with prices based on quantities
@@ -187,7 +189,7 @@
                 let products = all_products[pkey];
                 for (let i in products) {
                   let qty = cart_data[pkey]['quantity' + i];
-                  if(qty == 0) {
+                  if (qty == 0) {
                     continue;
                   }
                   errors = findNonNegInt(qty, true);
@@ -211,6 +213,19 @@
               <td align="center" width="11%">${qty}<br><font color = "red">${errors.join('<br>')}</td>
               <td width="13%">$${products[i].price}</td>
               <td width="20%">$${(extended_price).toFixed(2)}</td>
+              <td width="10%">
+          <select class="rating" name="rating_${i}">
+            <option value="">Rate...</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+        </td>
+        <td width="20%">
+          <input type="text" name="comment_${i}" placeholder="Leave a comment">
+        </td>
             </tr>
             `)
                 }
