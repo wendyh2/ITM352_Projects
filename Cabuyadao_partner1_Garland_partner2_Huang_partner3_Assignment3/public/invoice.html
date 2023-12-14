@@ -159,8 +159,12 @@
   </h2>
   <div style="text-align: center;">
     <script>
-      document.write(`<input id="logoutButton" type="button" value="Log Out" onclick="location.href ='./logout?username=${username}'">`)
-    </script>
+      document.write(`<input id="logoutButton" type="button" value="Log Out" onclick="logoutUser()">`);
+    
+      function logoutUser() {
+        window.location.href = '/logout';
+      }
+    </script>    
   </div>
   <div class="flex-box-container">
     <div class="flex-box">

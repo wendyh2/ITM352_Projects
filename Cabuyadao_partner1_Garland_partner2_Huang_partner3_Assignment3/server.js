@@ -68,11 +68,11 @@ if (fs.existsSync(filename)) {
 
     // Convert user_registration_info to object
     var user_registration_info = JSON.parse(user_registration_info_obj_JSON);
-// Function to check if a user is an admin
-function isAdmin(username) {
-    // Assuming user_registration_info contains a field 'role' for each user
-    return user_registration_info[username] && user_registration_info[username].role === 'admin';
-}
+    // Function to check if a user is an admin
+    function isAdmin(username) {
+        // Assuming user_registration_info contains a field 'role' for each user
+        return user_registration_info[username] && user_registration_info[username].role === 'admin';
+    }
 
 
     // If file is not found
@@ -133,7 +133,7 @@ function isEmpty(obj) {
     return Object.keys(obj).length === 0 && obj.constructor === Object;
 }
 
-// Process purchase request
+// Process purchase request rem to change to add cart
 app.post("/purchase", function (request, response, next) {
     let prod_key = request.body.product_type;
     let products = all_products[prod_key];
@@ -236,7 +236,7 @@ app.post("/purchase", function (request, response, next) {
                 return
             }
         }
-    } else {       
+    } else {
     }
     response.redirect(
         "./products_display.html?" + querystring.stringify(request.body) + "&" + querystring.stringify(errors)
@@ -291,8 +291,10 @@ app.post("/login", function (request, response, next) {
             params.append("loginCount", user_registration_info[username].loginCount);
             params.append("lastLogin", user_registration_info[username].lastLoginDate);
 
+
             // Redirect to invoice.html with the new params values
-            response.redirect("./invoice.html?" + params.toString());
+            response.redirect("./products_display.html?" + params.toString());
+            return;
         }
     } else {
         // If login information is invalid, redirects to login page and gives error
@@ -400,16 +402,16 @@ app.post("/register", function (request, response, next) {
         if (!loggedInUsers.hasOwnProperty(username)) {
             loggedInUsers[username] = true; // You can use `true` to indicate that the user is logged in.
         }
-
-        // When the purchase is valid this will reduce our inventory by the amounts purchased
-
-        for (let i in all_products) {
-            // Update sets available
-            all_products[i].sets_available -= Number(request.body[`quantity${i}`]);
-            // Track total quantity of each item sold - code from Assignment 1
-            all_products[i].sets_sold += Number(request.body[`quantity${i}`]);
-        }
-
+        /*
+                // When the purchase is valid this will reduce our inventory by the amounts purchased
+        
+                for (let i in all_products) {
+                    // Update sets available
+                    all_products[i].sets_available -= Number(request.body[`quantity${i}`]);
+                    // Track total quantity of each item sold - code from Assignment 1
+                    all_products[i].sets_sold += Number(request.body[`quantity${i}`]);
+                }
+        */
         // Create params variable and add username and name fields
         let params = new URLSearchParams(request.body);
         params.append("loginCount", user_registration_info[username].loginCount);
@@ -442,16 +444,41 @@ app.post('/viewInvoice', (request, response) => {
 
 })
 
-//IR5: Logout route that sends user to login page
-app.get('/logout', (request, response) => {
-    // Get username and index of that username in loggedInUsers array
-    const username = request.query["username"];
-    console.log(`logging out username ${username}`);
-
-    // Remove username from loggedInUsers object (logging the user out)
-    if (loggedInUsers.hasOwnProperty(username)) {
-        delete loggedInUsers[username];
+app.get('/checkout', (request, response) => {
+    // check if user is logged in. If not, redirect to login
+    if(!request.cookies.userinfo) {
+        response.redirect('./login.html');
+        return;
     }
+
+    // Final checkout
+
+    // remove items purchased from inventory
+    for (let pkey in request.session.cart) {
+        for (let i in all_products[pkey]) {
+            // Update sets available
+            all_products[pkey][i].sets_available -= Number(Number(request.session.cart[pkey][`quantity${i}`]));
+            // Track total quantity of each item sold - code from Assignment 1
+            all_products[pkey][i].sets_sold += Number(Number(request.session.cart[pkey][`quantity${i}`]));
+        }
+    }
+    // email invoice to user
+
+    // send to final invoice
+    response.redirect("./invoice.html");
+    return;
+})
+
+//IR5: Logout route that sends user to login page
+    app.get('/logout', (req, res) => {
+        req.session.destroy(err => {
+            if (err) {
+                res.status(500).send('Error logging out');
+            } else {
+                res.redirect('/login.html'); // Redirect to login page after logout
+            }
+        });
+    });    
 
     // Thank user for purchase and tell them they are logged out then redirect to home.html
     response.send(`
