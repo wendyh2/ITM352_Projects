@@ -6,6 +6,28 @@ Description: My Homepage
 -->
 <script src="./products_data.js" type="text/javascript"></script>
 <script>
+        // Got this from W3 schools get cookie section
+        function getCookie(cname) {
+      let name = cname + "=";
+      let decodedCookie = decodeURIComponent(document.cookie);
+      let ca = decodedCookie.split(';');
+      for (let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) == ' ') {
+          c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+          return c.substring(name.length, c.length);
+        }
+      }
+      return "";
+    }
+
+    // if user does not have username cookies, send them to login
+    if (getCookie('userinfo') !== '') {
+        userinfo = JSON.parse(getCookie('userinfo'));
+    }
+
     // get the query string and put it into a searchParams Object
     let params = (new URL(document.location)).searchParams;
     let prod_key = "Lorelei Collection"; //Default to Lorelei page if product_type isn't specified in the querystring
@@ -159,7 +181,15 @@ function update_total_selected() {
                 <input type="text" id="searchInput" placeholder="Search Nail Sets" onkeyup="filterProducts()">
                 <i class='bx bx-search-alt' style='color:#eebaba'></i>            
             </div>            
-            <a href="login.html">Login</a>
+     
+            <script>
+                // if user is logged in, print a logout link. Othwerwise print a login link 
+                if (typeof userinfo !== "undefined") {
+                    document.write(`<a href="logout">Log Out ${userinfo['full_name']}</a>`);
+                } else {
+                    document.write(`<a href="login.html">Login</a>`);
+                }
+             </script> 
             <div class="cart-icon">
                 <a href="cart.html"><i class="fa-solid fa-bag-shopping"></i></a>
                 <span>0</span>

@@ -24,7 +24,7 @@ app.use(session({
     cookie: { maxAge: 24 * 60 * 60 * 1000 } // set max cookie age for 24 hours so it does not stay and cause issues in the long term. 
 }));
 
-// IR1: Middleware to store and redirect to the last visited page
+// IR1: Middleware to store and redirect to the last visited page MAKE SURE TO REFERENCE
 app.use(function (request, response, next) {
     const nonStorePaths = ['/login', '/logout', '/register', '/', '/index.html', '/server.js'];
     const assetExtensions = ['.jpg', '.png', '.gif', '.css', '.js'];
@@ -310,7 +310,7 @@ app.post("/login", function (request, response, next) {
             // Regular user logic
             // send a usernames cookie to indicate they're logged in
             response.cookie("userinfo", JSON.stringify({ "email": username, "full_name": name }), { expire: Date.now() + 30 * 1000 });
-            // IR4 - Keep track of the number of times a user logged in and the last time they logged in.
+            // IR4 - Keep track of the number of times a user logged in and the last time they logged in. 
             user_registration_info[username].loginCount += 1;
             user_registration_info[username].lastLoginDate = Date.now();
 
@@ -528,18 +528,11 @@ function findNonNegInt(q, returnErrors = false) {
     return returnErrors ? errors : errors.length == 0;
 }
 
-//IR5: Logout route that sends user to login page
-app.get('/logout', function(req, res) {
-    // Destroy the user's session
-    req.session.destroy(function(err) {
-        if (err) {
-            console.log(err);
-            res.send("Error logging out");
-        } else {
-            // Redirect to home page or login page after logging out
-            res.redirect('./login.html'); 
-        }
-    });
+// Logout route to expire the cookie redirect them to the homepage afterwards
+app.get('/logout', function(req, res, next) {
+    res.clearCookie('userinfo');
+    res.redirect("home.html");
+
 });
 
 

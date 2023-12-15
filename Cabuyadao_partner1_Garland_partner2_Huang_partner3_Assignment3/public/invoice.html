@@ -124,6 +124,9 @@
       <a href="products_display.html">Shop</a>
       <a href="about.html">About</a>
       <a href="contact.html">Contact</a>
+      <script>
+        document.write(`<a href="logout">Log Out ${userinfo['full_name']}</a>`);
+      </script>
       <div class="cart-icon">
         <a href="cart.html"><i class="fa-solid fa-bag-shopping"></i></a>
         <span>0</span>
@@ -158,13 +161,6 @@
     </script>
   </h2>
   <div style="text-align: center;">
-    <script>
-      document.write(`<input id="logoutButton" type="button" value="Log Out" onclick="logoutUser()">`);
-
-      function logoutUser() {
-        window.location.href = '/logout';
-      }
-    </script>
   </div>
   <div class="flex-box-container">
     <div class="flex-box">

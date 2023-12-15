@@ -2,15 +2,15 @@
   "karie@yahoo.com": {
     "name": "Karie Smith",
     "password": "cbda979e53fe4a828d8d1860685d53b5dc8ed93cffbe733ba7fa54a06ae35965",
-    "lastLoginDate": 1702626769602,
-    "loginCount": 5,
+    "lastLoginDate": 1702632721222,
+    "loginCount": 9,
     "role": "user"
   },
   "itm352@hawaii.edu": {
     "name": "Michelle Zhang",
     "password": "1c543c5e4336fdff03dcac8a8242ac9eb496c123b429b3f2cc7af6d9529f332a",
-    "lastLoginDate": 1702626590381,
-    "loginCount": 5,
+    "lastLoginDate": 1702629818194,
+    "loginCount": 6,
     "role": "admin"
   },
   "apple@edu.com": {
