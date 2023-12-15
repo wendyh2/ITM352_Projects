@@ -6,11 +6,13 @@
 
 const express = require('express');
 const app = express();
+app.use(express.static(__dirname + '/public'));
 const querystring = require('querystring');
 const all_products = require(__dirname + '/products.json');
 const fs = require("fs");
 const cookieParser = require('cookie-parser');
 app.use(cookieParser());
+app.use(express.json());
 
 const session = require('express-session');
 
@@ -50,6 +52,15 @@ const crypto = require('crypto');
 // IR5:  Keep track of the number of users currently logged in to the site and display this number with the personalization information.
 // This is the global array variable
 const loggedInUsers = {};
+
+// Admin middleware to check if the user is an admin
+function requireAdmin(req, res, next) {
+    if (req.session.isAdmin) {
+        next();
+    } else {
+        res.status(403).send('Access Denied');
+    }
+}
 
 function hashPassword(password) {
     //We use any secret key of our choosing, here we use test.
@@ -261,13 +272,11 @@ app.post("/login", function (request, response, next) {
     // Initialize empty errors
     const errors = {};
 
-    // Create variables username & password - referenced from Assignment 2 example code
     let username = request.body["username"].toLowerCase();
     let password = request.body["password"];
 
-    // Check if username exists in user_registration_info.json
+    // Check if username exists in user_registration_info
     if (user_registration_info.hasOwnProperty(username)) {
-        // IR1: Encrypt the password and check it against the user_registration_info encrypted password 
         if (hashPassword(password) !== user_registration_info[username].password) {
             errors[`password_error`] = "Password is incorrect.";
         }
@@ -279,32 +288,36 @@ app.post("/login", function (request, response, next) {
     if (Object.keys(errors).length === 0) {
         let name = user_registration_info[username].name;
 
+        // Set session user and admin status
+        request.session.user = username;
+        request.session.isAdmin = user_registration_info[username].role === 'admin';
+
+        // Keep track of the number of times a user logged in and the last time they logged in
+        user_registration_info[username].loginCount += 1;
+        user_registration_info[username].lastLoginDate = new Date().getTime();
+
+        // Update the user info in loggedInUsers
+        loggedInUsers[username] = true;
+
+        // Save the updated user_registration_info
+        fs.writeFileSync(filename, JSON.stringify(user_registration_info, null, 2));
+
         // Check if the user is an admin
-        if (isAdmin(username)) {
+        if (user_registration_info[username].role === 'admin') {
             // Redirect to the admin panel page
             response.redirect("./admin_panel.html");
         } else {
             // Regular user logic
             // send a usernames cookie to indicate they're logged in
             response.cookie("userinfo", JSON.stringify({ "email": username, "full_name": name }), { expire: Date.now() + 60 * 1000 });
-            // IR4 - Keep track of the number of times a user logged in and the last time they logged in.
-            user_registration_info[username].loginCount += 1;
-            user_registration_info[username].lastLoginDate = Date.now();
-
-            // IR5: Add username to keep track of amount of logged in users
-            if (!loggedInUsers.hasOwnProperty(username)) {
-                loggedInUsers[username] = true;
-            }
-
+            
             // Create params variable and add username and name fields
             let params = new URLSearchParams();
             params.append("loginCount", user_registration_info[username].loginCount);
             params.append("lastLogin", user_registration_info[username].lastLoginDate);
 
-
-            // Redirect to invoice.html with the new params values
+            // Redirect to products_display.html with the new params values
             response.redirect("./products_display.html?" + params.toString());
-            return;
         }
     } else {
         // If login information is invalid, redirects to login page and gives error
@@ -609,12 +622,17 @@ app.post('/admin/login', function (request, response) {
     let username = request.body.username;
     let password = request.body.password;
     if (isAdmin(username) && user_registration_info[username].password === hashPassword(password)) {
+        request.session.user = username;
         request.session.isAdmin = true;
         response.send({ success: true });
     } else {
         response.send({ success: false, message: 'Invalid credentials or not an admin' });
     }
 });
+
+// Apply requireAdmin middleware to admin routes
+app.use('/admin/inventory', requireAdmin);
+app.use('/admin/users', requireAdmin);
 
 // Admin add/edit/delete inventory route
 app.post('/admin/inventory', function (request, response) {
