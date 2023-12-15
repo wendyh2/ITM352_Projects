@@ -72,21 +72,15 @@
   "admin@hawaii.edu": {
     "name": "Main Admin",
     "password": "e8f47b347e0fd41a5c66b5fa74a734e3fc9f98cd6671d2901128d44a99fa5ab5",
-    "lastLoginDate": 1702619009100,
-    "loginCount": 9,
+    "lastLoginDate": 1702619433366,
+    "loginCount": 10,
     "role": "admin"
   },
   "scott997@hawaii.edu": {
     "name": "Scott Garland",
     "password": "5fae201379aebe543d83f6e866124532eea995d646ff3ece30b0dc815215a39f",
-    "lastLoginDate": 1702504576557,
-    "loginCount": 1,
+    "lastLoginDate": 1702619479735,
+    "loginCount": 2,
     "role": "admin"
-  },
-  "crack@cocaine.com": {
-    "name": "Crack Cocaine",
-    "password": "cbda979e53fe4a828d8d1860685d53b5dc8ed93cffbe733ba7fa54a06ae35965",
-    "lastLoginDate": 1702610024818,
-    "loginCount": 1
   }
 }
