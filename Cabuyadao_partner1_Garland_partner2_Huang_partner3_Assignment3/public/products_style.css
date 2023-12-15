@@ -46,6 +46,7 @@ header {
     font-family: 'Montserrat', sans-serif;
     gap: 100px;
     margin-right: 250px;
+    align-items: center;
 }
 
 .navmenu a {

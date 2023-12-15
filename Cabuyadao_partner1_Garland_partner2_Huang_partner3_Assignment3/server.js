@@ -69,16 +69,7 @@ function hashPassword(password) {
     const hash = crypto.createHmac('sha256', secret).update(password).digest('hex');
     return hash;
 }
-/*
-// Add the rating to the specified product
-if (typeof products[i].rating === "undefined") {
-    products[i].rating = [];
- }
- products[i].rating.push(rating);
-// Write the updated products object back to the file
- fs.writeFileSync('./products.json', JSON.stringify(products, null, 2), 'utf8');
-response.send(`Thank you for rating ${products[i].name} ${rating} stars`);
-*/
+
 
 // We use user_registration_info.json to hold users registration data (name, password, email)
 var filename = __dirname + "/user_registration_info.json";
@@ -118,6 +109,19 @@ app.get("/products_data.js", function (request, response, next) {
     response.type('.js');
     const products_str = `let all_products = ${JSON.stringify(all_products)}`;
     response.send(products_str);
+});
+
+// Route to provide reviews for a product
+app.post("/add_review", function (request, response, next) {
+    console.log(request.body);
+    var prod_index = Number(request.body.product_reviewed_index);
+    let prod_key = request.body.product_reviewed_key;
+    if(typeof all_products[prod_key][prod_index].reviews === 'undefined' ) {
+        all_products[prod_key][prod_index].reviews =[];
+    }
+    all_products[prod_key][prod_index].reviews.push({"rating": Number(request.body.star), "comments": request.body.Comments, "date": Date()});
+
+    response.send(`<script>alert("Thank you for your review! Click ok to go back to the products page.");location.href ='./products_display.html?product_type=${prod_key}';</script>`);
 });
 
 // Route to provide cart data as a JavaScript file
@@ -310,7 +314,7 @@ app.post("/login", function (request, response, next) {
             // Regular user logic
             // send a usernames cookie to indicate they're logged in
             response.cookie("userinfo", JSON.stringify({ "email": username, "full_name": name }), { expire: Date.now() + 30 * 1000 });
-            // IR4 - Keep track of the number of times a user logged in and the last time they logged in. 
+            // Keep track of the number of times a user logged in and the last time they logged in. 
             user_registration_info[username].loginCount += 1;
             user_registration_info[username].lastLoginDate = Date.now();
 
@@ -419,16 +423,16 @@ app.post("/register", function (request, response, next) {
         // Save new registration info into user_registration_info.json
         user_registration_info[username] = {};
         user_registration_info[username].name = request.body.name;
-        // IR1: Store encrypted password into user_registration_info
+        // Store encrypted password into user_registration_info
         user_registration_info[username].password = hashPassword(request.body.password);
-        // IR4 add lastLoginDate and loginCount for this new user make it a string
+        // Add lastLoginDate and loginCount for this new user make it a string
         user_registration_info[username].lastLoginDate = Date.now();
         user_registration_info[username].loginCount = 1;
 
         // Write to our user_registration_info.json file, we add the null and 2 option to account for a null replacer, and indentation
         fs.writeFileSync(filename, JSON.stringify(user_registration_info, null, 2));
 
-        // IR5: Add username to keep track of amount of logged in users
+        // Add username to keep track of amount of logged in users
         // Check if loggedInUsers already has the username so that we don't login more than once for the same user
         if (!loggedInUsers.hasOwnProperty(username)) {
             loggedInUsers[username] = true; // You can use `true` to indicate that the user is logged in.

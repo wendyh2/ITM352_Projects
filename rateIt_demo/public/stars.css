@@ -1,0 +1,22 @@
+.rate_widget {
+    border:     1px solid #CCC;
+    overflow:   visible;
+    padding:    10px;
+    position:   relative;
+    width:      180px;
+    height:     32px;
+}
+.empty_star {
+    background: url('images/empty_star.png') no-repeat;
+    float:      left;
+    height:     28px;
+    padding:    0px;
+    width:      32px;
+}
+.full_star {
+    background: url('images/full_star.png') no-repeat;
+    float:      left;
+    height:     28px;
+    padding:    0px;
+    width:      32px;
+}
