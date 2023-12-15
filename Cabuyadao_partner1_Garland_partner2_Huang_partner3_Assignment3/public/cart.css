@@ -1,132 +1,153 @@
 /*
 Author: Wendy Huang
-Assignment 2
-Date: 11/28/2023
-Description: CSS stylesheet for registration page 
- */
+Assignment 1
+Date: 11/12/2023
+Description: My CSS stylesheet for my invoice.html
+*/
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: white;
+    color: black;
+}
 
-
-/* Header styles */
 header {
-    position: fixed;
-    width: 100%;
-    top: 0;
-    right: 0;
-    z-index: 1000;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 2%;
-    background-image: url(img/purpstarsky.jpg);
-    background-position: center;
-    background-size: cover;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.06);
+    background-color: #1a1a1a;
+    padding: 10px;
+    color: white;
+    text-align: center;
 }
 
-/* Logo styles */
+.img-mouseover {
+    position: relative;
+    display: inline-block;
+}
+
+/* IR5: Hide product description when img is not being hovered with cursor*/
+.product-description {
+    display: none;
+    position: absolute;
+    z-index: 10;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+
+/* IR5: Make product description visible when img is being hovered with cursor */
+.img-mouseover:hover .product-description {
+    display: block;
+}
+
+
 .logo {
-    max-width: 120px; /* Adjusted max-width */
+    width: 80px;
     height: auto;
-    margin-left: 100px; /* Adjusted margin */
 }
 
-/* Navigation menu styles */
 .navmenu {
     display: flex;
-    font-family: 'Montserrat', sans-serif;
-    gap: 100px;
-    margin-right: 250px;
+    justify-content: space-around;
+    margin-top: 10px;
 }
 
 .navmenu a {
-    font-size: 18px;
     color: white;
-    text-transform: capitalize;
-    font-weight: 400;
-    padding: 20px 40px;
-    text-decoration: none; /* Removing the underline that was part of it */
-    transition: all .40s ease;
-    margin-left: 120px;
+    text-decoration: none;
 }
 
-/* Hover effect for navigation menu items */
-.navmenu a:hover{
-    color: pink;
+.cart-icon {
+    position: relative;
 }
 
-/* Styling for preventing logo cut-off and main-home section */
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 2%;
+.fa-bag-shopping {
+    font-size: 24px;
 }
 
-/* Cart Page Main Styles */
-body {
-    background-color: pink; /* Set the main background color */
-    font-family: 'Montserrat', sans-serif;
-    margin: 0; /* Remove default margin to prevent unwanted spacing */
+.header-spacing {
+    margin-top: 140px;
 }
 
-/* Center the flex-box-container */
-.flex-box-container {
-    background-color: white; /* Set the background color for the container */
-    padding: 20px;
-    border-radius: 10px;
-    margin: 0 auto; /* Center horizontally by setting margin to auto */
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    display: flex; /* Add flex display to create a flex container */
-    flex-wrap: wrap; /* Enable wrapping of flex items if they overflow */
-    gap: 20px; /* Add gap between flex items for spacing */
-    justify-content: center; /* Center the items horizontally within the container */
-    align-items: center; /* Center the items vertically within the container */
+h1 {
+    text-align: center;
+    color: #1a1a1a;
+}
+
+h2 {
+    text-align: center;
+}
+
+.text-spacing {
+    padding: 10px 0px;
+}
+
+table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 15px;
+    text-align: center;
+}
+
+th {
+    background-color: #1a1a1a;
+    color: white;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+
+h4 {
+    text-align: center;
+    margin-top: 20px;
+    color: #1a1a1a;
+}
+
+strong {
+    color: #e44d26;
+    /* Orange color */
 }
 
 .flex-box {
-    background-color: white; /* Set the background color for each box */
-    padding: 20px;
-    border-radius: 10px;
-    flex: 1; /* Distribute available space evenly among flex items */
+    width: 80%;
+    justify-self: center;
 }
 
-
-.main-btn {
-    display: block; /* Change to block-level element to take full width */
-    width: 100%; /* Set button width to 100% within the flex box */
-    padding: 10px 20px;
-    margin-top: 20px;
-    background-color: #007bff;
-    color: white;
-    text-align: center;
-    border-radius: 5px;
-    text-decoration: none;
-    font-weight: bold;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    font-family: 'Montserrat', sans-serif;
+.flex-box-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }
 
-.main-btn:hover {
-    background-color: #0056b3;
-}
-
-/* Centering the table */
-table {
-    margin: 0 auto;
-}
-
-/* Styling the checkout button */
-#checkout-button {
+/* Register button styling */
+#checkout_button {
     display: block;
-    width: 150px;
-    padding: 10px;
-    margin: 20px auto;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 5px;
+    background-color: rgb(167, 123, 181);
+    color: #ffffff;
+    border-color: rgb(167, 123, 181);
+    border-radius: 10px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 17px;
+    border-width: 1.5px;
+    min-width: 100px;
+    padding: 10px 20px;
+    margin: 0 auto;
+    margin-top: 20px;
     cursor: pointer;
-    font-size: 16px;
+    margin-bottom: 50px;
+}
+
+#checkout_button:hover {
+    background-color: #ffffff;
+    border-color: rgb(167, 123, 181);
+    color: rgb(167, 123, 181);
 }
