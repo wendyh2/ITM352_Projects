@@ -128,8 +128,8 @@ strong {
     justify-content: center;
 }
 
-/* Register button styling */
-#checkout_button {
+/* Combined styling for both buttons */
+#checkout_button, #update_button {
     display: block;
     background-color: rgb(167, 123, 181);
     color: #ffffff;
@@ -138,15 +138,15 @@ strong {
     font-family: 'Montserrat', sans-serif;
     font-size: 17px;
     border-width: 1.5px;
-    min-width: 100px;
+    min-width: 50px;
     padding: 10px 20px;
     margin: 0 auto;
     margin-top: 20px;
     cursor: pointer;
-    margin-bottom: 50px;
+    margin-bottom: 2px; 
 }
 
-#checkout_button:hover {
+#checkout_button:hover, #update_button:hover {
     background-color: #ffffff;
     border-color: rgb(167, 123, 181);
     color: rgb(167, 123, 181);

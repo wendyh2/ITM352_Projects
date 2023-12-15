@@ -1,4 +1,3 @@
-
 <!-- Author: Wendy Huang, Gellie Cabuyadao, Scott Garland-->
 <!-- Assignment 1 -->
 <!-- Date: 11/17/2023 -->
@@ -6,22 +5,29 @@
 <!DOCTYPE html>
 
 <html lang="en">
+
 <head>
-<meta charset="utf-8"/>
-<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Receipt Sales</title>
-<script src="./getLoggedInUsers.js" type="text/javascript"></script>
-<script src="./products_data.js" type="text/javascript"></script>
-<script src="./get_cart.js" type="text/javascript"></script>
-<link href="cart.css" rel="stylesheet"/>
-<link href="products_style.css" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari&amp;family=Palanquin+Dark:wght@500&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Dosis:wght@300&amp;family=Noto+Sans+Devanagari&amp;family=Palanquin+Dark:wght@500&amp;display=swap" rel="stylesheet"/>
-<link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" referrerpolicy="no-referrer" rel="stylesheet">
-<link href="https://unpkg.com/boxicons@latest/css/boxicons.min.css" rel="stylesheet"/>
-<script>
+    <meta charset="utf-8" />
+    <meta content="IE=edge" http-equiv="X-UA-Compatible" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Receipt Sales</title>
+    <script src="./getLoggedInUsers.js" type="text/javascript"></script>
+    <script src="./products_data.js" type="text/javascript"></script>
+    <script src="./get_cart.js" type="text/javascript"></script>
+    <link href="cart.css" rel="stylesheet" />
+    <link href="products_style.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat" rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari&amp;family=Palanquin+Dark:wght@500&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Dosis:wght@300&amp;family=Noto+Sans+Devanagari&amp;family=Palanquin+Dark:wght@500&amp;display=swap"
+        rel="stylesheet" />
+    <link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        referrerpolicy="no-referrer" rel="stylesheet">
+    <link href="https://unpkg.com/boxicons@latest/css/boxicons.min.css" rel="stylesheet" />
+    <script>
         const cart_data = cart;
 
         let params = (new URL(document.location)).searchParams;
@@ -36,62 +42,64 @@
         var subtotal = 0;
 
     </script>
-</link></head>
+    </link>
+</head>
+
 <body>
-<!--Displaying my header-->
-<header>
-<a href="index.html"><img alt="my logo" class="logo" src="img/logo.png"/></a>
-<!--This is where my logo goes in my header-->
-<!--Got this from my home.html because it's my navigation menu-->
-<div class="navmenu">
-<a href="home.html">Home</a>
-<a href="products_display.html">Shop</a>
-<a href="about.html">About</a>
-<a href="contact.html">Contact</a>
-<div class="cart-icon">
-<a href="cart.html"><i class="fa-solid fa-bag-shopping"></i></a>
-</div>
-</div>
-</header>
-<!-- Create div for spacing between header and rest of page -->
-<div class="header-spacing"></div>
-<section class="main-cart">
-<h1>Shopping Cart</h1>
-<!-- <form id="purchase-form" action="./login" method="POST">
+    <!--Displaying my header-->
+    <header>
+        <a href="index.html"><img alt="my logo" class="logo" src="img/logo.png" /></a>
+        <!--This is where my logo goes in my header-->
+        <!--Got this from my home.html because it's my navigation menu-->
+        <div class="navmenu">
+            <a href="home.html">Home</a>
+            <a href="products_display.html">Shop</a>
+            <a href="about.html">About</a>
+            <a href="contact.html">Contact</a>
+            <div class="cart-icon">
+                <a href="cart.html"><i class="fa-solid fa-bag-shopping"></i></a>
+            </div>
+        </div>
+    </header>
+    <!-- Create div for spacing between header and rest of page -->
+    <div class="header-spacing"></div>
+    <section class="main-cart">
+        <h1>Shopping Cart</h1>
+        <!-- <form id="purchase-form" action="./login" method="POST">
         <input type="submit">Login to Complete Purchase</input>
     </form> -->
-<!--form to post cart quantity updates-->
-<form action="./update_cart" id="updateCart" method="POST">
-<div class="flex-box-container">
-<div class="flex-box">
-<!--Where I will print my invoice-->
-<table border="2">
-<tbody>
-<!-- column titles row -->
-<tr>
-<th style="text-align: center;" width="11%">Image</th>
-<th style="text-align: center;" width="26%">Item</th>
-<th style="text-align: center;" width="11%">Quantity</th>
-<th style="text-align: center;" width="13%">Price</th>
-<th style="text-align: center;" width="20%">Price Altogether</th>
-</tr>
-<script>
-                        // generates rows with prices based on quantities
-                        function generate_item_rows() {
-                            for (let pkey in cart_data) {
-                                let products = all_products[pkey];
-                                for (let i in products) {
-                                    let qty = cart_data[pkey]['quantity' + i];
-                                    if(qty > 0){
-                                    errors = findNonNegInt(qty, true);
-                                    if (errors.length == 0) {
-                                        var extended_price = qty * products[i].price;
-                                        subtotal += extended_price;
-                                    }
-                                    else (extended_price = 0);
+        <!--form to post cart quantity updates-->
+        <form action="./update_cart" id="updateCart" method="POST">
+            <div class="flex-box-container">
+                <div class="flex-box">
+                    <!--Where I will print my invoice-->
+                    <table border="2">
+                        <tbody>
+                            <!-- column titles row -->
+                            <tr>
+                                <th style="text-align: center;" width="11%">Image</th>
+                                <th style="text-align: center;" width="26%">Item</th>
+                                <th style="text-align: center;" width="11%">Quantity</th>
+                                <th style="text-align: center;" width="13%">Price</th>
+                                <th style="text-align: center;" width="20%">Price Altogether</th>
+                            </tr>
+                            <script>
+                                // generates rows with prices based on quantities
+                                function generate_item_rows() {
+                                    for (let pkey in cart_data) {
+                                        let products = all_products[pkey];
+                                        for (let i in products) {
+                                            let qty = cart_data[pkey]['quantity' + i];
+                                            if (qty > 0) {
+                                                errors = findNonNegInt(qty, true);
+                                                if (errors.length == 0) {
+                                                    var extended_price = qty * products[i].price;
+                                                    subtotal += extended_price;
+                                                }
+                                                else (extended_price = 0);
 
-                                    // IR 5 - When diplaying the invoice, add a small icon image of the product to the line item, show description on mouseover
-                                    document.write(`
+                                                // IR 5 - When diplaying the invoice, add a small icon image of the product to the line item, show description on mouseover
+                                                document.write(`
             <tr>
              <td height="70px" width="11%">
               <div class="img-mouseover">
@@ -106,33 +114,33 @@
               <td width="20%">$${(extended_price).toFixed(2)}</td>
             </tr>
             `)
+                                            }
+                                        }
+                                    }
                                 }
-                            }
-                            }
-                        }
 
-                        function findNonNegInt(q, returnErrors = false) { //the function returns non-negative integers in the object.
-                            errors = []; // assume no errors at first
-                            if (Number(q) != q) errors.push('Not a number!'); // Check if string is a number value
-                            if (q < 0) errors.push('Negative value!'); // Check if it is non-negative
-                            if (parseInt(q) != q) errors.push('Not an integer!'); // Check that it is an integer
+                                function findNonNegInt(q, returnErrors = false) { //the function returns non-negative integers in the object.
+                                    errors = []; // assume no errors at first
+                                    if (Number(q) != q) errors.push('Not a number!'); // Check if string is a number value
+                                    if (q < 0) errors.push('Negative value!'); // Check if it is non-negative
+                                    if (parseInt(q) != q) errors.push('Not an integer!'); // Check that it is an integer
 
-                            return returnErrors ? errors : (errors.length == 0);
-                        }
+                                    return returnErrors ? errors : (errors.length == 0);
+                                }
 
-                        generate_item_rows();
-                        // Tax rate
-                        var tax_rate = 0.04712;
-                        var tax = tax_rate * subtotal;
+                                generate_item_rows();
+                                // Tax rate
+                                var tax_rate = 0.04712;
+                                var tax = tax_rate * subtotal;
 
-                        // Compute shipping (if subtotal is less than 80, shipping is $10, otherwise it's free)
-                        if (subtotal < 80) { shipping = 10 }
-                        else { shipping = 0 };
+                                // Compute shipping (if subtotal is less than 80, shipping is $10, otherwise it's free)
+                                if (subtotal < 80) { shipping = 10 }
+                                else { shipping = 0 };
 
-                        // Grand total
-                        var total = subtotal + tax + shipping;
+                                // Grand total
+                                var total = subtotal + tax + shipping;
 
-                        document.write(`
+                                document.write(`
             <tr>
               <td colspan="5" width="100%">&nbsp;</td>
             </tr>
@@ -153,19 +161,20 @@
               <td colspan="2" width="54%"><b>$${(total).toFixed(2)}</b></td>
             </tr>
             `)
-                    </script>
-</tbody>
-</table>
-<input class="purchase_button" id="purchase_button" type="submit" value="Update Cart"/>
-</div>
-</div></form>
-<!-- Login to Check Out Button -->
-<form id="checkout_form" action="/checkout" method="GET">
-    <input class="checkout_button" id="checkout_button" type="submit" value="Check Out"/>
-</form>
-<h4><strong> Our shipping policy is: A subtotal of $0-$80 will be $10 shipping. Subtotals over $80 will have
-                    free
-                    shipping</strong></h4>
-</section></body></html>
+                            </script>
+                        </tbody>
+                    </table>
+                    <input class="update_button" id="update_button" type="submit" value="Update Cart" />
+                </div>
+            </div>
+        </form>
+        <!-- Login to Check Out Button -->
+        <form id="checkout_form" action="/checkout" method="GET">
+            <input class="checkout_button" id="checkout_button" type="submit" value="Check Out" />
+        </form>
+        <h4><strong> Our shipping policy is: A subtotal of $0-$80 will be $10 shipping. Subtotals over $80 will have
+                free shipping</strong></h4>
+    </section>
+</body>
 
-
+</html>

@@ -22,7 +22,7 @@ app.use(session({
     cookie: { maxAge: 24 * 60 * 60 * 1000 } // set max cookie age for 24 hours so it does not stay and cause issues in the long term. 
 }));
 
-// Middleware to store and redirect to the last visited page
+// IR1: Middleware to store and redirect to the last visited page
 app.use(function (request, response, next) {
     const nonStorePaths = ['/login', '/logout', '/register', '/', '/index.html', '/server.js'];
     const assetExtensions = ['.jpg', '.png', '.gif', '.css', '.js'];
@@ -286,7 +286,7 @@ app.post("/login", function (request, response, next) {
         } else {
             // Regular user logic
             // send a usernames cookie to indicate they're logged in
-            response.cookie("userinfo", JSON.stringify({ "email": username, "full_name": name }), { expire: Date.now() + 60 * 1000 });
+            response.cookie("userinfo", JSON.stringify({ "email": username, "full_name": name }), { expire: Date.now() + 30 * 1000 });
             // IR4 - Keep track of the number of times a user logged in and the last time they logged in.
             user_registration_info[username].loginCount += 1;
             user_registration_info[username].lastLoginDate = Date.now();
@@ -412,16 +412,7 @@ app.post("/register", function (request, response, next) {
         if (!loggedInUsers.hasOwnProperty(username)) {
             loggedInUsers[username] = true; // You can use `true` to indicate that the user is logged in.
         }
-        /*
-                // When the purchase is valid this will reduce our inventory by the amounts purchased
-        
-                for (let i in all_products) {
-                    // Update sets available
-                    all_products[i].sets_available -= Number(request.body[`quantity${i}`]);
-                    // Track total quantity of each item sold - code from Assignment 1
-                    all_products[i].sets_sold += Number(request.body[`quantity${i}`]);
-                }
-        */
+      
         // Create params variable and add username and name fields
         let params = new URLSearchParams(request.body);
         params.append("loginCount", user_registration_info[username].loginCount);
@@ -517,16 +508,21 @@ function findNonNegInt(q, returnErrors = false) {
 }
 
 //IR5: Logout route that sends user to login page
-app.get('/logout', (req, res) => {
-    req.session.destroy(err => {
+app.get('/logout', function(req, res) {
+    // Destroy the user's session
+    req.session.destroy(function(err) {
         if (err) {
-            res.status(500).send('Error logging out');
+            console.log(err);
+            res.send("Error logging out");
         } else {
-            res.redirect('/login.html'); // Redirect to login page after logout
+            // Redirect to home page or login page after logging out
+            res.redirect('./login.html'); 
         }
     });
 });
 
+
+/*
 // Logout route that sends user to the thank you page and then logs out ASK DA FOR HELP
 app.get('/logout', (req, res) => {
     const username = req.session.username; // Assuming username is stored in the session
@@ -560,7 +556,7 @@ app.get('/logout', (req, res) => {
                     text-align: center;
                 }
                 .thank-you-message {
-                    font-size: 30px; /* Adjusted font size to 30px */
+                    font-size: 30px; // Adjusted font size to 30px 
                     margin-bottom: 10px;
                 }
                 .bold-red {
@@ -568,7 +564,7 @@ app.get('/logout', (req, res) => {
                     color: red;
                 }
                 .logout-message {
-                    font-size: 24px; /* Adjusted font size to 24px */
+                    font-size: 24px; // Adjusted font size to 24px 
                     margin-bottom: 10px;
                 }
             </style>
@@ -595,7 +591,7 @@ app.get('/logout', (req, res) => {
         // Destroy the session after sending the response
         req.session.destroy();
     });
-});
+}); */
 
 
 // Serve static files
