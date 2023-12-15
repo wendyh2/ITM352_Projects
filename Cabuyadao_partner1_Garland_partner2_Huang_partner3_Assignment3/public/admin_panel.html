@@ -4,16 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Panel</title>
+    <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            padding: 20px;
-        }
         .container {
             width: 80%;
             margin: auto;
             overflow: hidden;
+            padding: 200px;
         }
         .panel {
             background: #fff;
@@ -33,7 +34,8 @@
         }
         .form-group input[type="text"], 
         .form-group input[type="email"], 
-        .form-group input[type="password"] {
+        .form-group input[type="password"],
+        .form-group textarea {
             width: 100%;
             padding: 8px;
             border: 1px solid #ddd;
@@ -55,6 +57,20 @@
     </style>
 </head>
 <body>
+    <header>
+        <a href="index.html"><img src="img/logo.png" class="logo" alt="my logo"></a>
+        <div class="navmenu">
+            <a href="home.html">Home</a>
+            <a href="products_display.html">Shop</a>
+            <a href="about.html">About</a>
+            <a href="contact.html">Contact</a>
+            <div class="cart-icon">
+                <a href="cart.html"><i class="fa-solid fa-bag-shopping"></i></a>
+                <span>0</span>
+            </div>
+        </div>
+    </header>
+
     <div class="container">
         <div class="panel">
             <div class="panel-heading">Inventory Management</div>
@@ -72,83 +88,165 @@
         </div>
 
         <div class="panel">
-            <div class="panel-heading">User Account Management</div>
+            <div class="panel-heading">Create New User</div>
             <div class="form-group">
-                <label for="username">Username</label>
-                <input type="text" id="username" placeholder="Enter Username">
+                <label for="newUsername">Email Address</label>
+                <input type="email" id="newUsername" placeholder="Enter email" required>
             </div>
             <div class="form-group">
-                <label for="userData">User Data (JSON)</label>
-                <textarea id="userData" rows="4" placeholder="Enter User Data as JSON"></textarea>
+                <label for="newName">Full Name</label>
+                <input type="text" id="newName" placeholder="Enter full name" required>
             </div>
             <div class="form-group">
-                <button onclick="handleUserUpdate()">Update User Account</button>
+                <label for="newPassword">Password</label>
+                <input type="password" id="newPassword" placeholder="Enter password" required>
+                <i class="far fa-eye" id="newPasswordVisibility" style="cursor: pointer;"></i>
+            </div>
+            <div class="form-group">
+                <label for="newRole">Role</label>
+                <select id="newRole">
+                    <option value="user">User</option>
+                    <option value="admin">Admin</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <button onclick="handleCreateNewUser()">Create User</button>
             </div>
         </div>
+
+        <div class="panel">
+            <div class="panel-heading">User Account Deletion</div>
+            <div class="form-group">
+                <label for="username">Email Address</label>
+                <input type="text" id="username" placeholder="Enter Email">
+            </div>
+            <!-- Delete User Button -->
+            <div class="form-group">
+                <button onclick="handleDeleteUser()">Delete User</button>
+            </div>
+        </div>
+
+        <div class="panel">
+            <div class="panel-heading">User Role Management</div>
+            <div class="form-group">
+                <label for="usernameToggleRole">Username</label>
+                <input type="text" id="usernameToggleRole" placeholder="Enter Username to Toggle Role">
+            </div>
+            <!-- Toggle Role Button -->
+            <div class="form-group">
+                <button onclick="handleToggleUserRole()">Toggle User/Admin Role</button>
+            </div>
+        </div>
+
     </div>
 
     <script>
-        function handleInventoryUpdate() {
-    var productId = document.getElementById('productId').value;
-    var productData = JSON.parse(document.getElementById('productData').value);
+            // Function to handle new user creation
+    function handleCreateNewUser() {
+        var username = document.getElementById('newUsername').value;
+        var name = document.getElementById('newName').value;
+        var password = document.getElementById('newPassword').value;
+        var role = document.getElementById('newRole').value;
 
-    fetch('/admin/inventory', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ action: 'edit', product: { id: productId, ...productData } })
-    })
-    .then(response => response.json())
-    .then(data => {
-        alert(data.message);
-    })
-    .catch(error => {
-        console.error('Error:', error);
+        // The password should be hashed server-side before storing.
+        // Do not send plain passwords over the network.
+
+        // Implement the fetch request to create the new user
+        fetch('/admin/users', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ 
+                action: 'add', 
+                username: username, 
+                userData: {
+                    name: name,
+                    password: password, // This password needs to be hashed server-side.
+                    role: role
+                } 
+            })
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Server responded with an error!');
+            }
+            return response.json();
+        })
+        .then(data => {
+            alert(data.message);
+            // Optionally clear the form or update the UI
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred: ' + error.message);
+        });
+    }
+
+    // Toggle password visibility for the new user password field
+    const newPasswordVisibility = document.getElementById('newPasswordVisibility');
+    const newPassword = document.getElementById('newPassword');
+    
+    newPasswordVisibility.addEventListener('click', function (e) {
+        const type = newPassword.getAttribute('type') === 'password' ? 'text' : 'password';
+        newPassword.setAttribute('type', type);
+        this.classList.toggle('fa-eye-slash');
     });
-}
+    
+     // Function to handle user deletion
+        function handleDeleteUser() {
+            var username = document.getElementById('username').value;
+    
+            // Implement the fetch request to delete the user
+            fetch('/admin/users', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ action: 'delete', username: username })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Server responded with an error!');
+                }
+                return response.json();
+            })
+            .then(data => {
+                alert(data.message);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred: ' + error.message);
+            });
+        }
 
-function handleUserUpdate() {
-    var username = document.getElementById('username').value;
-    var action = document.getElementById('userData').value; // This should contain action directly
+            // Function to handle toggling user role
+            function handleToggleUserRole() {
+    var username = document.getElementById('usernameToggleRole').value;
 
-    try {
-        action = JSON.parse(action); // Parse the JSON to get the action object
-    } catch (error) {
-        console.error('Error parsing JSON:', error);
-        alert('Invalid JSON data.');
-        return;
-    }
-
-    // Make sure that the action object includes the "delete" action
-    if (action.action !== 'delete') {
-        alert('Invalid action. Only deletion is supported here.');
-        return;
-    }
-
+    // Implement the fetch request to toggle the user role
     fetch('/admin/users', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ action: action.action, username: username }) // Send the correct format
+        body: JSON.stringify({ action: 'toggleAdmin', username: username })
     })
     .then(response => {
         if (!response.ok) {
-            // If the response is not ok, throw an error to catch it in the catch block
-            return response.text().then(text => { throw new Error(text) });
+            throw new Error('Server responded with an error!');
         }
         return response.json();
     })
     .then(data => {
-        alert(data.message); // Show success message
+        alert(data.message);
+        // Optionally refresh the page or update the UI to reflect the role change
     })
     .catch(error => {
         console.error('Error:', error);
-        alert('An error occurred: ' + error.message); // Show the error message
+        alert('An error occurred: ' + error.message);
     });
 }
-
     </script>
 </body>
 </html>

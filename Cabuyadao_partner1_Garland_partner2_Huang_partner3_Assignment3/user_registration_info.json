@@ -20,20 +20,6 @@
     "loginCount": 1,
     "role": "user"
   },
-  "asdf@edu.com": {
-    "name": "Test Test",
-    "password": "558b937c706b4a38a9133f85dbd47b9dcae6fa22722255572ae6a1ea29844297",
-    "lastLoginDate": 1701753982310,
-    "loginCount": 1,
-    "role": "user"
-  },
-  "carol@hawaii.edu": {
-    "name": "Carol Lee",
-    "password": "cbda979e53fe4a828d8d1860685d53b5dc8ed93cffbe733ba7fa54a06ae35965",
-    "lastLoginDate": 1701759792737,
-    "loginCount": 1,
-    "role": "user"
-  },
   "layla@hawaii.edu": {
     "name": "Layla Dang",
     "password": "cbda979e53fe4a828d8d1860685d53b5dc8ed93cffbe733ba7fa54a06ae35965",
@@ -72,15 +58,15 @@
   "admin@hawaii.edu": {
     "name": "Main Admin",
     "password": "e8f47b347e0fd41a5c66b5fa74a734e3fc9f98cd6671d2901128d44a99fa5ab5",
-    "lastLoginDate": 1702619433366,
-    "loginCount": 10,
+    "lastLoginDate": 1702681299380,
+    "loginCount": 12,
     "role": "admin"
   },
   "scott997@hawaii.edu": {
     "name": "Scott Garland",
     "password": "5fae201379aebe543d83f6e866124532eea995d646ff3ece30b0dc815215a39f",
-    "lastLoginDate": 1702619479735,
-    "loginCount": 2,
-    "role": "admin"
+    "lastLoginDate": 1702681411275,
+    "loginCount": 5,
+    "role": "user"
   }
 }

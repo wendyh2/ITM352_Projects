@@ -621,9 +621,24 @@ app.post('/admin/login', function (request, response) {
     if (isAdmin(username) && user_registration_info[username].password === hashPassword(password)) {
         request.session.user = username;
         request.session.isAdmin = true;
-        response.send({ success: true });
+        // Redirect to the choice page instead of directly to admin panel
+        response.redirect('/admin/choice');
     } else {
         response.send({ success: false, message: 'Invalid credentials or not an admin' });
+    }
+});
+
+// Route to display choice page for admin after login
+app.get('/admin/choice', function (request, response) {
+    if (request.session.isAdmin) {
+        // Serve a simple HTML page with choices
+        response.send(`
+            <h1>Welcome Admin</h1>
+            <p>Choose where you would like to go:</p>
+            <a href="/admin_panel.html">Admin Panel</a> | <a href="/products_display.html">User Interface</a>
+        `);
+    } else {
+        response.redirect('/login.html');
     }
 });
 
