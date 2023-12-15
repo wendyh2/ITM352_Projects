@@ -314,7 +314,7 @@ app.post("/login", function (request, response, next) {
             // Regular user logic
             // send a usernames cookie to indicate they're logged in
             response.cookie("userinfo", JSON.stringify({ "email": username, "full_name": name }), { expire: Date.now() + 30 * 1000 });
-            // IR4 - Keep track of the number of times a user logged in and the last time they logged in. 
+            // Keep track of the number of times a user logged in and the last time they logged in. 
             user_registration_info[username].loginCount += 1;
             user_registration_info[username].lastLoginDate = Date.now();
 
@@ -423,16 +423,16 @@ app.post("/register", function (request, response, next) {
         // Save new registration info into user_registration_info.json
         user_registration_info[username] = {};
         user_registration_info[username].name = request.body.name;
-        // IR1: Store encrypted password into user_registration_info
+        // Store encrypted password into user_registration_info
         user_registration_info[username].password = hashPassword(request.body.password);
-        // IR4 add lastLoginDate and loginCount for this new user make it a string
+        // Add lastLoginDate and loginCount for this new user make it a string
         user_registration_info[username].lastLoginDate = Date.now();
         user_registration_info[username].loginCount = 1;
 
         // Write to our user_registration_info.json file, we add the null and 2 option to account for a null replacer, and indentation
         fs.writeFileSync(filename, JSON.stringify(user_registration_info, null, 2));
 
-        // IR5: Add username to keep track of amount of logged in users
+        // Add username to keep track of amount of logged in users
         // Check if loggedInUsers already has the username so that we don't login more than once for the same user
         if (!loggedInUsers.hasOwnProperty(username)) {
             loggedInUsers[username] = true; // You can use `true` to indicate that the user is logged in.

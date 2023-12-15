@@ -57,13 +57,13 @@ Description: My Homepage
                 // put qty value from query string into quantity textbox
                 document.getElementById(`quantity${i}`).value = qty;
             }
-            // IR2: if there is an error for the quantity for product i, display it in the error div
+            // If there is an error for the quantity for product i, display it in the error div
             if (params.has(`quantity${i}_error`)) {
-                // IR2: print error message near input 
+                // Print error message near input 
                 document.getElementById(`error_quantity${i}_div`).innerHTML = params.get(`quantity${i}_error`);
-                // IR2: we also make the textbox red 
+                // We also make the textbox red 
                 document.getElementById(`quantity${i}`).style.border = '1px solid red';
-                // IR4: Change purchase button text from "Purchase" to text that indicates why the purchase is invalid
+                // Change purchase button text from "Purchase" to text that indicates why the purchase is invalid
                 // We save the error message into a variable
                 let errorMessage = params.get(`quantity${i}_error`);
 
@@ -77,15 +77,15 @@ Description: My Homepage
                     document.getElementById('purchase_button').value = errorMessage;
                 }
             }
-            // IR3: If there is an error for quantity exceeds available quantity for product i, display it in the error div
+            // If there is an error for quantity exceeds available quantity for product i, display it in the error div
             if (params.has(`quantity${i}_exceeds_error`)) {
-                // IR3: Print error message for we don't have xx available
+                // Print error message for we don't have xx available
                 document.getElementById(`error_quantity${i}_div`).innerHTML = params.get(`quantity${i}_exceeds_error`);
-                // IR3: Replace the input to the quantity available
+                // Replace the input to the quantity available
                 document.getElementById(`quantity${i}`).value = products[i].sets_available;
-                // IR3: Change frame for the textbox to red
+                // Change frame for the textbox to red
                 document.getElementById(`quantity${i}`).style.border = '1px solid red';
-                // IR4: Change purchase button text from "Purchase" to text that indicates why the purchase is invalid
+                // Change purchase button text from "Purchase" to text that indicates why the purchase is invalid
                 document.getElementById('purchase_button').value = "Quantity of at least 1 product exceeds quantity available";
             }
         }
@@ -93,7 +93,7 @@ Description: My Homepage
         // if the user did not select any quanitities, let them kmow
         // if the is an error for the quantity for product i, display it in the error div
         if (params.has("noQty")) {
-            // IR4: Change purchase button text from "Purchase" to text that indicates why the purchase is invalid
+            // Change purchase button text from "Purchase" to text that indicates why the purchase is invalid
             document.getElementById('purchase_button').value = params.get("noQty");
         }
     }
@@ -233,7 +233,7 @@ function update_total_selected() {
                         <h4>${products[i].name}</h4>
                         <p>$${products[i].price}</p>
                         <p>Sets available: ${products[i].sets_available}</p>
-                        <!-- IR1: Display total quantity sold -->
+                        <!-- Display total quantity sold -->
                         <p>Sets sold: ${products[i].sets_sold}</p>
                         <div class="qty">
                             <label id="quantity${i}_label">Sets Desired:</label>
