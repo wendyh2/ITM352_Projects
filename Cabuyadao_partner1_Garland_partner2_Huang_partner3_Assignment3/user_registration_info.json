@@ -16,8 +16,8 @@
   "itm352@hawaii.edu": {
     "name": "Michelle Zhang",
     "password": "1c543c5e4336fdff03dcac8a8242ac9eb496c123b429b3f2cc7af6d9529f332a",
-    "lastLoginDate": 1702391281758,
-    "loginCount": 3,
+    "lastLoginDate": 1702609676931,
+    "loginCount": 4,
     "role": "user"
   },
   "apple@edu.com": {
@@ -86,14 +86,14 @@
   "scott997@hawaii.edu": {
     "name": "Scott Garland",
     "password": "5fae201379aebe543d83f6e866124532eea995d646ff3ece30b0dc815215a39f",
-    "lastLoginDate": 1702618721371,
-    "loginCount": 11,
-    "role": "user"
+    "lastLoginDate": 1702504576557,
+    "loginCount": 1,
+    "role": "admin"
   },
-  "scottgarland8@gmail.com": {
-    "name": "Scott Garland",
-    "password": "99407a040d08731a6daa089c8da0abe8db2e0adc28c9fc8ccb8399059419e97d",
-    "lastLoginDate": 1702614980154,
-    "loginCount": 4
+  "crack@cocaine.com": {
+    "name": "Crack Cocaine",
+    "password": "cbda979e53fe4a828d8d1860685d53b5dc8ed93cffbe733ba7fa54a06ae35965",
+    "lastLoginDate": 1702610024818,
+    "loginCount": 1
   }
 }
