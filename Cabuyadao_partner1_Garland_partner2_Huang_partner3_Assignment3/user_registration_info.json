@@ -6,13 +6,6 @@
     "loginCount": 4,
     "role": "user"
   },
-  "xander@yahoo.com": {
-    "name": "Xander Woo",
-    "password": "cbda979e53fe4a828d8d1860685d53b5dc8ed93cffbe733ba7fa54a06ae35965",
-    "lastLoginDate": 1701658070244,
-    "loginCount": 1,
-    "role": "user"
-  },
   "tony@hawaii.edu": {
     "name": "Tony Lot",
     "password": "cbda979e53fe4a828d8d1860685d53b5dc8ed93cffbe733ba7fa54a06ae35965",
@@ -62,20 +55,6 @@
     "loginCount": 1,
     "role": "user"
   },
-  "london@hawaii.edu": {
-    "name": "London Tipton",
-    "password": "cbda979e53fe4a828d8d1860685d53b5dc8ed93cffbe733ba7fa54a06ae35965",
-    "lastLoginDate": 1701827274635,
-    "loginCount": 1,
-    "role": "user"
-  },
-  "miley@hawaii.edu": {
-    "name": "Miley Cyrus",
-    "password": "cbda979e53fe4a828d8d1860685d53b5dc8ed93cffbe733ba7fa54a06ae35965",
-    "lastLoginDate": 1701839518382,
-    "loginCount": 1,
-    "role": "user"
-  },
   "barack@obama.com": {
     "name": "Barack Obama",
     "password": "cbda979e53fe4a828d8d1860685d53b5dc8ed93cffbe733ba7fa54a06ae35965",
@@ -100,8 +79,8 @@
   "admin@hawaii.edu": {
     "name": "Main Admin",
     "password": "e8f47b347e0fd41a5c66b5fa74a734e3fc9f98cd6671d2901128d44a99fa5ab5",
-    "lastLoginDate": 1702502712904,
-    "loginCount": 1,
+    "lastLoginDate": 1702619009100,
+    "loginCount": 9,
     "role": "admin"
   },
   "scott997@hawaii.edu": {
