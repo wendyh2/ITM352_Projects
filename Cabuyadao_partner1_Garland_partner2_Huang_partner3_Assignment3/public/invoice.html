@@ -175,9 +175,6 @@
             <th style="text-align: center;" width="11%">Quantity</th>
             <th style="text-align: center;" width="13%">Price</th>
             <th style="text-align: center;" width="20%">Price Altogether</th>
-            <th style="text-align: center;" width="10%">Rating</th>
-            <th style="text-align: center;" width="20%">Comments</th>
-          </tr>
           <script>
             // generates rows with prices based on quantities
             function generate_item_rows() {
@@ -209,18 +206,6 @@
               <td align="center" width="11%">${qty}<br><font color = "red">${errors.join('<br>')}</td>
               <td width="13%">$${products[i].price}</td>
               <td width="20%">$${(extended_price).toFixed(2)}</td>
-              <td width="10%">
-          <select class="rating" name="rating_${i}">
-            <option value="">Rate...</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-          </select>
-        </td>
-        <td width="20%">
-          <input type="text" name="comment_${i}" placeholder="Leave a comment">
         </td>
             </tr>
             `)
