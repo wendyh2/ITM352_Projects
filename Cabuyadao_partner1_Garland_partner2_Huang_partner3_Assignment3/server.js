@@ -69,16 +69,7 @@ function hashPassword(password) {
     const hash = crypto.createHmac('sha256', secret).update(password).digest('hex');
     return hash;
 }
-/*
-// Add the rating to the specified product
-if (typeof products[i].rating === "undefined") {
-    products[i].rating = [];
- }
- products[i].rating.push(rating);
-// Write the updated products object back to the file
- fs.writeFileSync('./products.json', JSON.stringify(products, null, 2), 'utf8');
-response.send(`Thank you for rating ${products[i].name} ${rating} stars`);
-*/
+
 
 // We use user_registration_info.json to hold users registration data (name, password, email)
 var filename = __dirname + "/user_registration_info.json";
@@ -118,6 +109,19 @@ app.get("/products_data.js", function (request, response, next) {
     response.type('.js');
     const products_str = `let all_products = ${JSON.stringify(all_products)}`;
     response.send(products_str);
+});
+
+// Route to provide reviews for a product
+app.post("/add_review", function (request, response, next) {
+    console.log(request.body);
+    var prod_index = Number(request.body.product_reviewed_index);
+    let prod_key = request.body.product_reviewed_key;
+    if(typeof all_products[prod_key][prod_index].reviews === 'undefined' ) {
+        all_products[prod_key][prod_index].reviews =[];
+    }
+    all_products[prod_key][prod_index].reviews.push({"rating": Number(request.body.star), "comments": request.body.Comments, "date": Date()});
+
+    response.send(`<script>alert("Thank you for your review! Click ok to go back to the products page.");location.href ='./products_display.html?product_type=${prod_key}';</script>`);
 });
 
 // Route to provide cart data as a JavaScript file

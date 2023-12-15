@@ -1,0 +1,86 @@
+<head>
+    <link rel="stylesheet" type="text/css" href="stars.css">
+    <script src="./product_data.js"></script>
+</head>
+
+<script>
+
+    function Star_rate(rate) {
+        //As per the value of rate parameter, mark respective radio button as “checked”
+        btn = document.getElementById("star_" + rate);
+        btn.checked = true;
+        //display correct rate stars images
+        var star = document.getElementById("star" + rate).className;
+
+        if (star == "empty_star")   //if an empty star is clicked, rating is done till that star
+        {
+            for (i = rate; i > 0; i--) {
+                document.getElementById("star" + i).className = "full_star";
+            }
+        }
+        else if (star == "full_star") //if a full star is clicked, rating is reduced to that star
+        {
+            for (i = rate; i < 5; i++) {
+                document.getElementById("star" + (i + 1)).className = "empty_star";
+            }
+        }
+    }
+
+</script>
+
+<form method="post" action="./add_review" name="review_form">
+
+    <div class="rating">
+        <h4>Please Rate Our Used Smartphones</h4>
+        <div class="rate_widget">
+            <script>
+                for (let i = 1; i <= 5; i++) {
+                    document.write(`
+<div class="empty_star" onClick="Star_rate(${i})" id="star${i}"></div>
+<input type="radio" name="star" id="star_${i}" value="${i}" style="display:none"> 
+`);
+                }
+            </script>
+        </div>
+        <br class="spacer">
+    </div>
+
+    <h4>Your Review</h4>
+    <label>Phone</label>
+    <select name="product_reviewed_index">
+        <script>
+            for (let i in products) {
+                document.write(`<option value="${i}">${products[i].brand}</option>`);
+            }
+        </script>
+    </select>
+    <br>
+    <label>Enter Comments</label><br>
+    <textarea name="Comments" rows="10" cols="80"></textarea><br><br>
+    <input type="submit" value="Submit Review" name="submit_review" id="submit_review">
+</form>
+
+<table border="1">
+    <tbody>
+        <tr>
+            <th style="text-align: center;"><b><big>Rating</big></b></th>
+            <th style="text-align: center;"><b><big>Comment</big></b></th>
+            <th style="text-align: center;"><b><big>Date and Time</big></b></th>
+        </tr>
+        <script>
+            for (let i in products) {
+                if (typeof products[i].reviews != 'undefined') {
+                    for (let review of products[i].reviews) {
+                        document.write(`
+       <tr>
+        <td style="text-align: center;"><b>${review.rating}</b></td>
+        <td style="text-align: center;"><b>${review.comments}</b></td>
+        <td style="text-align: center;"><b>${review.date}</b></td>
+        </tr>
+       `);
+                    }
+                }
+            }
+        </script>
+    </tbody>
+</table>

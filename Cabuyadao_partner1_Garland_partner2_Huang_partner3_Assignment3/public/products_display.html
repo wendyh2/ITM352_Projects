@@ -28,6 +28,18 @@ Description: My Homepage
         userinfo = JSON.parse(getCookie('userinfo'));
     }
 
+    function compute_average_rating(product) {
+        if(typeof product.reviews === 'undefined' || product.reviews.length === 0) {
+            return"no reviews";
+        }
+        let sum = 0;
+        for (let i = 0; i < product.reviews.length; i++) {
+            if(product.reviews[i].rating !== undefined && product.reviews[i].rating !== null && product.reviews[i].rating !== '') {
+                sum += product.reviews[i].rating;
+            }
+        }
+        return sum / product.reviews.length;
+    }
     // get the query string and put it into a searchParams Object
     let params = (new URL(document.location)).searchParams;
     let prod_key = "Lorelei Collection"; //Default to Lorelei page if product_type isn't specified in the querystring
@@ -217,7 +229,7 @@ function update_total_selected() {
                 `<div class="row">
                     <img src="./img/${products[i].image}" alt="${products[i].name}" />
                     <div class="product-text">
-                        <h4>${products[i].rating}</h4>
+                        <h4>Rating: ${compute_average_rating(products[i])}</h4>
                         <h4>${products[i].name}</h4>
                         <p>$${products[i].price}</p>
                         <p>Sets available: ${products[i].sets_available}</p>
@@ -228,6 +240,7 @@ function update_total_selected() {
                             <input type="text" name="quantity${i}" id="quantity${i}" placeholder="0" value="0" onkeyup="update_total_selected();">
                             <div class="error_msg" id="error_quantity${i}_div"></div>
                         </div>
+                        <h4><a href="./rate_product.html?prod_key=${prod_key}&prod_index=${i}">See Reviews!<a></h4>
                         <!-- leave out for now -- adding individual items to cart
                             <button class="add-to-cart" onclick="addToCart(${i})">Add to Cart</button>
                             -->
