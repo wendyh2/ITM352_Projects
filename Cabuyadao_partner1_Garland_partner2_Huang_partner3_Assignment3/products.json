@@ -1,153 +1,158 @@
 {
-  "Lorelei Collection": [
-    {
-      "name": "Emiliana",
-      "price": 52,
-      "image": "bow.jpg",
-      "sets_available": 12,
-      "sets_sold": 5,
-      "description": "An adorable blend of pink and white, adorned with charming bows, delicate pearls, and touches of elegant gold in the design.",
-      "rating": 4
-    },
-    {
-      "name": "Nerissa",
-      "price": 46,
-      "image": "floral.jpg",
-      "sets_available": 11,
-      "sets_sold": 7,
-      "description": "An enchanting blend of water lilies and delicate spider webs, creating a whimsical 3D masterpiece that captures the magic of nature."
-    },
-    {
-      "name": "Ligeia",
-      "price": 58,
-      "image": "mermaid.jpg",
-      "sets_available": 16,
-      "sets_sold": 2,
-      "description": "A cute fusion of enchanting sirens and a touch of modern cuteness, adorned with charming bows for an irresistibly adorable charm."
-    },
-    {
-      "name": "Aurora",
-      "price": 57,
-      "image": "pinky.jpg",
-      "sets_available": 15,
-      "sets_sold": 4,
-      "description": "Dive into the enchanting world where the shimmering hues of the aurora borealis dance upon your nails, creating a captivating underwater masterpiece."
-    },
-    {
-      "name": "Eloise",
-      "price": 56,
-      "image": "starbow.jpg",
-      "sets_available": 17,
-      "sets_sold": 8,
-      "description": "Indulge in the adorable allure of a pink-themed superstar and bow nail set, perfect for unleashing your inner cuteness!"
-    },
-    {
-      "name": "Zarina",
-      "price": 70,
-      "image": "nail14.jpg",
-      "sets_available": 3,
-      "sets_sold": 17,
-      "description": "Elevate your nail game with our adorable limited edition set featuring vibrant butterflies, blooming flowers, and sparkling jewels accented with charming silver details."
-    }
-  ],
-  "Aureliana Collection": [
-    {
-      "name": "Gellie",
-      "price": 53,
-      "image": "nail1.jpg",
-      "sets_available": 13,
-      "sets_sold": 2,
-      "description": "Adorn your nails with the enchanting allure of a jellyfish-inspired design, featuring adorable pops of red and blue that will make your fingertips a whimsical ocean delight."
-    },
-    {
-      "name": "Gisella",
-      "price": 52,
-      "image": "nail2.jpg",
-      "sets_available": 14,
-      "sets_sold": 6,
-      "description": "Dazzle your nails with a whimsical blend of pink and blue hues, adorned with delightful water and floral textures for an irresistibly cute touch."
-    },
-    {
-      "name": "Aysha",
-      "price": 49,
-      "image": "nail3.jpg",
-      "sets_available": 18,
-      "sets_sold": 8,
-      "description": "Indulge in adorable nail art with our pink, yellow, and iridescent-themed set featuring whimsical water textures, sweet bows, and delicate flowers for a touch of cuteness at your fingertips."
-    },
-    {
-      "name": "Serafina",
-      "price": 52,
-      "image": "nail4.jpg",
-      "sets_available": 12,
-      "sets_sold": 10,
-      "description": "A whimsical world of black and white, adorned with twinkling stars and charming mushrooms, where chaos finds its delightful harmony."
-    },
-    {
-      "name": "Venera",
-      "price": 50,
-      "image": "nail5.jpg",
-      "sets_available": 11,
-      "sets_sold": 9,
-      "description": "A whimsical symphony of textures and colors, where flowers effortlessly dance in perfect harmony."
-    },
-    {
-      "name": "Norina",
-      "price": 52,
-      "image": "nail6.jpg",
-      "sets_available": 14,
-      "sets_sold": 6,
-      "description": "A delightful blend of spring perfection with charming floral details to infuse your style with seasonal sweetness."
-    }
-  ],
-  "Mariela Collection": [
-    {
-      "name": "Zaira",
-      "price": 59,
-      "image": "nail7.jpg",
-      "sets_available": 15,
-      "sets_sold": 10,
-      "description": "A beautiful blend of blue porcelain, adorable bows, and fruity charm creates a surprisingly cohesive and irresistibly cute collection."
-    },
-    {
-      "name": "Daviana",
-      "price": 62,
-      "image": "nail8.jpg",
-      "sets_available": 17,
-      "sets_sold": 14,
-      "description": "Indulge in the enchanting allure of our nail set, adorned with charming bows, delightful flowers, sweet hearts, and playful kisses for a touch of irresistible cuteness."
-    },
-    {
-      "name": "Mai",
-      "price": 58,
-      "image": "nail9.jpg",
-      "sets_available": 13,
-      "sets_sold": 18,
-      "description": "Embark on a heartwarming journey through a whimsical world where bunnies and stars collide in a charming romantic tale, inspired by the Seishun Buta Yarō anime."
-    },
-    {
-      "name": "Liviana",
-      "price": 64,
-      "image": "nail13.jpg",
-      "sets_available": 12,
-      "sets_sold": 15,
-      "description": "A whimsically rebellious blue and silver coffin-shaped rock-star set adorned with charming hearts and intricate punk silver designs."
-    },
-    {
-      "name": "Mirella",
-      "price": 48,
-      "image": "nail10.jpg",
-      "sets_available": 18,
-      "sets_sold": 17,
-      "description": "Indulge in pure sweetness with this irresistibly cute collection, adorned with cherries, bows, hearts, and an array of charming details in a vibrant palette."
-    },
-    {
-      "name": "Noemi",
-      "price": 61,
-      "image": "nail12.jpg",
-      "sets_available": 11,
-      "sets_sold": 19,
-      "description": "A whimsical collection of dark-themed florals, blending textures for an irresistibly cute touch."
-    }
-  ]
+    "Lorelei Collection":
+    [
+        {
+            "name": "Emiliana",
+            "price": 52.00,
+            "image": "bow.jpg",
+            "sets_available": 12,
+            "sets_sold": 5,
+            "description": "An adorable blend of pink and white, adorned with charming bows, delicate pearls, and touches of elegant gold in the design.",
+            "rating":4.0
+        },
+        {
+            "name": "Nerissa",
+            "price": 46.00,
+            "image": "floral.jpg",
+            "sets_available": 11,
+            "sets_sold": 7,
+            "description": "An enchanting blend of water lilies and delicate spider webs, creating a whimsical 3D masterpiece that captures the magic of nature."
+        },
+        {
+            "name": "Ligeia",
+            "price": 58.00,
+            "image": "mermaid.jpg",
+            "sets_available": 16,
+            "sets_sold": 2,
+            "description": "A cute fusion of enchanting sirens and a touch of modern cuteness, adorned with charming bows for an irresistibly adorable charm."
+        },
+        {
+            "name": "Aurora",
+            "price": 57.00,
+            "image": "pinky.jpg",
+            "sets_available": 15,
+            "sets_sold": 4,
+            "description": "Dive into the enchanting world where the shimmering hues of the aurora borealis dance upon your nails, creating a captivating underwater masterpiece."
+        },
+        {
+            "name": "Eloise",
+            "price": 56.00,
+            "image": "starbow.jpg",
+            "sets_available": 17,
+            "sets_sold": 8,
+            "description": "Indulge in the adorable allure of a pink-themed superstar and bow nail set, perfect for unleashing your inner cuteness!"
+        },
+        {
+            "name": "Zarina",
+            "price": 70.00,
+            "image": "nail14.jpg",
+            "sets_available": 3,
+            "sets_sold": 17,
+            "description": "Elevate your nail game with our adorable limited edition set featuring vibrant butterflies, blooming flowers, and sparkling jewels accented with charming silver details."
+        }
+    ],
+
+    "Aureliana Collection":
+    [
+        {
+            "name": "Gellie",
+            "price": 53.00,
+            "image": "nail1.jpg",
+            "sets_available": 13,
+            "sets_sold": 2,
+            "description": "Adorn your nails with the enchanting allure of a jellyfish-inspired design, featuring adorable pops of red and blue that will make your fingertips a whimsical ocean delight."
+        },
+        {
+            "name": "Gisella",
+            "price": 52.00,
+            "image": "nail2.jpg",
+            "sets_available": 14,
+            "sets_sold": 6,
+            "description": "Dazzle your nails with a whimsical blend of pink and blue hues, adorned with delightful water and floral textures for an irresistibly cute touch."
+        },
+        {
+            "name": "Aysha",
+            "price": 49.00,
+            "image": "nail3.jpg",
+            "sets_available": 18,
+            "sets_sold": 8,
+            "description": "Indulge in adorable nail art with our pink, yellow, and iridescent-themed set featuring whimsical water textures, sweet bows, and delicate flowers for a touch of cuteness at your fingertips."
+        },
+        {
+            "name": "Serafina",
+            "price": 52.00,
+            "image": "nail4.jpg",
+            "sets_available": 12,
+            "sets_sold": 10,
+            "description": "A whimsical world of black and white, adorned with twinkling stars and charming mushrooms, where chaos finds its delightful harmony."
+        },
+        {
+            "name": "Venera",
+            "price": 50.00,
+            "image": "nail5.jpg",
+            "sets_available": 11,
+            "sets_sold": 9,
+            "description": "A whimsical symphony of textures and colors, where flowers effortlessly dance in perfect harmony."
+        },
+        {
+            "name": "Norina",
+            "price": 52.00,
+            "image": "nail6.jpg",
+            "sets_available": 14,
+            "sets_sold": 6,
+            "description": "A delightful blend of spring perfection with charming floral details to infuse your style with seasonal sweetness."
+        }
+    ],
+
+    "Mariela Collection":
+    [
+        {
+            "name": "Zaira",
+            "price": 59.00,
+            "image": "nail7.jpg",
+            "sets_available": 15,
+            "sets_sold": 10,
+            "description": "A beautiful blend of blue porcelain, adorable bows, and fruity charm creates a surprisingly cohesive and irresistibly cute collection."
+        },
+        {
+            "name": "Daviana",
+            "price": 62.00,
+            "image": "nail8.jpg",
+            "sets_available": 17,
+            "sets_sold": 14,
+            "description": "Indulge in the enchanting allure of our nail set, adorned with charming bows, delightful flowers, sweet hearts, and playful kisses for a touch of irresistible cuteness."
+        },
+        {
+            "name": "Mai",
+            "price": 58.00,
+            "image": "nail9.jpg",
+            "sets_available": 13,
+            "sets_sold": 18,
+            "description": "Embark on a heartwarming journey through a whimsical world where bunnies and stars collide in a charming romantic tale, inspired by the Seishun Buta Yarō anime."
+        },
+        {
+            "name": "Liviana",
+            "price": 64.00,
+            "image": "nail13.jpg",
+            "sets_available": 12,
+            "sets_sold": 15,
+            "description": "A whimsically rebellious blue and silver coffin-shaped rock-star set adorned with charming hearts and intricate punk silver designs."
+        },
+        {
+            "name": "Mirella",
+            "price": 48.00,
+            "image": "nail10.jpg",
+            "sets_available": 18,
+            "sets_sold": 17,
+            "description": "Indulge in pure sweetness with this irresistibly cute collection, adorned with cherries, bows, hearts, and an array of charming details in a vibrant palette."
+        },
+        {
+            "name": "Noemi",
+            "price": 61.00,
+            "image": "nail12.jpg",
+            "sets_available": 11,
+            "sets_sold": 19,
+            "description": "A whimsical collection of dark-themed florals, blending textures for an irresistibly cute touch."
+        }
+    ]
 }
