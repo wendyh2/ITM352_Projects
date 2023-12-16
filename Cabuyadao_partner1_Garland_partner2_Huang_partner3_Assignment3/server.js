@@ -6,7 +6,6 @@
 
 const express = require('express');
 const app = express();
-app.use(express.static(__dirname + '/public'));
 const querystring = require('querystring');
 const all_products = require(__dirname + '/products.json');
 const fs = require("fs");
@@ -14,6 +13,7 @@ const cookieParser = require('cookie-parser');
 app.use(cookieParser());
 app.use(express.json());
 const path = require('path');
+const nodemailer = require("nodemailer");
 
 const session = require('express-session');
 
@@ -83,7 +83,15 @@ app.all('*', function (request, response, next) {
         request.session.cart = {};
     }
     console.log(request.method + ' to ' + request.path);
-    next();
+    const referringUrl = request.get('referer') || request.get('referrer'); // Referer header may be spelled with or without an "r"
+
+    // IR1: If user came from another server, send them to the last product page they were on if they have one
+    if((referringUrl === undefined ||  referringUrl.includes(request.hostname) === false) && request.session.lastProductPage && request.url.includes(request.session.lastProductPage) === false) {
+        response.redirect(`.${request.session.lastProductPage}`);
+    } else {
+        next(); 
+    }
+
 });
 
 // Route to provide products data as a JavaScript file
@@ -93,15 +101,39 @@ app.get("/products_data.js", function (request, response, next) {
     response.send(products_str);
 });
 
+// Route interecpt going to a product page and save the last product page they were on
+app.get("/products_display.html", function (request, response, next) {
+    request.session.lastProductPage = request.originalUrl;
+    next();
+});
+
+//  IR1: save the page user is on login 
+app.get("/login.html", function (request, response, next) {
+    const referringUrl = request.get('referer') || request.get('referrer');
+    if(referringUrl.includes('login') === false) {
+        request.session.currentPage = referringUrl;
+    }
+    next();
+});
+
+app.get("/registration.html", function (request, response, next) {
+    const referringUrl = request.get('referer') || request.get('referrer');
+    if(referringUrl.includes('registration') === false) {
+        request.session.currentPage = referringUrl;
+    }
+    next();
+});
+    
+
 // Route to provide reviews for a product
 app.post("/add_review", function (request, response, next) {
     console.log(request.body);
     var prod_index = Number(request.body.product_reviewed_index);
     let prod_key = request.body.product_reviewed_key;
-    if(typeof all_products[prod_key][prod_index].reviews === 'undefined' ) {
-        all_products[prod_key][prod_index].reviews =[];
+    if (typeof all_products[prod_key][prod_index].reviews === 'undefined') {
+        all_products[prod_key][prod_index].reviews = [];
     }
-    all_products[prod_key][prod_index].reviews.push({"rating": Number(request.body.star), "comments": request.body.Comments, "date": Date()});
+    all_products[prod_key][prod_index].reviews.push({ "rating": Number(request.body.star), "comments": request.body.Comments, "date": Date() });
 
     response.send(`<script>alert("Thank you for your review! Click ok to go back to the products page.");location.href ='./products_display.html?product_type=${prod_key}';</script>`);
 });
@@ -290,14 +322,14 @@ app.post("/login", function (request, response, next) {
 
         // Send a user info cookie to indicate they're logged in
         response.cookie("userinfo", JSON.stringify({ "email": username, "full_name": name }), { expire: Date.now() + 30 * 1000 });
-        
+
         // Create params variable and add username and name fields
         let params = new URLSearchParams();
         params.append("loginCount", user_registration_info[username].loginCount);
         params.append("lastLogin", user_registration_info[username].lastLoginDate);
 
-        // Redirect to products_display.html for all users
-        response.redirect("./products_display.html?" + params.toString());
+        // Redirect to precvious page for all users
+        response.redirect(request.session.currentPage || "./products_display.html?" + params.toString() );
     } else {
         // If login information is invalid, redirects to login page and gives error
         let params = new URLSearchParams(request.body);
@@ -407,7 +439,7 @@ app.post("/register", function (request, response, next) {
         if (!loggedInUsers.hasOwnProperty(username)) {
             loggedInUsers[username] = true; // You can use `true` to indicate that the user is logged in.
         }
-      
+
         // Create params variable and add username and name fields
         let params = new URLSearchParams(request.body);
         params.append("loginCount", user_registration_info[username].loginCount);
@@ -447,20 +479,16 @@ app.get('/checkout', (request, response) => {
         return;
     }
 
-
-    const userinfo = request.cookies.userinfo;
-    
     // console.log(userinfo);
     // console.log(userinfo["email"]);
     // console.log(userinfo.email);
 
-    // For some reason, accessing these values in userinfo doesn't work
-    var name = request.cookies.userinfo["full_name"]
-    var email = request.cookies.userinfo["email"]
+    // For some reason, accessing these values in userinfo doesn't work    
+    let userinfo = JSON.parse(request.cookies.userinfo);
 
-    // Declare str variable to be displayed
+    // Creating a final invoice 
     str = `
-    <h2>Thank you ${name} for your purchase! Please see your invoice below.</h2>
+    <h2>Thank you ${userinfo.full_name} for your purchase! Please see your invoice below.</h2>
     <div class="flex-box-container">
     <div class="flex-box">
       <!--Where I will print my invoice-->
@@ -483,16 +511,6 @@ app.get('/checkout', (request, response) => {
     var cart_data = request.session.cart;
 
 
-    // 
-    function findNonNegInt(q, returnErrors = false) { //the function returns non-negative integers in the object.
-        errors = []; // assume no errors at first
-        if (Number(q) != q) errors.push('Not a number!'); // Check if string is a number value
-        if (q < 0) errors.push('Negative value!'); // Check if it is non-negative
-        if (parseInt(q) != q) errors.push('Not an integer!'); // Check that it is an integer
-
-        return returnErrors ? errors : (errors.length == 0);
-    }
-
     // Add more table rows
     for (let pkey in cart_data) {
         let products = all_products[pkey];
@@ -501,14 +519,10 @@ app.get('/checkout', (request, response) => {
             if (qty == 0) {
                 continue;
             }
-            errors = findNonNegInt(qty, true);
-            if (errors.length == 0) {
-                var extended_price = qty * products[i].price;
-                subtotal += extended_price;
-            }
-            else (extended_price = 0);
 
-           
+            var extended_price = qty * products[i].price;
+            subtotal += extended_price;
+
             str += `
             <tr>
              <td height="70px" width="11%">
@@ -519,7 +533,7 @@ app.get('/checkout', (request, response) => {
                   </div>
                 </div></td>
               <td width="26%">${products[i].name}</td>
-              <td align="center" width="11%">${qty}<br><font color = "red">${errors.join('<br>')}</td>
+              <td align="center" width="11%">${qty}<br><font color = "red"></td>
               <td width="13%">$${products[i].price}</td>
               <td width="20%">$${(extended_price).toFixed(2)}</td>
               <td width="10%">
@@ -577,7 +591,8 @@ app.get('/checkout', (request, response) => {
             </table >
             <h4><strong> Our shipping policy is: A subtotal of $0-$80 will be $10 shipping. Subtotals over $80 will have free
             shipping</strong></h4>
-            <h1>We have emailed your invoice to ${email}!</h1>
+            
+            <h1>We have emailed your invoice to ${userinfo['email']}!</h1>
             </div>
             </div>
     `;
@@ -598,44 +613,37 @@ app.get('/checkout', (request, response) => {
     // send to final invoice
 
     // Referenced from assignment 3 code example
-	// Create a transporter variable for nodemailer
-	var transporter = nodemailer.createTransport({
-		host: "mail.hawaii.edu",
-		port: 25,
-		secure: false, // use TLS
-		tls: {
-			// do not fail on invalid certs
-			rejectUnauthorized: false,
-		},
-	});
+    // Create a transporter variable for nodemailer
+    var transporter = nodemailer.createTransport({
+        host: "smtp.freesmtpservers.com",
+        port: 25,
+        secure: false, // use TLS
+        tls: {
+            // do not fail on invalid certs
+            rejectUnauthorized: false,
+        },
+    });
 
-    var user_email = email;
-
-	// Options for email
-	var mailOptions = {
-		from: "wendyh2@hawaii.edu", //sender
-		to: user_email, //receiver
-		subject: "Thank you for your order!", // subject heading
-		html: str, //html body (invoice)
-	};
+    // Options for email
+    var mailOptions = {
+        from: "wendyh2@hawaii.edu", //sender
+        to: userinfo.email, //receiver
+        subject: "Thank you for your order!", // subject heading
+        html: str, //html body (invoice)
+    };
 
     // Attempt to send email
-	transporter.sendMail(mailOptions, function (error, info) {
-		if (error) {
-			email_msg = `<script>alert('Oops, ${userid}. There was an error and your invoice could not be sent');</script>`;
-			response.send(email_msg);
-			return; // terminate the function after sending the error response
-		} else {
-			console.log("Email sent to: " + info.response);
-			email_msg = `<script>alert('Your invoice was mailed to ${userid}');</script>`;
-			response.send(str + email_msg);
-		}
-	});
+    transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+            str += `<script>alert('Oops, ${userinfo.full_name}, there was an error and your invoice could not be sent');</script>`;
+        } else {
+            str += `<script>alert('Your invoice was mailed to ${userinfo.email}');</script>`;
+        }
+    });
 
     response.send(str);
-    // response.redirect("./invoice.html");
     return;
-})
+});
 
 // update the session quantities with updated amounts from cart
 app.post("/update_cart", function (request, response, next) {
@@ -649,7 +657,7 @@ app.post("/update_cart", function (request, response, next) {
         let prod_key = updatekey.split("_")[1]; // get product type
         let prod_num = updatekey.split("_")[2]; // get product number
         // updates the cart with the new quantities
-        request.session.cart[prod_key]["quantity"+prod_num]=updated_cart[updatekey];
+        request.session.cart[prod_key]["quantity" + prod_num] = updated_cart[updatekey];
     }
 
     if (Object.keys(errors).length == 0) {
@@ -675,9 +683,9 @@ function findNonNegInt(q, returnErrors = false) {
 }
 
 // Logout route to expire the cookie redirect them to the homepage afterwards
-app.get('/logout', function(req, res, next) {
-//remove them from loggedin users
-    let userinfo = JSON.parse (req.cookies['userinfo']);
+app.get('/logout', function (req, res, next) {
+    //remove them from loggedin users
+    let userinfo = JSON.parse(req.cookies['userinfo']);
     delete loggedInUsers[userinfo.email];
     res.clearCookie('userinfo');
     res.redirect("home.html");
@@ -887,7 +895,7 @@ app.post('/admin/users', function (request, response) {
         case 'edit':
             // Edit an existing user
             if (user_registration_info[username]) {
-                if(userData.password) {
+                if (userData.password) {
                     userData.password = hashPassword(userData.password); // Hash the password if provided
                 }
                 user_registration_info[username] = { ...user_registration_info[username], ...userData };
