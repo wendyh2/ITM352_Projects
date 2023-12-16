@@ -2,8 +2,8 @@
   "karie@yahoo.com": {
     "name": "Karie Smith",
     "password": "cbda979e53fe4a828d8d1860685d53b5dc8ed93cffbe733ba7fa54a06ae35965",
-    "lastLoginDate": 1702717314007,
-    "loginCount": 22,
+    "lastLoginDate": 1702718070309,
+    "loginCount": 23,
     "role": "user"
   },
   "itm352@hawaii.edu": {
@@ -63,6 +63,12 @@
     "name": "Yo Mama",
     "password": "cbda979e53fe4a828d8d1860685d53b5dc8ed93cffbe733ba7fa54a06ae35965",
     "lastLoginDate": 1702717666563,
+    "loginCount": 1
+  },
+  "cerina@kim.com": {
+    "name": "Cerina Kim",
+    "password": "cbda979e53fe4a828d8d1860685d53b5dc8ed93cffbe733ba7fa54a06ae35965",
+    "lastLoginDate": 1702718112776,
     "loginCount": 1
   }
 }
