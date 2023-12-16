@@ -12,6 +12,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Receipt Sales</title>
 
+  <script src="./user_data.js" type="text/javascript"></script>
   <script src="./getLoggedInUsers.js" type="text/javascript"></script>
   <script src="./products_data.js" type="text/javascript"></script>
   <link href="invoice.css" rel="stylesheet">
@@ -84,12 +85,12 @@
     // Subtotal
     var subtotal = 0;
 
-    // Display login count and date of last login
+      // Display login count and date of last login
     // Get login count
-    const numLogins = params.get(`loginCount`);
+    const numLogins = all_users[userinfo.email].loginCount;
 
-    // Extract the lastLogin value from the query parameters
-    const lastLoginStr = params.get('lastLogin');
+    // Extract the lastLogin value 
+    const lastLoginStr = all_users[userinfo.email].lastLoginDate;
 
     // This code is referenced from chatGPT
     // Convert the lastLogin string to a number (timestamp) 
@@ -154,7 +155,6 @@
     </script>
       <div class="cart-icon">
         <a href="cart.html"><i class="fa-solid fa-bag-shopping"></i></a>
-        <span>0</span>
       </div>
     </div>
   </header>
@@ -283,12 +283,14 @@
           </script>
         </tbody>
       </table>
-      <h4><strong> Our shipping policy is: A subtotal of $0-$80 will be $10 shipping. Subtotals over $80 will have free
-          shipping</strong></h4>
-      <script>
-        document.write(`We have emailed your invoice to ${userinfo['email']}`)
-
-      </script>
+          <!-- Login to Check Out Button -->
+          <form id="checkout_form" action="/checkout" method="GET">
+            <input class="checkout_button" id="checkout_button" type="submit" value="Confirm Purchase" />
+        </form>
+        <!-- <script>
+          document.write(`We have emailed your invoice to ${userinfo['email']}`)
+  
+        </script> -->
     </div>
   </div>
 </body>

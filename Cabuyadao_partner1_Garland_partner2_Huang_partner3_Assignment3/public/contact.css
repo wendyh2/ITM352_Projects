@@ -151,20 +151,6 @@ section {
    
 }
 
-.cart-icon span {
-display: flex;
-height: 20px;
-width: 20px;
-background-color: pink;
-justify-content: center;
-align-items: center;
-color: black;
-border-radius: 50%;
-position: absolute;
-top: 60%;
-right: 30px;
-font-size: 14px;
-}
 
 /* Cart icon styling */
 .cart-icon i {

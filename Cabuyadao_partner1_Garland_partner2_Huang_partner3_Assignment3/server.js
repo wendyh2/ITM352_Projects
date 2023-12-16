@@ -8,6 +8,7 @@ const express = require('express');
 const app = express();
 const querystring = require('querystring');
 const all_products = require(__dirname + '/products.json');
+const all_users = require(__dirname + "/user_registration_info.json");
 const fs = require("fs");
 const cookieParser = require('cookie-parser');
 app.use(cookieParser());
@@ -100,6 +101,12 @@ app.get("/products_data.js", function (request, response, next) {
     const products_str = `let all_products = ${JSON.stringify(all_products)}`;
     response.send(products_str);
 });
+
+app.get("/user_data.js", function (request, response, next) {
+    response.type('.js');
+    const user_str = `let all_users = ${JSON.stringify(all_users)}`;
+    response.send(user_str);
+})
 
 // Route interecpt going to a product page and save the last product page they were on
 app.get("/products_display.html", function (request, response, next) {
@@ -471,6 +478,21 @@ app.post('/viewInvoice', (request, response) => {
     response.redirect("./invoice.html?" + params.toString());
 
 })
+
+app.get('/pre-checkout', (request, response) => {
+    // check if user is logged in. If not, redirect to login
+    if (!request.cookies.userinfo) {
+        response.redirect('./login.html');
+        return;
+    }
+
+    // before checkout
+
+    // send to final invoice
+    response.redirect("./invoice.html");
+    return;
+})
+
 
 app.get('/checkout', (request, response) => {
     // check if user is logged in. If not, redirect to login

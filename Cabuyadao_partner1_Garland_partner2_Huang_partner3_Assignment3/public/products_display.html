@@ -28,6 +28,27 @@ Additional information: Assisted by ChatGPT and D. Port
     if (getCookie('userinfo') !== '') {
         userinfo = JSON.parse(getCookie('userinfo'));
     }
+    function displayStars(rating) {
+        const maxStars = 5;
+        const fullStar = '<i class="fa-solid fa-star"></i>';
+        const emptyStar = '<i class="far fa-star"></i>';
+
+        let starsHtml = '';
+
+        // Round the rating to the nearest half star
+        const roundedRating = Math.round(rating * 2) / 2;
+
+        // Display full stars
+        for (let i = 1; i <= maxStars; i++) {
+            if (i <= roundedRating) {
+                starsHtml += fullStar;
+            } else {
+                starsHtml += emptyStar;
+            }
+        }
+
+        return starsHtml;
+    }
 
     function compute_average_rating(product) {
         if (typeof product.reviews === 'undefined' || product.reviews.length === 0) {
@@ -248,7 +269,7 @@ Additional information: Assisted by ChatGPT and D. Port
                             `<div class="row">
                     <img src="./img/${products[i].image}" alt="${products[i].name}" />
                     <div class="product-text">
-                        <h4>Rating: ${compute_average_rating(products[i])}</h4>
+                        <h4>Rating: ${displayStars(compute_average_rating(products[i]))}</h4>
                         <h4>${products[i].name}</h4>
                         <p>$${products[i].price}</p>
                         <p>Sets available: ${products[i].sets_available}</p>

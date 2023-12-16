@@ -69,7 +69,7 @@ header {
 }
 
 .header-spacing {
-    margin-top: 140px;
+    margin-top: 200px;
 }
 
 h1 {
@@ -151,4 +151,27 @@ strong {
     background-color: pink;
     border-color: rgb(167, 123, 181);
     color: white;
+}
+/* Combined styling for both buttons */
+#checkout_button, #update_button {
+    display: block;
+    background-color: rgb(167, 123, 181);
+    color: #ffffff;
+    border-color: rgb(167, 123, 181);
+    border-radius: 10px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 17px;
+    border-width: 1.5px;
+    min-width: 50px;
+    padding: 10px 20px;
+    margin: 0 auto;
+    margin-top: 20px;
+    cursor: pointer;
+    margin-bottom: 2px; 
+}
+
+#checkout_button:hover, #update_button:hover {
+    background-color: #ffffff;
+    border-color: rgb(167, 123, 181);
+    color: rgb(167, 123, 181);
 }
