@@ -58,8 +58,8 @@
   "admin@hawaii.edu": {
     "name": "Main Admin",
     "password": "e8f47b347e0fd41a5c66b5fa74a734e3fc9f98cd6671d2901128d44a99fa5ab5",
-    "lastLoginDate": 1702694747093,
-    "loginCount": 19,
+    "lastLoginDate": 1702695791259,
+    "loginCount": 20,
     "role": "admin"
   },
   "scott997@hawaii.edu": {
@@ -67,6 +67,6 @@
     "password": "5fae201379aebe543d83f6e866124532eea995d646ff3ece30b0dc815215a39f",
     "lastLoginDate": 1702695322521,
     "loginCount": 7,
-    "role": "user"
+    "role": "admin"
   }
 }
