@@ -292,15 +292,15 @@ app.post("/login", function (request, response, next) {
     if (Object.keys(errors).length === 0) {
         let name = user_registration_info[username].name;
 
-        // Set session user and admin status
+        // Set session user and admin status (if applicable)
         request.session.user = username;
         request.session.isAdmin = user_registration_info[username].role === 'admin';
 
-        // Keep track of the number of times a user logged in and the last time they logged in
-        user_registration_info[username].loginCount += 1;
+        // IR4 - Keep track of the number of times a user logged in and the last time they logged in. 
+        user_registration_info[username].loginCount = (user_registration_info[username].loginCount || 0) + 1;
         user_registration_info[username].lastLoginDate = new Date().getTime();
 
-        // Update the user info in loggedInUsers
+        // Update the user info in loggedInUsers for IR5
         loggedInUsers[username] = true;
 
         // Save the updated user_registration_info
@@ -314,11 +314,11 @@ app.post("/login", function (request, response, next) {
             // Regular user logic
             // send a usernames cookie to indicate they're logged in
             response.cookie("userinfo", JSON.stringify({ "email": username, "full_name": name }), { expire: Date.now() + 30 * 1000 });
-            // Keep track of the number of times a user logged in and the last time they logged in. 
+            // IR4 - Keep track of the number of times a user logged in and the last time they logged in. 
             user_registration_info[username].loginCount += 1;
             user_registration_info[username].lastLoginDate = Date.now();
 
-            // Add username to keep track of amount of logged in users
+            // IR5: Add username to keep track of amount of logged in users
             if (!loggedInUsers.hasOwnProperty(username)) {
                 loggedInUsers[username] = true;
             }
@@ -328,9 +328,8 @@ app.post("/login", function (request, response, next) {
             params.append("loginCount", user_registration_info[username].loginCount);
             params.append("lastLogin", user_registration_info[username].lastLoginDate);
 
-            // Redirect to products_display.html with the new params values
-            response.redirect("./products_display.html?" + params.toString());
-        }
+        // Redirect to products_display.html for all users
+        response.redirect("./products_display.html?" + params.toString());
     } else {
         // If login information is invalid, redirects to login page and gives error
         let params = new URLSearchParams(request.body);
@@ -340,6 +339,8 @@ app.post("/login", function (request, response, next) {
         response.redirect("./login.html?" + params.toString());
     }
 });
+
+
 
 // Register route, this is a post request and is referenced from the Assignment 2 example code.
 app.post("/register", function (request, response, next) {
@@ -425,7 +426,7 @@ app.post("/register", function (request, response, next) {
         user_registration_info[username].name = request.body.name;
         // Store encrypted password into user_registration_info
         user_registration_info[username].password = hashPassword(request.body.password);
-        // add lastLoginDate and loginCount for this new user make it a string
+        // IR4 add lastLoginDate and loginCount for this new user make it a string
         user_registration_info[username].lastLoginDate = Date.now();
         user_registration_info[username].loginCount = 1;
 
@@ -610,9 +611,24 @@ app.post('/admin/login', function (request, response) {
     if (isAdmin(username) && user_registration_info[username].password === hashPassword(password)) {
         request.session.user = username;
         request.session.isAdmin = true;
-        response.send({ success: true });
+        // Redirect to the choice page instead of directly to admin panel
+        response.redirect('/admin/choice');
     } else {
         response.send({ success: false, message: 'Invalid credentials or not an admin' });
+    }
+});
+
+// Route to display choice page for admin after login
+app.get('/admin/choice', function (request, response) {
+    if (request.session.isAdmin) {
+        // Serve a simple HTML page with choices
+        response.send(`
+            <h1>Welcome Admin</h1>
+            <p>Choose where you would like to go:</p>
+            <a href="/admin_panel.html">Admin Panel</a> | <a href="/products_display.html">User Interface</a>
+        `);
+    } else {
+        response.redirect('/login.html');
     }
 });
 
@@ -670,6 +686,7 @@ app.post('/admin/users', function (request, response) {
         case 'add':
             // Add a new user
             if (!user_registration_info[username]) {
+                userData.password = hashPassword(userData.password); // Hash the password
                 user_registration_info[username] = userData;
             } else {
                 return response.status(400).send('User already exists');
@@ -678,6 +695,9 @@ app.post('/admin/users', function (request, response) {
         case 'edit':
             // Edit an existing user
             if (user_registration_info[username]) {
+                if(userData.password) {
+                    userData.password = hashPassword(userData.password); // Hash the password if provided
+                }
                 user_registration_info[username] = { ...user_registration_info[username], ...userData };
             } else {
                 return response.status(404).send('User not found');
