@@ -637,7 +637,7 @@ app.get('/checkout', (request, response) => {
     // Referenced from assignment 3 code example
     // Create a transporter variable for nodemailer
     var transporter = nodemailer.createTransport({
-        host: "smtp.freesmtpservers.com",
+        host: "mail.hawaii.edu",
         port: 25,
         secure: false, // use TLS
         tls: {
@@ -648,7 +648,7 @@ app.get('/checkout', (request, response) => {
 
     // Options for email
     var mailOptions = {
-        from: "wendyh2@hawaii.edu", //sender
+        from: "wenailed@hawaii.edu", //sender
         to: userinfo.email, //receiver
         subject: "Thank you for your order!", // subject heading
         html: str, //html body (invoice)
