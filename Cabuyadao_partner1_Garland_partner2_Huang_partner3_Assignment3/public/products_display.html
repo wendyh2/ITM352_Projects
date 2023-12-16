@@ -37,6 +37,7 @@ Description: My Homepage
             if (product.reviews[i].rating !== undefined && product.reviews[i].rating !== null && product.reviews[i].rating !== '') {
                 sum += product.reviews[i].rating;
             }
+            
         }
         return sum / product.reviews.length;
     }
@@ -126,10 +127,6 @@ Description: My Homepage
         */
     }
 
-
-    
-
-    
     // IR3: Have a search feature that enables users to find products by name, type, or something in their description. Search results show up immediately on the current page and enable users to select them without leaving the current page. 
     function filterProducts() {
         // Declare variables to be used in the function
