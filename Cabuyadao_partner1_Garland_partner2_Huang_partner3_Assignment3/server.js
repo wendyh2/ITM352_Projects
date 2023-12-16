@@ -711,64 +711,6 @@ app.get('/logout', function(req, res, next) {
 
 });
 
-
-/*
-    // Prepare and send the thank you message
-    const thankYouMessage = `
-        <!DOCTYPE html>
-        <html lang="en">
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400&display=swap" rel="stylesheet">
-            <style>
-                body {
-                    font-family: 'Montserrat', sans-serif;
-                    background-image: url(img/topback.png);
-                    background-position: center;
-                    background-size: cover;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    height: 100vh;
-                    margin: 0;
-                }
-                .message-container {
-                    text-align: center;
-                }
-                .thank-you-message {
-                    font-size: 30px; // Adjusted font size to 30px 
-                    margin-bottom: 10px;
-                }
-                .bold-red {
-                    font-weight: bold;
-                    color: red;
-                }
-                .logout-message {
-                    font-size: 24px; // Adjusted font size to 24px 
-                    margin-bottom: 10px;
-                }
-            </style>
-        </head>
-        <body>
-            <div class="message-container">
-                <div class="thank-you-message">
-                    Thank you for your purchase, <span class="bold-red">${user_registration_info[username].name}</span>.
-                </div>
-                <div class="logout-message">
-                    Logged out ${username}.
-                </div>
-                <div>
-                    You will be redirected to the home page in 5 seconds.
-                </div>
-            </div>
-            <meta http-equiv="refresh" content="5;url=/home.html">
-        </body>
-        </html>
-    `;
-    */
-
-
 // Serve static files
 app.use(express.static(__dirname + '/public'));
 
