@@ -49,7 +49,7 @@ header {
 .navmenu {
     display: flex;
     font-family: 'Montserrat', sans-serif;
-    gap: 100px;
+    gap: 50px;
     margin-right: 250px;
     align-items: center;
 }

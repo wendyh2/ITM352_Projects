@@ -16,7 +16,7 @@ app.use(express.json());
 
 const session = require('express-session');
 
-//test for IR1
+//session 
 app.use(session({
     secret: "YourSecretKey",
     resave: false,
@@ -24,27 +24,7 @@ app.use(session({
     cookie: { maxAge: 24 * 60 * 60 * 1000 } // set max cookie age for 24 hours so it does not stay and cause issues in the long term. 
 }));
 
-// IR1: Middleware to store and redirect to the last visited page MAKE SURE TO REFERENCE
-app.use(function (request, response, next) {
-    const nonStorePaths = ['/login', '/logout', '/register', '/', '/index.html', '/server.js'];
-    const assetExtensions = ['.jpg', '.png', '.gif', '.css', '.js'];
-    const currentPath = request.url;
 
-    // Check if the path is not an asset and not in the nonStorePaths array
-    if (!assetExtensions.some(ext => currentPath.endsWith(ext)) && !nonStorePaths.includes(currentPath)) {
-        request.session.lastVisitedPage = currentPath;
-    }
-
-    // Redirect to the last visited page if the current request is for the home page and there's a stored page
-    if ((currentPath === '/' || currentPath === '/index.html') && request.session.lastVisitedPage) {
-        const lastPage = request.session.lastVisitedPage;
-        request.session.lastVisitedPage = null; // Clear to avoid repeated redirections
-        return response.redirect(lastPage);
-    }
-
-    next();
-});
-//End of test for IR1
 
 // Use crypto library to encrypt password
 const crypto = require('crypto');
@@ -306,27 +286,13 @@ app.post("/login", function (request, response, next) {
         // Save the updated user_registration_info
         fs.writeFileSync(filename, JSON.stringify(user_registration_info, null, 2));
 
-        // Check if the user is an admin
-        if (user_registration_info[username].role === 'admin') {
-            // Redirect to the admin panel page
-            response.redirect("./admin_panel.html");
-        } else {
-            // Regular user logic
-            // send a usernames cookie to indicate they're logged in
-            response.cookie("userinfo", JSON.stringify({ "email": username, "full_name": name }), { expire: Date.now() + 30 * 1000 });
-            // IR4 - Keep track of the number of times a user logged in and the last time they logged in. 
-            user_registration_info[username].loginCount += 1;
-            user_registration_info[username].lastLoginDate = Date.now();
-
-            // IR5: Add username to keep track of amount of logged in users
-            if (!loggedInUsers.hasOwnProperty(username)) {
-                loggedInUsers[username] = true;
-            }
-
-            // Create params variable and add username and name fields
-            let params = new URLSearchParams();
-            params.append("loginCount", user_registration_info[username].loginCount);
-            params.append("lastLogin", user_registration_info[username].lastLoginDate);
+        // Send a user info cookie to indicate they're logged in
+        response.cookie("userinfo", JSON.stringify({ "email": username, "full_name": name }), { expire: Date.now() + 30 * 1000 });
+        
+        // Create params variable and add username and name fields
+        let params = new URLSearchParams();
+        params.append("loginCount", user_registration_info[username].loginCount);
+        params.append("lastLogin", user_registration_info[username].lastLoginDate);
 
         // Redirect to products_display.html for all users
         response.redirect("./products_display.html?" + params.toString());
@@ -339,6 +305,7 @@ app.post("/login", function (request, response, next) {
         response.redirect("./login.html?" + params.toString());
     }
 });
+
 
 
 
@@ -478,21 +445,193 @@ app.get('/checkout', (request, response) => {
         return;
     }
 
+
+    const userinfo = request.cookies.userinfo;
+    
+    // console.log(userinfo);
+    // console.log(userinfo["email"]);
+    // console.log(userinfo.email);
+
+    // For some reason, accessing these values in userinfo doesn't work
+    var name = request.cookies.userinfo["full_name"]
+    var email = request.cookies.userinfo["email"]
+
+    // Declare str variable to be displayed
+    str = `
+    <h2>Thank you ${name} for your purchase! Please see your invoice below.</h2>
+    <div class="flex-box-container">
+    <div class="flex-box">
+      <!--Where I will print my invoice-->
+      <table border="2">
+        <tbody>
+
+          <!-- column titles row -->
+          <tr>
+            <th style="text-align: center;" width="11%">Image</th>
+            <th style="text-align: center;" width="26%">Item</th>
+            <th style="text-align: center;" width="11%">Quantity</th>
+            <th style="text-align: center;" width="13%">Price</th>
+            <th style="text-align: center;" width="20%">Price Altogether</th>
+            <th style="text-align: center;" width="10%">Rating</th>
+            <th style="text-align: center;" width="20%">Comments</th>
+          </tr>
+          `;
+
+    // Declare cart data variable
+    var cart_data = request.session.cart;
+
+
+    // 
+    function findNonNegInt(q, returnErrors = false) { //the function returns non-negative integers in the object.
+        errors = []; // assume no errors at first
+        if (Number(q) != q) errors.push('Not a number!'); // Check if string is a number value
+        if (q < 0) errors.push('Negative value!'); // Check if it is non-negative
+        if (parseInt(q) != q) errors.push('Not an integer!'); // Check that it is an integer
+
+        return returnErrors ? errors : (errors.length == 0);
+    }
+
+    // Add more table rows
+    for (let pkey in cart_data) {
+        let products = all_products[pkey];
+        for (let i in products) {
+            let qty = cart_data[pkey]['quantity' + i];
+            if (qty == 0) {
+                continue;
+            }
+            errors = findNonNegInt(qty, true);
+            if (errors.length == 0) {
+                var extended_price = qty * products[i].price;
+                subtotal += extended_price;
+            }
+            else (extended_price = 0);
+
+           
+            str += `
+            <tr>
+             <td height="70px" width="11%">
+              <div class="img-mouseover">
+                <img src="./img/${products[i].image}" height="100px" width="100px">
+                <div class="product-description">
+                  ${products[i].description}
+                  </div>
+                </div></td>
+              <td width="26%">${products[i].name}</td>
+              <td align="center" width="11%">${qty}<br><font color = "red">${errors.join('<br>')}</td>
+              <td width="13%">$${products[i].price}</td>
+              <td width="20%">$${(extended_price).toFixed(2)}</td>
+              <td width="10%">
+          <select class="rating" name="rating_${i}">
+            <option value="">Rate...</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+        </td>
+        <td width="20%">
+          <input type="text" name="comment_${i}" placeholder="Leave a comment">
+        </td>
+            </tr>
+            `;
+        }
+    }
+    // Subtotal
+    var subtotal = 0;
+
+    // Tax rate
+    var tax_rate = 0.04712;
+    var tax = tax_rate * subtotal;
+
+    // Compute shipping (if subtotal is less than 80, shipping is $10, otherwise it's free)
+    if (subtotal < 80) { shipping = 10 }
+    else { shipping = 0 };
+
+    // Grand total
+    var total = subtotal + tax + shipping;
+
+    str += `
+            <tr>
+              <td colspan="5" width="100%">&nbsp;</td>
+            </tr>
+            <tr>
+              <td style="text-align: right;" colspan="3" width="67%">Subtotal</td>
+              <td colspan="2" width="54%">$${(subtotal).toFixed(2)}</td>
+            </tr>
+            <tr>
+              <td style="text-align: right;" colspan="3" width="67%">Tax @ 4.71%</span></td>
+              <td colspan="2" width="54%">$${(tax).toFixed(2)}</td>
+            </tr>
+            <tr>
+              <td style="text-align: right;" colspan="3" width="67%">Shipping</span></td>
+              <td colspan="2" width="54%">$${shipping}</td>
+            </tr>
+            <tr>
+              <td style="text-align: right;" colspan="3" width="67%"><b>Total</b></td>
+              <td colspan="2" width="54%"><b>$${(total).toFixed(2)}</b></td>
+            </tr>
+            </tbody >
+            </table >
+            <h4><strong> Our shipping policy is: A subtotal of $0-$80 will be $10 shipping. Subtotals over $80 will have free
+            shipping</strong></h4>
+            <h1>We have emailed your invoice to ${email}!</h1>
+            </div>
+            </div>
+    `;
+
     // Final checkout
 
     // remove items purchased from inventory
-    for (let pkey in request.session.cart) {
+    for (let pkey in request.session.cart_data) {
         for (let i in all_products[pkey]) {
             // Update sets available
-            all_products[pkey][i].sets_available -= Number(Number(request.session.cart[pkey][`quantity${i}`]));
+            all_products[pkey][i].sets_available -= Number(Number(request.session.cart_data[pkey][`quantity${i} `]));
             // Track total quantity of each item sold - code from Assignment 1
-            all_products[pkey][i].sets_sold += Number(Number(request.session.cart[pkey][`quantity${i}`]));
+            all_products[pkey][i].sets_sold += Number(Number(request.session.cart_data[pkey][`quantity${i} `]));
         }
     }
     // email invoice to user
 
     // send to final invoice
-    response.redirect("./invoice.html");
+
+    // Referenced from assignment 3 code example
+	// Create a transporter variable for nodemailer
+	var transporter = nodemailer.createTransport({
+		host: "mail.hawaii.edu",
+		port: 25,
+		secure: false, // use TLS
+		tls: {
+			// do not fail on invalid certs
+			rejectUnauthorized: false,
+		},
+	});
+
+    var user_email = email;
+
+	// Options for email
+	var mailOptions = {
+		from: "wendyh2@hawaii.edu", //sender
+		to: user_email, //receiver
+		subject: "Thank you for your order!", // subject heading
+		html: str, //html body (invoice)
+	};
+
+    // Attempt to send email
+	transporter.sendMail(mailOptions, function (error, info) {
+		if (error) {
+			email_msg = `<script>alert('Oops, ${userid}. There was an error and your invoice could not be sent');</script>`;
+			response.send(email_msg);
+			return; // terminate the function after sending the error response
+		} else {
+			console.log("Email sent to: " + info.response);
+			email_msg = `<script>alert('Your invoice was mailed to ${userid}');</script>`;
+			response.send(str + email_msg);
+		}
+	});
+
+    response.send(str);
+    // response.redirect("./invoice.html");
     return;
 })
 

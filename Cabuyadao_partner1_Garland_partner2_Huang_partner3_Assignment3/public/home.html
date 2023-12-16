@@ -24,6 +24,29 @@ Description: My Homepage
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
 </head>
+<script>
+     // Got this from W3 schools get cookie section
+   function getCookie(cname) {
+        let name = cname + "=";
+        let decodedCookie = decodeURIComponent(document.cookie);
+        let ca = decodedCookie.split(';');
+        for (let i = 0; i < ca.length; i++) {
+            let c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+    // if user does not have username cookies, send them to login
+    if (getCookie('userinfo') !== '') {
+        userinfo = JSON.parse(getCookie('userinfo'));
+    }
+
+</script>
 
 <body>
     <!--Making my logo and Nav bar for homepage-->
@@ -33,7 +56,14 @@ Description: My Homepage
             <a href="products_display.html">Shop</a>
             <a href="about.html">About</a>
             <a href="contact.html">Contact</a>
-            <a href="login.html">Login</a>
+            <script>
+                // if user is logged in, print a logout link. Othwerwise print a login link 
+                if (typeof userinfo !== "undefined") {
+                    document.write(`<a href="logout">Log Out ${userinfo['full_name']}</a>`);
+                } else {
+                    document.write(`<a href="login.html">Login</a>`);
+                }
+            </script>
             <div class="cart-icon">
                 <a href="cart.html"><i class="fa-solid fa-bag-shopping"></i></a>
                 <span>0</span>
