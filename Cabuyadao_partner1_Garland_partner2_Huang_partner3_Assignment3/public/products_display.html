@@ -6,21 +6,21 @@ Description: My Homepage
 -->
 <script src="./products_data.js" type="text/javascript"></script>
 <script>
-        // Got this from W3 schools get cookie section
-        function getCookie(cname) {
-      let name = cname + "=";
-      let decodedCookie = decodeURIComponent(document.cookie);
-      let ca = decodedCookie.split(';');
-      for (let i = 0; i < ca.length; i++) {
-        let c = ca[i];
-        while (c.charAt(0) == ' ') {
-          c = c.substring(1);
+    // Got this from W3 schools get cookie section
+    function getCookie(cname) {
+        let name = cname + "=";
+        let decodedCookie = decodeURIComponent(document.cookie);
+        let ca = decodedCookie.split(';');
+        for (let i = 0; i < ca.length; i++) {
+            let c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
         }
-        if (c.indexOf(name) == 0) {
-          return c.substring(name.length, c.length);
-        }
-      }
-      return "";
+        return "";
     }
 
     // if user does not have username cookies, send them to login
@@ -29,12 +29,12 @@ Description: My Homepage
     }
 
     function compute_average_rating(product) {
-        if(typeof product.reviews === 'undefined' || product.reviews.length === 0) {
-            return"no reviews";
+        if (typeof product.reviews === 'undefined' || product.reviews.length === 0) {
+            return "no reviews";
         }
         let sum = 0;
         for (let i = 0; i < product.reviews.length; i++) {
-            if(product.reviews[i].rating !== undefined && product.reviews[i].rating !== null && product.reviews[i].rating !== '') {
+            if (product.reviews[i].rating !== undefined && product.reviews[i].rating !== null && product.reviews[i].rating !== '') {
                 sum += product.reviews[i].rating;
             }
         }
@@ -102,58 +102,80 @@ Description: My Homepage
         console.log('in update total selected');
         let total_selected = 0;
         for (let i in products) {
-            {
-                total_selected += 1 * (document.getElementById(`quantity${i}`).value);
-            }
-            cart_total_span.innerHTML = total_selected;
+            let qty = parseInt(document.getElementById(`quantity${i}`).value) || 0;
+            total_selected += qty; // Calculates the total quantity
         }
+        localStorage.setItem('total_selected', total_selected); // Save the total quantity in localStorage
+        document.querySelector('.cart-icon span').textContent = total_selected; // Update the display
     }
+
+    // Call this function to load the saved total selected from localStorage when the page loads
+    function load_total_selected() {
+        let total_selected = localStorage.getItem('total_selected') || 0; // Retrieve the total quantity from localStorage
+        document.querySelector('.cart-icon span').textContent = total_selected; // Updates the display
+    }
+
+    window.onload = function () {
+        load_total_selected(); // Call load_total_selected when the page loads
+      
+        /*
+        {
+            total_selected += 1 * (document.getElementById(`quantity${i}`).value);
+        }
+        cart_total_span.innerHTML = total_selected;
+        */
+    }
+
+
+    
+
+    
     // IR3: Have a search feature that enables users to find products by name, type, or something in their description. Search results show up immediately on the current page and enable users to select them without leaving the current page. 
     function filterProducts() {
-    // Declare variables to be used in the function
-    let input, filter, container, products, title, i, txtValue;
-    // Get the search input element by its ID
-    input = document.getElementById('searchInput');
-    // Convert the search input value to uppercase for case-insensitive comparison
-    filter = input.value.toUpperCase();
-    // Get the container element that holds all products
-    container = document.getElementById("productContainer");
-    // Retrieve all product elements within the container
-    products = container.getElementsByClassName('row');
-    // Iterate over each product
-    for (i = 0; i < products.length; i++) {
-        // Get the first element with class 'product-text' (assumed to be the title) within the product
-        title = products[i].getElementsByClassName("product-text")[0];
-        // If a title element is found
-        if (title) {
-            // Get the text content of the title element
-            txtValue = title.textContent || title.innerText;
-            // Check if the title text contains the search string
-            if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                // If found, display the product
-                products[i].style.display = "";
-            } else {
-                // If not found, hide the product
-                products[i].style.display = "none";
+        // Declare variables to be used in the function
+        let input, filter, container, products, title, i, txtValue;
+        // Get the search input element by its ID
+        input = document.getElementById('searchInput');
+        // Convert the search input value to uppercase for case-insensitive comparison
+        filter = input.value.toUpperCase();
+        // Get the container element that holds all products
+        container = document.getElementById("productContainer");
+        // Retrieve all product elements within the container
+        products = container.getElementsByClassName('row');
+        // Iterate over each product
+        for (i = 0; i < products.length; i++) {
+            // Get the first element with class 'product-text' (assumed to be the title) within the product
+            title = products[i].getElementsByClassName("product-text")[0];
+            // If a title element is found
+            if (title) {
+                // Get the text content of the title element
+                txtValue = title.textContent || title.innerText;
+                // Check if the title text contains the search string
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    // If found, display the product
+                    products[i].style.display = "";
+                } else {
+                    // If not found, hide the product
+                    products[i].style.display = "none";
+                }
             }
         }
     }
-}
 
-function update_total_selected() {
-    let total_selected = 0; // Initialize a variable to hold the total quantity of selected items
+    function update_total_selected() {
+        let total_selected = 0; // Initialize a variable to hold the total quantity of selected items
 
-    // Loop through each product in the 'products' array/object
-    for (let i in products) {
-        // For each product, get the quantity from the corresponding input field
-        // Parse it as an integer. If it's not a number (NaN), use 0 as a default
-        total_selected += parseInt(document.getElementById(`quantity${i}`).value) || 0;
+        // Loop through each product in the 'products' array/object
+        for (let i in products) {
+            // For each product, get the quantity from the corresponding input field
+            // Parse it as an integer. If it's not a number (NaN), use 0 as a default
+            total_selected += parseInt(document.getElementById(`quantity${i}`).value) || 0;
+        }
+
+        // Update the text content of the <span> inside the cart icon
+        // This <span> shows the total quantity of selected items
+        document.querySelector('.cart-icon span').textContent = total_selected;
     }
-
-    // Update the text content of the <span> inside the cart icon
-    // This <span> shows the total quantity of selected items
-    document.querySelector('.cart-icon span').textContent = total_selected;
-}
 
 
 </script>
@@ -191,9 +213,9 @@ function update_total_selected() {
             <a href="contact.html">Contact</a>
             <div class="search-box">
                 <input type="text" id="searchInput" placeholder="Search Nail Sets" onkeyup="filterProducts()">
-                <i class='bx bx-search-alt' style='color:#eebaba'></i>            
-            </div>            
-     
+                <i class='bx bx-search-alt' style='color:#eebaba'></i>
+            </div>
+
             <script>
                 // if user is logged in, print a logout link. Othwerwise print a login link 
                 if (typeof userinfo !== "undefined") {
@@ -201,11 +223,11 @@ function update_total_selected() {
                 } else {
                     document.write(`<a href="login.html">Login</a>`);
                 }
-             </script> 
+            </script>
             <div class="cart-icon">
                 <a href="cart.html"><i class="fa-solid fa-bag-shopping"></i></a>
                 <span>0</span>
-        </div>
+            </div>
         </div>
     </header>
     <!--My Shop-->
@@ -221,12 +243,12 @@ function update_total_selected() {
             <script>
                 document.write(`<input type="hidden" name="product_type" value="${prod_key}"`);
             </script>
-<!-- Container for all products -->
-<div class="products" id="productContainer">
-    <script>
-        for (let i in products) {
-            document.write(
-                `<div class="row">
+            <!-- Container for all products -->
+            <div class="products" id="productContainer">
+                <script>
+                    for (let i in products) {
+                        document.write(
+                            `<div class="row">
                     <img src="./img/${products[i].image}" alt="${products[i].name}" />
                     <div class="product-text">
                         <h4>Rating: ${compute_average_rating(products[i])}</h4>
@@ -246,10 +268,10 @@ function update_total_selected() {
                             -->
                     </div>
                 </div>`
-            );
-        };
-    </script>
-</div>
+                        );
+                    };
+                </script>
+            </div>
             <!-- Add to cart button -->
             <input type="submit" class="purchase_button" id="purchase_button" value="Add to Cart">
 
