@@ -472,6 +472,20 @@ app.post('/viewInvoice', (request, response) => {
 
 })
 
+app.get('/pre-checkout', (request, response) => {
+    // check if user is logged in. If not, redirect to login
+    if (!request.cookies.userinfo) {
+        response.redirect('./login.html');
+        return;
+    }
+
+    // before checkout
+
+    // send to final invoice
+    response.redirect("./invoice.html");
+    return;
+})
+
 app.get('/checkout', (request, response) => {
     // check if user is logged in. If not, redirect to login
     if (!request.cookies.userinfo) {
@@ -479,16 +493,17 @@ app.get('/checkout', (request, response) => {
         return;
     }
 
-    // console.log(userinfo);
-    // console.log(userinfo["email"]);
-    // console.log(userinfo.email);
+    // Get userinfo and parse it into userInfoObject
+    const userinfo = request.cookies.userinfo;
+    const userInfoObject = JSON.parse(userinfo);
 
-    // For some reason, accessing these values in userinfo doesn't work    
-    let userinfo = JSON.parse(request.cookies.userinfo);
+    // Variables for name and email
+    var name = userInfoObject.full_name;
+    var email = userInfoObject.email;
 
-    // Creating a final invoice 
+    // Declare str variable to be displayed
     str = `
-    <h2>Thank you ${userinfo.full_name} for your purchase! Please see your invoice below.</h2>
+    <h2>Thank you ${name} for your purchase! Please see your invoice below.</h2>
     <div class="flex-box-container">
     <div class="flex-box">
       <!--Where I will print my invoice-->
@@ -503,13 +518,24 @@ app.get('/checkout', (request, response) => {
             <th style="text-align: center;" width="13%">Price</th>
             <th style="text-align: center;" width="20%">Price Altogether</th>
             <th style="text-align: center;" width="10%">Rating</th>
-            <th style="text-align: center;" width="20%">Comments</th>
           </tr>
           `;
 
     // Declare cart data variable
     var cart_data = request.session.cart;
 
+    // Subtotal
+    var subtotal = 0;
+
+    // 
+    function findNonNegInt(q, returnErrors = false) { //the function returns non-negative integers in the object.
+        errors = []; // assume no errors at first
+        if (Number(q) != q) errors.push('Not a number!'); // Check if string is a number value
+        if (q < 0) errors.push('Negative value!'); // Check if it is non-negative
+        if (parseInt(q) != q) errors.push('Not an integer!'); // Check that it is an integer
+
+        return returnErrors ? errors : (errors.length == 0);
+    }
 
     // Add more table rows
     for (let pkey in cart_data) {
@@ -519,9 +545,13 @@ app.get('/checkout', (request, response) => {
             if (qty == 0) {
                 continue;
             }
+            errors = findNonNegInt(qty, true);
+            if (errors.length == 0) {
+                var extended_price = qty * products[i].price;
+                subtotal += extended_price;
+            }
+            else (extended_price = 0);
 
-            var extended_price = qty * products[i].price;
-            subtotal += extended_price;
 
             str += `
             <tr>
@@ -533,28 +563,17 @@ app.get('/checkout', (request, response) => {
                   </div>
                 </div></td>
               <td width="26%">${products[i].name}</td>
-              <td align="center" width="11%">${qty}<br><font color = "red"></td>
+              <td align="center" width="11%">${qty}<br><font color = "red">${errors.join('<br>')}</td>
               <td width="13%">$${products[i].price}</td>
               <td width="20%">$${(extended_price).toFixed(2)}</td>
-              <td width="10%">
-          <select class="rating" name="rating_${i}">
-            <option value="">Rate...</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-          </select>
-        </td>
         <td width="20%">
-          <input type="text" name="comment_${i}" placeholder="Leave a comment">
+        <h4><a href="./rate_product.html?prod_key=${pkey}&prod_index=${i}">Add Review!<a></h4>
         </td>
             </tr>
             `;
         }
     }
-    // Subtotal
-    var subtotal = 0;
+
 
     // Tax rate
     var tax_rate = 0.04712;
@@ -591,8 +610,7 @@ app.get('/checkout', (request, response) => {
             </table >
             <h4><strong> Our shipping policy is: A subtotal of $0-$80 will be $10 shipping. Subtotals over $80 will have free
             shipping</strong></h4>
-            
-            <h1>We have emailed your invoice to ${userinfo['email']}!</h1>
+            <h1>We have emailed your invoice to ${email}!</h1>
             </div>
             </div>
     `;
@@ -624,10 +642,13 @@ app.get('/checkout', (request, response) => {
         },
     });
 
+    var user_email = email;
+    var userid = name;
+
     // Options for email
     var mailOptions = {
         from: "wendyh2@hawaii.edu", //sender
-        to: userinfo.email, //receiver
+        to: user_email, //receiver
         subject: "Thank you for your order!", // subject heading
         html: str, //html body (invoice)
     };
@@ -635,15 +656,19 @@ app.get('/checkout', (request, response) => {
     // Attempt to send email
     transporter.sendMail(mailOptions, function (error, info) {
         if (error) {
-            str += `<script>alert('Oops, ${userinfo.full_name}, there was an error and your invoice could not be sent');</script>`;
+            email_msg = `<script>alert('Oops, ${userid}. There was an error and your invoice could not be sent');</script>`;
+            // this is just for the video, revert back to response.send(email_msg);
+            response.send(str);
+            return; // terminate the function after sending the error response
         } else {
-            str += `<script>alert('Your invoice was mailed to ${userinfo.email}');</script>`;
+            console.log("Email sent to: " + info.response);
+            email_msg = `<script>alert('Your invoice was mailed to ${userid}');</script>`;
+            response.send(str + email_msg);
         }
     });
 
-    response.send(str);
     return;
-});
+})
 
 // update the session quantities with updated amounts from cart
 app.post("/update_cart", function (request, response, next) {
@@ -683,7 +708,10 @@ function findNonNegInt(q, returnErrors = false) {
 }
 
 // Logout route to expire the cookie redirect them to the homepage afterwards
-app.get('/logout', function(req, res, next) {
+app.get('/logout', function (req, res, next) {
+    //remove them from loggedin users
+    let userinfo = JSON.parse(req.cookies['userinfo']);
+    delete loggedInUsers[userinfo.email];
     res.clearCookie('userinfo');
     res.redirect("home.html");
 
@@ -767,173 +795,142 @@ function writeProductsData(data) {
     fs.writeFileSync(productsFilePath, JSON.stringify(data, null, 2), 'utf8');
 }
 
-
-// Admin login route
+// POST route for admin login
 app.post('/admin/login', function (request, response) {
     let username = request.body.username;
     let password = request.body.password;
+    // Checks if user is admin and password is correct
     if (isAdmin(username) && user_registration_info[username].password === hashPassword(password)) {
-        request.session.user = username;
-        request.session.isAdmin = true;
-        // Redirect to the choice page instead of directly to admin panel
+        request.session.user = username; // Sets session user
+        request.session.isAdmin = true; // Sets session admin flag
+        // Redirects to admin choice page upon successful login
         response.redirect('/admin/choice');
     } else {
-        response.send({ success: false, message: 'Invalid credentials or not an admin' });
+        // Sends alert and redirects to admin login page if credentials are invalid
+        response.send(`<script>alert("Invalid credentials or not an admin"); window.location.href = '/admin_login.html';</script>`);
     }
 });
 
-// Route to display choice page for admin after login
+// GET route to display admin choice page after login
 app.get('/admin/choice', function (request, response) {
+    // Checks if the user has admin privileges
     if (request.session.isAdmin) {
-        // Serve a simple HTML page with choices
+        // Serves a simple HTML page with admin options
         response.send(`
             <h1>Welcome Admin</h1>
             <p>Choose where you would like to go:</p>
             <a href="/admin_panel.html">Admin Panel</a> | <a href="/products_display.html">User Interface</a>
         `);
     } else {
+        // Redirects to general login page if not an admin
         response.redirect('/login.html');
     }
 });
 
-// Apply requireAdmin middleware to admin routes
+// Middleware to ensure that user is an admin for accessing admin routes
 app.use('/admin/inventory', requireAdmin);
 app.use('/admin/users', requireAdmin);
 
-// Admin route to modify inventory
-app.post('/admin/inventory', function (request, response) {
-    if (!request.session.isAdmin) {
-        return response.status(403).send('Access denied');
-    }
-
-    const action = request.body.action;
-    const product = request.body.product;
+app.post('/admin/create_product', (req, res) => {
+    const { collection, product } = req.body;
+    
+    // Read the current product data
     const products = readProductsData();
 
-    switch (action) {
-        case 'add':
-            // Add new product logic
-            products.push(product);
-            break;
-        case 'edit':
-            // Edit product logic
-            // Find and update product in products array
-            break;
-        case 'delete':
-            // Delete product logic
-            // Filter out the product from products array
-            break;
-        default:
-            return response.status(400).send('Invalid action');
+    // Check if the specified collection exists
+    if (products[collection]) {
+        // Add the new product to the collection
+        products[collection].push(product);
+        
+        // Write the updated product data back to the file
+        writeProductsData(products);
+
+        res.send({ success: true, message: 'Product created successfully' });
+    } else {
+        res.status(404).send({ success: false, message: 'Collection not found' }); // Nani?
     }
-
-    // Write updated data back to products.json
-    writeProductsData(products);
-
-    response.send({ success: true, message: 'Inventory updated' });
 });
 
-// Admin add/edit/delete inventory route
-app.post('/admin/inventory', function (request, response) {
-    if (!request.session.isAdmin) {
-        response.status(403).send('Access denied');
-        return;
+
+app.post('/admin/delete_product',requireAdmin, (req, res) => {
+    const { collection, productName } = req.body;
+    
+    // Read the current product data
+    const products = readProductsData();
+
+    // Check if the product exists in the specified collection
+    if (products[collection]) {
+        // Filter out the product to be deleted
+        products[collection] = products[collection].filter(product => product.name !== productName);
+        
+        // Write the updated product data back to the file
+        writeProductsData(products);
+
+        res.send({ success: true, message: 'Product deleted successfully' });
+    } else {
+        res.status(404).send({ success: false, message: 'Collection or product not found' });
     }
-
-    const action = request.body.action;
-    const product = request.body.product;
-
-    switch (action) {
-        case 'add':
-            all_products[product.id] = product; // Assuming product object contains all necessary details
-            break;
-        case 'edit':
-            if (all_products[product.id]) {
-                all_products[product.id] = product;
-            } else {
-                response.status(404).send('Product not found');
-                return;
-            }
-            break;
-        case 'delete':
-            if (all_products[product.id]) {
-                delete all_products[product.id];
-            } else {
-                response.status(404).send('Product not found');
-                return;
-            }
-            break;
-        default:
-            response.status(400).send('Invalid action');
-            return;
-    }
-
-    response.send({ success: true, message: 'Inventory updated' });
 });
 
-// Admin add/edit/delete user accounts route
-app.post('/admin/users', function (request, response) {
-    if (!request.session.isAdmin) {
-        return response.status(403).send('Access denied');
-    }
 
+
+// POST route for admin to add, edit, delete, or toggle role of user accounts
+app.post('/admin/users', requireAdmin, function (request, response) {
+    if (!request.session.isAdmin) {
+        return response.status(403).send('Access denied'); // Denies access if not admin
+    }
     const { action, username, userData } = request.body;
-
+    // Handles different actions (add, edit, delete, toggleAdmin) on user accounts
     switch (action) {
         case 'add':
-            // Add a new user
             if (!user_registration_info[username]) {
-                userData.password = hashPassword(userData.password); // Hash the password
-                user_registration_info[username] = userData;
+                userData.password = hashPassword(userData.password); // Hashes password for new user
+                user_registration_info[username] = userData; // Adds new user
             } else {
-                return response.status(400).send('User already exists');
+                return response.status(400).send('User already exists'); // Sends error if user exists
             }
             break;
         case 'edit':
-            // Edit an existing user
             if (user_registration_info[username]) {
                 if(userData.password) {
-                    userData.password = hashPassword(userData.password); // Hash the password if provided
+                    userData.password = hashPassword(userData.password); // Hashes password if provided
                 }
-                user_registration_info[username] = { ...user_registration_info[username], ...userData };
+                user_registration_info[username] = { ...user_registration_info[username], ...userData }; // Edits existing user
             } else {
-                return response.status(404).send('User not found');
+                return response.status(404).send('User not found'); // Sends error if user not found
             }
             break;
         case 'delete':
-            // Delete a user
             if (user_registration_info[username]) {
-                delete user_registration_info[username];
+                delete user_registration_info[username]; // Deletes user
             } else {
-                return response.status(404).send('User not found');
+                return response.status(404).send('User not found'); // Sends error if user not found
             }
             break;
         case 'toggleAdmin':
-            // Toggle admin role
             if (user_registration_info[username]) {
-                user_registration_info[username].role = user_registration_info[username].role === 'admin' ? 'user' : 'admin';
+                user_registration_info[username].role = user_registration_info[username].role === 'admin' ? 'user' : 'admin'; // Toggles user's admin role between being an admin not not being one 
             } else {
-                return response.status(404).send('User not found');
+                return response.status(404).send('User not found'); // Sends error if user not found
             }
             break;
         default:
-            return response.status(400).send('Invalid action');
+            return response.status(400).send('Invalid action'); // Sends error if action is invalid
     }
-
-    // Save changes to file
+    // Saves changes to user registration file
     fs.writeFileSync(filename, JSON.stringify(user_registration_info, null, 2));
-
-    response.send({ success: true, message: 'User account updated' });
+    response.send({ success: true, message: 'User account updated' }); // Confirms user account update
 });
 
-// Start server
+// Starts the server on port 8080
 app.listen(8080, () => console.log(`listening on port 8080`));
 
+// Utility function to check if a string is a non-negative integer
 function findNonNegInt(q, returnErrors = false) {
     const errors = [];
-    if (Number(q) != q) errors.push('Please enter a number!'); // Check if string is a number value
-    if (q < 0) errors.push('Please enter a non-negative value!'); // Check if it is non-negative
-    if (parseInt(q) != q) errors.push('This is not an integer!'); // Check that it is an integer
-
+    // Validates if q is a non-negative integer
+    if (Number(q) != q) errors.push('Please enter a number!');
+    if (q < 0) errors.push('Please enter a non-negative value!');
+    if (parseInt(q) != q) errors.push('This is not an integer!');
     return returnErrors ? errors : errors.length === 0;
 };

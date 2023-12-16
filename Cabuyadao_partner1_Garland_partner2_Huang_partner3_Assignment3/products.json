@@ -98,6 +98,14 @@
       "sets_available": 14,
       "sets_sold": 6,
       "description": "A delightful blend of spring perfection with charming floral details to infuse your style with seasonal sweetness."
+    },
+    {
+      "name": "test",
+      "price": 2,
+      "image": "2",
+      "description": "test",
+      "sets_available": 3,
+      "sets_sold": 0
     }
   ],
   "Mariela Collection": [
