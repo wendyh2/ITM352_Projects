@@ -65,8 +65,8 @@
   "scott997@hawaii.edu": {
     "name": "Scott Garland",
     "password": "5fae201379aebe543d83f6e866124532eea995d646ff3ece30b0dc815215a39f",
-    "lastLoginDate": 1702695322521,
-    "loginCount": 7,
-    "role": "admin"
+    "lastLoginDate": 1702696244457,
+    "loginCount": 8,
+    "role": "user"
   }
 }
