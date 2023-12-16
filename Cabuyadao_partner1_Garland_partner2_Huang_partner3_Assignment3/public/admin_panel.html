@@ -73,7 +73,7 @@
 
     <div class="container">
         <div class="panel">
-            <div class="panel-heading">Add Inventory</div>
+            <div class="panel-heading">Create Product</div>
             <div class="form-group">
                 <label for="newProductName">Product Name</label>
                 <input type="text" id="newProductName" placeholder="Enter Product Name">
@@ -83,12 +83,47 @@
                 <input type="number" id="newProductPrice" placeholder="Enter Price">
             </div>
             <div class="form-group">
-                <label for="newProductQuantity">Quantity</label>
-                <input type="number" id="newProductQuantity" placeholder="Enter Quantity">
+                <label for="newProductImage">Product Image (URL)</label>
+                <input type="text" id="newProductImage" placeholder="Enter Image URL">
             </div>
-            <!-- Add other fields as necessary -->
             <div class="form-group">
-                <button onclick="handleAddInventory()">Add Inventory</button>
+                <label for="newProductSetsAvailable">Sets Available</label>
+                <input type="number" id="newProductSetsAvailable" placeholder="Enter Number of Sets Available">
+            </div>
+            <div class="form-group">
+                <label for="newProductDescription">Product Description</label>
+                <textarea id="newProductDescription" placeholder="Enter Product Description"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="newProductCollection">Collection</label>
+                <select id="newProductCollection">
+                    <option value="Lorelei Collection">Lorelei Collection</option>
+                    <option value="Aureliana Collection">Aureliana Collection</option>
+                    <option value="Mariela Collection">Mariela Collection</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <button onclick="handleCreateProduct()">Create Product</button>
+            </div>
+        </div>
+        
+
+        <div class="panel">
+            <div class="panel-heading">Delete Product</div>
+            <div class="form-group">
+                <label for="deleteProductName">Product Name</label>
+                <input type="text" id="deleteProductName" placeholder="Enter Product Name">
+            </div>
+            <div class="form-group">
+                <label for="deleteProductCollection">Collection</label>
+                <select id="deleteProductCollection">
+                    <option value="Lorelei Collection">Lorelei Collection</option>
+                    <option value="Aureliana Collection">Aureliana Collection</option>
+                    <option value="Mariela Collection">Mariela Collection</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <button onclick="handleDeleteProduct()">Delete Product</button>
             </div>
         </div>
 
@@ -187,6 +222,115 @@
             alert('An error occurred: ' + error.message);
         });
     }
+
+    function handleDeleteProduct() {
+    var productName = document.getElementById('deleteProductName').value;
+    var productCollection = document.getElementById('deleteProductCollection').value;
+
+    fetch('/admin/delete_product', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ 
+            collection: productCollection, 
+            productName: productName 
+        })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Server responded with an error!');
+        }
+        return response.json();
+    })
+    .then(data => {
+        alert(data.message);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred: ' + error.message);
+    });
+}
+
+
+function handleCreateProduct() {
+    var productName = document.getElementById('newProductName').value;
+    var productPrice = document.getElementById('newProductPrice').value;
+    var productImage = document.getElementById('newProductImage').value;
+    var productDescription = document.getElementById('newProductDescription').value;
+    var productSetsAvailable = document.getElementById('newProductSetsAvailable').value;
+    var productCollection = document.getElementById('newProductCollection').value;
+
+    fetch('/admin/create_product', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ 
+            collection: productCollection,
+            product: {
+                name: productName,
+                price: parseFloat(productPrice),
+                image: productImage,
+                description: productDescription,
+                sets_available: parseInt(productSetsAvailable),
+                sets_sold: 0 // Default value for sets sold
+            } 
+        })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Server responded with an error!');
+        }
+        return response.json();
+    })
+    .then(data => {
+        alert(data.message);
+        // Optionally clear the form or update the UI
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred: ' + error.message);
+    });
+}
+
+
+
+// Function to handle adding inventory
+function handleAddInventory() {
+    const productName = document.getElementById('newProductName').value;
+    const productPrice = document.getElementById('newProductPrice').value;
+    const productImage = document.getElementById('newProductImage').value; // Assuming you have an input for image URL
+    const productQuantity = document.getElementById('newProductQuantity').value;
+    const productDescription = document.getElementById('newProductDescription').value; // Assuming you have an input for description
+
+    // Construct product data
+    const productData = {
+        name: productName,
+        price: parseFloat(productPrice),
+        image: productImage,
+        sets_available: parseInt(productQuantity),
+        sets_sold: 0, // Assuming new product has not been sold yet
+        description: productDescription
+    };
+
+    // Send request to add inventory
+    fetch('/admin/inventory', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({action: 'add', product: productData})
+    })
+
+    .then(response => response.json())
+    .then(data => {
+        alert(data.message);
+        // Optionally clear the form or refresh the page
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred: ' + error.message);
+    });
+}
 
 // Function to handle adding inventory
 function handleAddInventory() {
