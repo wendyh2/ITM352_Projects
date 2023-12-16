@@ -22,7 +22,7 @@ header {
     display: inline-block;
 }
 
-/* IR5: Hide product description when img is not being hovered with cursor*/
+/* Hide product description when img is not being hovered with cursor*/
 .product-description {
     display: none;
     position: absolute;
@@ -37,7 +37,7 @@ header {
 }
 
 
-/* IR5: Make product description visible when img is being hovered with cursor */
+/* Make product description visible when img is being hovered with cursor */
 .img-mouseover:hover .product-description {
     display: block;
 }

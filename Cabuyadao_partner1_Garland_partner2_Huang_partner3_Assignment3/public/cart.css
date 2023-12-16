@@ -22,7 +22,7 @@ header {
     display: inline-block;
 }
 
-/* IR5: Hide product description when img is not being hovered with cursor*/
+/* Hide product description when img is not being hovered with cursor*/
 .product-description {
     display: none;
     position: absolute;
@@ -69,10 +69,11 @@ header {
 }
 
 .header-spacing {
-    margin-top: 140px;
+    margin-top: 190px;
 }
 
 h1 {
+
     text-align: center;
     color: #1a1a1a;
 }
