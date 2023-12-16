@@ -472,12 +472,35 @@ app.post('/viewInvoice', (request, response) => {
 
 })
 
+app.get('/pre-checkout', (request, response) => {
+    // check if user is logged in. If not, redirect to login
+    if (!request.cookies.userinfo) {
+        response.redirect('./login.html');
+        return;
+    }
+
+    // before checkout
+
+    // send to final invoice
+    response.redirect("./invoice.html");
+    return;
+})
+
 app.get('/checkout', (request, response) => {
     // check if user is logged in. If not, redirect to login
     if (!request.cookies.userinfo) {
         response.redirect('./login.html');
         return;
     }
+
+    // Get userinfo and parse it into userInfoObject
+    const userinfo = request.cookies.userinfo;
+    const userInfoObject = JSON.parse(userinfo);
+
+    // Variables for name and email
+    var name = userInfoObject.full_name;
+    var email = userInfoObject.email;
+
 
     // console.log(userinfo);
     // console.log(userinfo["email"]);
@@ -533,26 +556,17 @@ app.get('/checkout', (request, response) => {
                   </div>
                 </div></td>
               <td width="26%">${products[i].name}</td>
-              <td align="center" width="11%">${qty}<br><font color = "red"></td>
+              <td align="center" width="11%">${qty}<br><font color = "red">${errors.join('<br>')}</td>
               <td width="13%">$${products[i].price}</td>
               <td width="20%">$${(extended_price).toFixed(2)}</td>
-              <td width="10%">
-          <select class="rating" name="rating_${i}">
-            <option value="">Rate...</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-          </select>
-        </td>
         <td width="20%">
-          <input type="text" name="comment_${i}" placeholder="Leave a comment">
+        <h4><a href="./rate_product.html?prod_key=${pkey}&prod_index=${i}">Add Review!<a></h4>
         </td>
             </tr>
             `;
         }
     }
+
     // Subtotal
     var subtotal = 0;
 
