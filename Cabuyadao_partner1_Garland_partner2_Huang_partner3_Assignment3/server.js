@@ -700,6 +700,7 @@ app.post('/admin/users', function (request, response) {
         case 'add':
             // Add a new user
             if (!user_registration_info[username]) {
+                userData.password = hashPassword(userData.password); // Hash the password
                 user_registration_info[username] = userData;
             } else {
                 return response.status(400).send('User already exists');
@@ -708,6 +709,9 @@ app.post('/admin/users', function (request, response) {
         case 'edit':
             // Edit an existing user
             if (user_registration_info[username]) {
+                if(userData.password) {
+                    userData.password = hashPassword(userData.password); // Hash the password if provided
+                }
                 user_registration_info[username] = { ...user_registration_info[username], ...userData };
             } else {
                 return response.status(404).send('User not found');
