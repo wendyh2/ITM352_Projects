@@ -501,17 +501,9 @@ app.get('/checkout', (request, response) => {
     var name = userInfoObject.full_name;
     var email = userInfoObject.email;
 
-
-    // console.log(userinfo);
-    // console.log(userinfo["email"]);
-    // console.log(userinfo.email);
-
-    // For some reason, accessing these values in userinfo doesn't work    
-    let userinfo = JSON.parse(request.cookies.userinfo);
-
-    // Creating a final invoice 
+    // Declare str variable to be displayed
     str = `
-    <h2>Thank you ${userinfo.full_name} for your purchase! Please see your invoice below.</h2>
+    <h2>Thank you ${name} for your purchase! Please see your invoice below.</h2>
     <div class="flex-box-container">
     <div class="flex-box">
       <!--Where I will print my invoice-->
@@ -526,13 +518,24 @@ app.get('/checkout', (request, response) => {
             <th style="text-align: center;" width="13%">Price</th>
             <th style="text-align: center;" width="20%">Price Altogether</th>
             <th style="text-align: center;" width="10%">Rating</th>
-            <th style="text-align: center;" width="20%">Comments</th>
           </tr>
           `;
 
     // Declare cart data variable
     var cart_data = request.session.cart;
 
+    // Subtotal
+    var subtotal = 0;
+
+    // 
+    function findNonNegInt(q, returnErrors = false) { //the function returns non-negative integers in the object.
+        errors = []; // assume no errors at first
+        if (Number(q) != q) errors.push('Not a number!'); // Check if string is a number value
+        if (q < 0) errors.push('Negative value!'); // Check if it is non-negative
+        if (parseInt(q) != q) errors.push('Not an integer!'); // Check that it is an integer
+
+        return returnErrors ? errors : (errors.length == 0);
+    }
 
     // Add more table rows
     for (let pkey in cart_data) {
@@ -542,9 +545,13 @@ app.get('/checkout', (request, response) => {
             if (qty == 0) {
                 continue;
             }
+            errors = findNonNegInt(qty, true);
+            if (errors.length == 0) {
+                var extended_price = qty * products[i].price;
+                subtotal += extended_price;
+            }
+            else (extended_price = 0);
 
-            var extended_price = qty * products[i].price;
-            subtotal += extended_price;
 
             str += `
             <tr>
@@ -567,8 +574,6 @@ app.get('/checkout', (request, response) => {
         }
     }
 
-    // Subtotal
-    var subtotal = 0;
 
     // Tax rate
     var tax_rate = 0.04712;
@@ -605,8 +610,7 @@ app.get('/checkout', (request, response) => {
             </table >
             <h4><strong> Our shipping policy is: A subtotal of $0-$80 will be $10 shipping. Subtotals over $80 will have free
             shipping</strong></h4>
-            
-            <h1>We have emailed your invoice to ${userinfo['email']}!</h1>
+            <h1>We have emailed your invoice to ${email}!</h1>
             </div>
             </div>
     `;
@@ -629,7 +633,7 @@ app.get('/checkout', (request, response) => {
     // Referenced from assignment 3 code example
     // Create a transporter variable for nodemailer
     var transporter = nodemailer.createTransport({
-        host: "smtp.freesmtpservers.com",
+        host: "mail.hawaii.edu",
         port: 25,
         secure: false, // use TLS
         tls: {
@@ -638,10 +642,13 @@ app.get('/checkout', (request, response) => {
         },
     });
 
+    var user_email = email;
+    var userid = name;
+
     // Options for email
     var mailOptions = {
         from: "wendyh2@hawaii.edu", //sender
-        to: userinfo.email, //receiver
+        to: user_email, //receiver
         subject: "Thank you for your order!", // subject heading
         html: str, //html body (invoice)
     };
@@ -649,15 +656,19 @@ app.get('/checkout', (request, response) => {
     // Attempt to send email
     transporter.sendMail(mailOptions, function (error, info) {
         if (error) {
-            str += `<script>alert('Oops, ${userinfo.full_name}, there was an error and your invoice could not be sent');</script>`;
+            email_msg = `<script>alert('Oops, ${userid}. There was an error and your invoice could not be sent');</script>`;
+            // this is just for the video, revert back to response.send(email_msg);
+            response.send(str);
+            return; // terminate the function after sending the error response
         } else {
-            str += `<script>alert('Your invoice was mailed to ${userinfo.email}');</script>`;
+            console.log("Email sent to: " + info.response);
+            email_msg = `<script>alert('Your invoice was mailed to ${userid}');</script>`;
+            response.send(str + email_msg);
         }
     });
 
-    response.send(str);
     return;
-});
+})
 
 // update the session quantities with updated amounts from cart
 app.post("/update_cart", function (request, response, next) {
