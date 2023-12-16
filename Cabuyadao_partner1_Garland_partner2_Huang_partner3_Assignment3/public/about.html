@@ -1,8 +1,8 @@
 <!--
-Author: Wendy Huang, Scott Garland
-Assignment 1
-Date: 11/10/2023
-Description: My About Page
+Author: Wendy Huang, Scott Garland, Gellie Cabuyadao
+Date: 16 December 2023
+Description: The about page that describes the business and provides contact information via links.
+Additional information: Copied from Assignment 1/2
 -->
 <!DOCTYPE html>
 <html lang="en">
@@ -15,6 +15,7 @@ Description: My About Page
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
     integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
     <title>About Wenailed</title>
 </head>
 <script>
@@ -50,11 +51,11 @@ Description: My About Page
             <a href="products_display.html">Shop</a>
             <a href="contact.html">Contact</a>
             <script>
-                // if user is logged in, print a logout link. Othwerwise print a login link 
+                // if user is logged in, print a logout link. Otherwise, print a login link 
                 if (typeof userinfo !== "undefined") {
-                    document.write(`<a href="logout">Log Out ${userinfo['full_name']}</a>`);
+                    document.write(`<a href="logout"><i class='bx bx-log-out'></i> Log Out ${userinfo['full_name']}</a>`);
                 } else {
-                    document.write(`<a href="login.html">Login</a>`);
+                    document.write(`<a href="login.html"><i class='bx bx-log-in'></i> Login</a>`);
                 }
             </script>
             <div class="cart-icon">

@@ -1,0 +1,38 @@
+/* Header styles */
+/* Styling for preventing logo cut-off and main-home section */
+header {
+    /* ... (existing styles) */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 2%;
+    background-image: url(img/purpstarsky.jpg);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat; /* Prevent background image from repeating */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.06);
+}
+
+/* Register button styling */
+#register_button {
+    /* ... (existing styles) */
+    margin-bottom: 20px; /* Adjusted margin */
+}
+
+h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 30px;
+    font-weight: bold;
+    color: rgb(153, 99, 135);
+    text-align: center; /* Center the text horizontally */
+    margin-top: 20px; /* Adjusted margin */
+}
+
+body {
+    /* ... (existing styles) */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center the content vertically */
+    justify-content: center; /* Center the content horizontally */
+    height: 100vh; /* Make sure the body takes the full height of the viewport */
+}

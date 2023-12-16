@@ -13,8 +13,10 @@ const fs = require("fs");
 const cookieParser = require('cookie-parser');
 app.use(cookieParser());
 app.use(express.json());
+const path = require('path');
 
 const session = require('express-session');
+
 
 //session 
 app.use(session({
@@ -26,10 +28,10 @@ app.use(session({
 
 
 
-// IR1: Use crypto library to encrypt password
+// Use crypto library to encrypt password
 const crypto = require('crypto');
 
-// IR5:  Keep track of the number of users currently logged in to the site and display this number with the personalization information.
+// Keep track of the number of users currently logged in to the site and display this number with the personalization information.
 // This is the global array variable
 const loggedInUsers = {};
 
@@ -38,7 +40,7 @@ function requireAdmin(req, res, next) {
     if (req.session.isAdmin) {
         next();
     } else {
-        res.status(403).send('Access Denied');
+        res.status(403).json({ success: false, message: 'Access Denied' });
     }
 }
 
@@ -280,7 +282,7 @@ app.post("/login", function (request, response, next) {
         user_registration_info[username].loginCount = (user_registration_info[username].loginCount || 0) + 1;
         user_registration_info[username].lastLoginDate = new Date().getTime();
 
-        // Update the user info in loggedInUsers for IR5
+        // Update the user info in loggedInUsers for IR5 add 
         loggedInUsers[username] = true;
 
         // Save the updated user_registration_info
@@ -360,7 +362,7 @@ app.post("/register", function (request, response, next) {
     } else if (!/^\S+$/.test(password)) {
         errors["password"].push("Password cannot have spaces. Please try again.");
 
-        // IR2: Require that passwords have at least one number and one special character, regex referenced from ChatGPT
+        // Require that passwords have at least one number and one special character, regex referenced from ChatGPT
     } else if (!/^(?=.*\d)(?=.*\W).+$/.test(password)) {
         errors["password"].push("Password must contain at least one letter, one number, and one special character.");
 
@@ -393,7 +395,7 @@ app.post("/register", function (request, response, next) {
         user_registration_info[username].name = request.body.name;
         // Store encrypted password into user_registration_info
         user_registration_info[username].password = hashPassword(request.body.password);
-        // Add lastLoginDate and loginCount for this new user make it a string
+        // IR4 add lastLoginDate and loginCount for this new user make it a string
         user_registration_info[username].lastLoginDate = Date.now();
         user_registration_info[username].loginCount = 1;
 
@@ -674,6 +676,9 @@ function findNonNegInt(q, returnErrors = false) {
 
 // Logout route to expire the cookie redirect them to the homepage afterwards
 app.get('/logout', function(req, res, next) {
+//remove them from loggedin users
+    let userinfo = JSON.parse (req.cookies['userinfo']);
+    delete loggedInUsers[userinfo.email];
     res.clearCookie('userinfo');
     res.redirect("home.html");
 
@@ -681,15 +686,6 @@ app.get('/logout', function(req, res, next) {
 
 
 /*
-// Logout route that sends user to the thank you page and then logs out ASK DA FOR HELP
-app.get('/logout', (req, res) => {
-    const username = req.session.username; // Assuming username is stored in the session
-
-    // Remove username from loggedInUsers object (logging the user out)
-    if (loggedInUsers.hasOwnProperty(username)) {
-        delete loggedInUsers[username];
-    }
-
     // Prepare and send the thank you message
     const thankYouMessage = `
         <!DOCTYPE html>
@@ -743,152 +739,196 @@ app.get('/logout', (req, res) => {
         </body>
         </html>
     `;
-
-    // Send the thank you message and then destroy the session
-    res.send(thankYouMessage, () => {
-        // Destroy the session after sending the response
-        req.session.destroy();
-    });
-}); */
+    */
 
 
 // Serve static files
 app.use(express.static(__dirname + '/public'));
 
 
-
-
 // Admin Routes
 
-// POST route for admin login
+// Path to your products.json file
+const productsFilePath = path.join(__dirname, 'products.json');
+
+// Function to read products data
+function readProductsData() {
+    const productsData = fs.readFileSync(productsFilePath, 'utf8');
+    return JSON.parse(productsData);
+}
+
+// Function to write products data
+function writeProductsData(data) {
+    fs.writeFileSync(productsFilePath, JSON.stringify(data, null, 2), 'utf8');
+}
+
+
+// Admin login route
 app.post('/admin/login', function (request, response) {
     let username = request.body.username;
     let password = request.body.password;
-    // Checks if user is admin and password is correct
     if (isAdmin(username) && user_registration_info[username].password === hashPassword(password)) {
-        request.session.user = username; // Sets session user
-        request.session.isAdmin = true; // Sets session admin flag
-        // Redirects to admin choice page upon successful login
+        request.session.user = username;
+        request.session.isAdmin = true;
+        // Redirect to the choice page instead of directly to admin panel
         response.redirect('/admin/choice');
     } else {
-        // Sends alert and redirects to admin login page if credentials are invalid
-        response.send(`<script>alert("Invalid credentials or not an admin"); window.location.href = '/admin_login.html';</script>`);
+        response.send({ success: false, message: 'Invalid credentials or not an admin' });
     }
 });
 
-// GET route to display admin choice page after login
+// Route to display choice page for admin after login
 app.get('/admin/choice', function (request, response) {
-    // Checks if the user has admin privileges
     if (request.session.isAdmin) {
-        // Serves a simple HTML page with admin options
+        // Serve a simple HTML page with choices
         response.send(`
             <h1>Welcome Admin</h1>
             <p>Choose where you would like to go:</p>
             <a href="/admin_panel.html">Admin Panel</a> | <a href="/products_display.html">User Interface</a>
         `);
     } else {
-        // Redirects to general login page if not an admin
         response.redirect('/login.html');
     }
 });
 
-// Middleware to ensure that user is an admin for accessing admin routes
+// Apply requireAdmin middleware to admin routes
 app.use('/admin/inventory', requireAdmin);
 app.use('/admin/users', requireAdmin);
 
-// POST route for admin to add, edit, or delete inventory
+// Admin route to modify inventory
 app.post('/admin/inventory', function (request, response) {
     if (!request.session.isAdmin) {
-        response.status(403).send('Access denied'); // Denies access if not admin
-        return;
+        return response.status(403).send('Access denied');
     }
+
     const action = request.body.action;
     const product = request.body.product;
-    // Handles different actions (add, edit, delete) on inventory
+    const products = readProductsData();
+
     switch (action) {
         case 'add':
-            all_products[product.id] = product; // Adds new product
+            // Add new product logic
+            products.push(product);
+            break;
+        case 'edit':
+            // Edit product logic
+            // Find and update product in products array
+            break;
+        case 'delete':
+            // Delete product logic
+            // Filter out the product from products array
+            break;
+        default:
+            return response.status(400).send('Invalid action');
+    }
+
+    // Write updated data back to products.json
+    writeProductsData(products);
+
+    response.send({ success: true, message: 'Inventory updated' });
+});
+
+// Admin add/edit/delete inventory route
+app.post('/admin/inventory', function (request, response) {
+    if (!request.session.isAdmin) {
+        response.status(403).send('Access denied');
+        return;
+    }
+
+    const action = request.body.action;
+    const product = request.body.product;
+
+    switch (action) {
+        case 'add':
+            all_products[product.id] = product; // Assuming product object contains all necessary details
             break;
         case 'edit':
             if (all_products[product.id]) {
-                all_products[product.id] = product; // Edits existing product
+                all_products[product.id] = product;
             } else {
-                response.status(404).send('Product not found'); // Sends error if product not found
+                response.status(404).send('Product not found');
                 return;
             }
             break;
         case 'delete':
             if (all_products[product.id]) {
-                delete all_products[product.id]; // Deletes product
+                delete all_products[product.id];
             } else {
-                response.status(404).send('Product not found'); // Sends error if product not found
+                response.status(404).send('Product not found');
                 return;
             }
             break;
         default:
-            response.status(400).send('Invalid action'); // Sends error if action is invalid
+            response.status(400).send('Invalid action');
             return;
     }
-    response.send({ success: true, message: 'Inventory updated' }); // Confirms inventory update
+
+    response.send({ success: true, message: 'Inventory updated' });
 });
 
-// POST route for admin to add, edit, delete, or toggle role of user accounts
+// Admin add/edit/delete user accounts route
 app.post('/admin/users', function (request, response) {
     if (!request.session.isAdmin) {
-        return response.status(403).send('Access denied'); // Denies access if not admin
+        return response.status(403).send('Access denied');
     }
+
     const { action, username, userData } = request.body;
-    // Handles different actions (add, edit, delete, toggleAdmin) on user accounts
+
     switch (action) {
         case 'add':
+            // Add a new user
             if (!user_registration_info[username]) {
-                userData.password = hashPassword(userData.password); // Hashes password for new user
-                user_registration_info[username] = userData; // Adds new user
+                userData.password = hashPassword(userData.password); // Hash the password
+                user_registration_info[username] = userData;
             } else {
-                return response.status(400).send('User already exists'); // Sends error if user exists
+                return response.status(400).send('User already exists');
             }
             break;
         case 'edit':
+            // Edit an existing user
             if (user_registration_info[username]) {
                 if(userData.password) {
-                    userData.password = hashPassword(userData.password); // Hashes password if provided
+                    userData.password = hashPassword(userData.password); // Hash the password if provided
                 }
-                user_registration_info[username] = { ...user_registration_info[username], ...userData }; // Edits existing user
+                user_registration_info[username] = { ...user_registration_info[username], ...userData };
             } else {
-                return response.status(404).send('User not found'); // Sends error if user not found
+                return response.status(404).send('User not found');
             }
             break;
         case 'delete':
+            // Delete a user
             if (user_registration_info[username]) {
-                delete user_registration_info[username]; // Deletes user
+                delete user_registration_info[username];
             } else {
-                return response.status(404).send('User not found'); // Sends error if user not found
+                return response.status(404).send('User not found');
             }
             break;
         case 'toggleAdmin':
+            // Toggle admin role
             if (user_registration_info[username]) {
-                user_registration_info[username].role = user_registration_info[username].role === 'admin' ? 'user' : 'admin'; // Toggles user's admin role
+                user_registration_info[username].role = user_registration_info[username].role === 'admin' ? 'user' : 'admin';
             } else {
-                return response.status(404).send('User not found'); // Sends error if user not found
+                return response.status(404).send('User not found');
             }
             break;
         default:
-            return response.status(400).send('Invalid action'); // Sends error if action is invalid
+            return response.status(400).send('Invalid action');
     }
-    // Saves changes to user registration file
+
+    // Save changes to file
     fs.writeFileSync(filename, JSON.stringify(user_registration_info, null, 2));
-    response.send({ success: true, message: 'User account updated' }); // Confirms user account update
+
+    response.send({ success: true, message: 'User account updated' });
 });
 
-// Starts the server on port 8080
+// Start server
 app.listen(8080, () => console.log(`listening on port 8080`));
 
-// Utility function to check if a string is a non-negative integer
 function findNonNegInt(q, returnErrors = false) {
     const errors = [];
-    // Validates if q is a non-negative integer
-    if (Number(q) != q) errors.push('Please enter a number!');
-    if (q < 0) errors.push('Please enter a non-negative value!');
-    if (parseInt(q) != q) errors.push('This is not an integer!');
+    if (Number(q) != q) errors.push('Please enter a number!'); // Check if string is a number value
+    if (q < 0) errors.push('Please enter a non-negative value!'); // Check if it is non-negative
+    if (parseInt(q) != q) errors.push('This is not an integer!'); // Check that it is an integer
+
     return returnErrors ? errors : errors.length === 0;
 };

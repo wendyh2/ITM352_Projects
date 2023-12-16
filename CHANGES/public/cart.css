@@ -1,0 +1,155 @@
+/*
+Author: Wendy Huang
+Assignment 1
+Date: 11/12/2023
+Description: My CSS stylesheet for my invoice.html
+*/
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: white;
+    color: black;
+}
+
+header {
+    background-color: #1a1a1a;
+    padding: 10px;
+    color: white;
+    text-align: center;
+}
+
+.img-mouseover {
+    position: relative;
+    display: inline-block;
+}
+
+/* Hide product description when img is not being hovered with cursor*/
+.product-description {
+    display: none;
+    position: absolute;
+    z-index: 10;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+
+/* Make product description visible when img is being hovered with cursor */
+.img-mouseover:hover .product-description {
+    display: block;
+}
+
+
+.logo {
+    width: 150px;
+    height: auto;
+}
+
+.navmenu {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 10px;
+    align-items: center;
+}
+
+.navmenu a {
+    color: white;
+    text-decoration: none;
+}
+
+.cart-icon {
+    position: relative;
+}
+
+.fa-bag-shopping {
+    font-size: 24px;
+}
+
+.header-spacing {
+    margin-top: 190px;
+}
+
+h1 {
+
+    text-align: center;
+    color: #1a1a1a;
+}
+
+h2 {
+    text-align: center;
+}
+
+.text-spacing {
+    padding: 10px 0px;
+}
+
+table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 15px;
+    text-align: center;
+}
+
+th {
+    background-color: #1a1a1a;
+    color: white;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+
+h4 {
+    text-align: center;
+    margin-top: 20px;
+    color: #1a1a1a;
+}
+
+strong {
+    color: #e44d26;
+    /* Orange color */
+}
+
+.flex-box {
+    width: 80%;
+    justify-self: center;
+}
+
+.flex-box-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+/* Combined styling for both buttons */
+#checkout_button, #update_button {
+    display: block;
+    background-color: rgb(167, 123, 181);
+    color: #ffffff;
+    border-color: rgb(167, 123, 181);
+    border-radius: 10px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 17px;
+    border-width: 1.5px;
+    min-width: 50px;
+    padding: 10px 20px;
+    margin: 0 auto;
+    margin-top: 20px;
+    cursor: pointer;
+    margin-bottom: 2px; 
+}
+
+#checkout_button:hover, #update_button:hover {
+    background-color: #ffffff;
+    border-color: rgb(167, 123, 181);
+    color: rgb(167, 123, 181);
+}

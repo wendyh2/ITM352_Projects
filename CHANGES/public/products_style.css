@@ -1,0 +1,321 @@
+/*
+Author: Wendy Huang
+Assignment 1
+Date: 11/10/2023
+Description: CSS for Shop/Products Display Page
+*/
+
+/* Resetting some default styles */
+body, h1, h2, p {
+    margin: 0;
+    padding: 0;
+}
+
+/* General styling for the document */
+body {
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* Header styles */
+header {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    right: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 2%;
+    background-image: url(img/purpstarsky.jpg);
+    background-position: center;
+    background-size: cover;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.06);
+}
+
+/* Logo styles */
+.logo {
+    max-width: 120px; /* Adjusted max-width */
+    height: auto;
+    margin-left: 80px; /* Adjusted margin */
+}
+
+/* Navigation menu styles */
+.navmenu {
+    display: flex;
+    font-family: 'Montserrat', sans-serif;
+    gap: 100px;
+    margin-right: 250px;
+    align-items: center;
+}
+
+.navmenu a {
+    font-size: 18px;
+    color: white;
+    text-transform: capitalize;
+    font-weight: 400;
+    padding: 20px 10px;
+    text-decoration: none; /* Removing the underline that was part of it */
+    transition: all .40s ease;
+    margin-left: 10px;
+}
+
+/* Cart icon styles */
+.cart-icon {
+    margin-top: 15px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    margin-right: 20px; /* Adjusted margin */
+    justify-content: center;
+    position: relative;
+   
+}
+
+.cart-icon span {
+display: flex;
+height: 20px;
+width: 20px;
+background-color: pink;
+justify-content: center;
+align-items: center;
+color: black;
+border-radius: 50%;
+position: absolute;
+top: 60%;
+right: 0px;
+font-size: 14px;
+}
+
+/* Cart icon styling */
+.cart-icon i {
+    font-size: 35px;
+}
+
+.cart-icon:hover .cart-text{
+    display: block;
+}
+
+/* Styling for preventing logo cut-off and main-home section */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 2%;
+}
+
+
+/* Hover effect for navigation menu items */
+.navmenu a:hover{
+    color: pink;
+}
+
+/* Shop section from the home CSS */
+.popular-products {
+    text-align: center;
+    padding: 40px 20px; 
+    background-image: url(img/indexback.png);
+    background-position: center;
+    background-size: cover; 
+}
+
+.collection-name h4 {
+    margin-top: 160px; /* Adjusted margin for less space */
+    color: white; 
+    font-size: 45px; /* Make it more noticeable and readable*/
+}
+
+.popular-products h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.product-text {
+    padding: 20px;
+    background-color: #fff;
+    margin-bottom: 10px;
+    font-size: 1.5rem;
+}
+
+.product-text h4 {
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+}
+
+.product-text p {
+    font-size: 1rem;
+    margin-bottom: 15px;
+}
+
+.product-text label {
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+.product-text input {
+    width: 40px;
+    padding: 5px;
+}
+
+/* Contact section from the home CSS */
+.contact {
+    text-align: center;
+    padding: 40px 0;
+    background-image: url(img/purpstarsky.jpg);
+    background-size: cover;
+    width: 100%;
+    color: rgb(74, 74, 74);
+}
+
+.contact-info img {
+    width: 160px;
+    border-radius: 50%;
+    margin-bottom: 0px;
+    height: auto;
+}
+
+.contact-info h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.contact-info p {
+    font-size: 1rem;
+    margin-bottom: 5px;
+}
+
+/* Styling for social media icons from the home CSS */
+.socialmedia-icon i {
+    margin-top: 15px;
+    color: white;
+    font-size: 30px;
+    margin-right: 10px;
+    transition: all .40s;
+}
+
+.socialmedia-icon i:hover {
+    transform: scale(1.4);
+}
+
+
+.products {
+    margin-top: 40px;
+        display: flex;
+        justify-content: center; /* Center the products horizontally */
+        flex-wrap: wrap; /* Allow products to wrap to the next row */
+        gap: 20px; /* Adjusted gap between products */
+    }
+
+.product-text {
+    color: rgb(96, 96, 96); /*Changing my product text to a more gray color*/
+}
+
+.row {
+    width: 100%;
+    max-width: 300px; /* Adjusted max-width to make products smaller */
+    padding: 10px;
+    border: 1px solid pink;
+    border-radius: 10px; /* Add border-radius for rounded corners */
+    position: relative;
+    background-color: white;
+    overflow: hidden; /* Ensure that the background color doesn't overflow */
+}
+
+.row img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px; /* Add border-radius for rounded corners */
+    transition: transform 0.3s;
+}
+
+
+.error_msg {
+    color: red;
+}
+
+/*Remember that i need to delete the purchase button later when i make the add to cart buttons work*/
+
+.purchase_button {
+    margin-top: 40px;
+    padding: 15px 30px; /* Adjusted padding */
+    font-size: 1.2rem; /* Increased font size */
+    cursor: pointer;
+    background-color: #aecbde; /* Updated background color to a shade of blue */
+    color: #fff; /* Set text color to white */
+    font-family: 'Montserrat', sans-serif; /* Use Montserrat font */
+    border: none; /* Remove border */
+    border-radius: 5px; /* Add border-radius for rounded corners */
+    transition: background-color 0.3s ease; /* Add transition for smoother color change */
+}
+
+.purchase_button:hover {
+    background-color: rgb(114, 164, 197); /* Darker shade of blue on hover */
+}
+
+/* Pagination styles */
+.collection {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px; /* Adjusted margin */
+}
+
+.collection a,
+.collection .current {
+    padding: 8px 16px;
+    margin: 0 4px;
+    text-decoration: none;
+    color: #fff;
+    background-color: pink; /* pink background color */
+    border-radius: 5px;
+}
+
+.collection a:hover {
+    background-color: #7597b9; /* Darker green on hover */
+}
+
+.collection .current {
+    background-color: #aecbde;; /* light blue for the current page */
+    cursor: default;
+}
+
+/* Styling for the Add to Cart button */
+.add-to-cart {
+    margin-top: 30px;
+    padding: 15px 30px; /* Adjusted padding */
+    font-size: 1.2rem; /* Increased font size */
+    cursor: pointer;
+    background-color: #aecbde; /* Updated background color to a shade of blue */
+    color: #fff; /* Set text color to white */
+    font-family: 'Montserrat', sans-serif; /* Use Montserrat font */
+    border: none; /* Remove border */
+    border-radius: 5px; /* Add border-radius for rounded corners */
+    transition: background-color 0.3s ease; /* Add transition for smoother color change */
+}
+
+.add-to-cart:hover {
+    background-color: rgb(114, 164, 197); /* Darker shade of blue on hover */
+}
+.search-box {
+    position: relative;
+    display: flex;
+    align-items: center;
+    font-family: 'Montserrat', sans-serif; /* Add Montserrat font */
+}
+
+#searchInput {
+    padding-left: 20px; /* Space for the icon */
+    text-align: center; /* Centers the placeholder text */
+    height: 25px;
+    width: 110px; /* Adjust width to make the bar smaller */
+    font-family: 'Montserrat', sans-serif; /* Montserrat font for input text */
+    font-size: 10px; /* Adjust font size as needed */
+    border-radius: 5px;
+    border: 1px solid gray; /* Gray border for the input field */
+}
+
+.search-box .bx-search-alt {
+    position: absolute;
+    margin-top: 1px;
+    left: 5px; /* Adjust as needed */
+    font-size: 18px; /* Adjust size of the icon */
+}
