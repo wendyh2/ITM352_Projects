@@ -1,4 +1,4 @@
-# Wendy Huang - GitHub README
+# Wendy Huang
 
 ## Overview
 
